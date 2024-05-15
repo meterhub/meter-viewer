@@ -35,10 +35,10 @@ def check_img_size(img: Img, size: t.Tuple[int, int], then: t.Callable[[Img], t.
     return False
 
 
-def img_from(folder: str):
+def img_from(folder: str = ""):
     # open folder to get all images.
     def get_img(num):
-        return np.random.randint(10, 10)
+        return np.random.randint(1, 255, size=(10, 20))
 
     return get_img
 
