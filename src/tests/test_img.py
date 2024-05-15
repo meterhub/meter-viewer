@@ -5,14 +5,18 @@ from matplotlib import pyplot as plt
 
 
 def show_img(img):
-    is_show = 0
+    is_show = 1
     if is_show:
         plt.imshow(img)
         plt.show()
 
 
 def test_join():
-    imglist = [img.get_random_img(1, img.img_from), img.get_random_img(2, img.img_from)]
+    imglist = [
+        img.get_random_img(1, img.img_from),
+        img.get_random_img(2, img.img_from),
+        img.get_random_img(3, img.img_from),
+    ]
     res = img.join_img(imglist, img.empty_check)
     # seems correct
     show_img(res)

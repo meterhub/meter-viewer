@@ -18,7 +18,7 @@ def use_func(name: str):
 def join_img(imglist: t.List[Img], check_func: t.Callable) -> Img:
     # merge images vertically
     check_func()
-    return np.vstack(imglist)
+    return np.hstack(imglist)
 
 
 def get_random_img(num: int, img_from: t.Callable) -> Img:
