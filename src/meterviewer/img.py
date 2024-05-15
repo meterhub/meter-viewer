@@ -1,18 +1,9 @@
 # process image, to fit the training proposals.
 
-from tabnanny import check
 import typing as t
 import numpy as np
 
 Img = np.ndarray
-
-global_func: t.Dict[str, t.Any] = {}
-
-
-def use_func(name: str):
-    f = global_func.get(name, None)
-    if not f:
-        raise ValueError(f"func {name} not found")
 
 
 def join_img(imglist: t.List[Img], check_func: t.Callable) -> Img:
@@ -64,15 +55,3 @@ def empty_check():
 def gen_block_img(number: int):
     num_l = [int(i) for i in number_to_string(number)]
     return join_img(get_img_list(num_l), empty_check)
-
-
-def create_dataset(train_nums: int, test_nums: int, save_method: t.Callable):
-    pass
-
-
-def dataset():
-    data = {}
-    str_template = "{name}_{peroid}.npy"
-
-    def get_root_path():
-        pass
