@@ -1,0 +1,41 @@
+[[base]]
+root_dir="D:/Store/MeterData"
+description="This config file is to store the path of the data, let the user easy to use."
+
+[[5digit]]
+base_folder= "D:/Store/MeterData/lens_6/XL/merge_np"
+
+[[5digit.block]]
+
+[[6digit]]
+base_folder="D:/Store/MeterData/lens_6/XL/merge_np"
+
+[[6digit.single]]
+folder = "Digit"
+
+[[6digit.block]]
+folder = "Block"
+
+[[6digit.block.train]]
+description = '6 digit block train'
+folder = 'Train'
+x = 'x_train.npy'
+y = 'y_train.npy'
+id = 'id_train.npy'
+shape = ''
+
+[[6digit.block.test]]
+description = '6 digit block test'
+folder = 'Test'
+x = 'x_all.npy'
+y = 'y_all.npy'
+id = 'id_all.npy'
+shape = ''
+
+[[6digit.block.valid]]
+description = '6 digit block test'
+folder = 'Valid'
+x = 'x_all.npy'
+y = 'y_all.npy'
+id = 'id_all.npy'
+shape = ''

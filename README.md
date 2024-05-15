@@ -1,6 +1,6 @@
-# meterviewer
+# Meterviewer
 
-Meter Data viewer, to view multiple dataset.
+Meter Data viewer, to view multiple dataset via notebook.
 
 ## Install
 
