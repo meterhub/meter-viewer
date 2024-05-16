@@ -7,8 +7,18 @@ from . import types as T
 
 def join_img(imglist: t.List[T.Img], check_func: t.Callable) -> T.Img:
     # merge images vertically
-    check_func()
+    check_func(imglist)
     return np.hstack(imglist)
+
+
+def size_check(img_list: t.List[T.Img], size: t.Optional[t.List[int]] = None):
+    assert img_list != [], "img_list should not be empty"
+    if not size:
+        size = list(img_list[0].shape)
+
+    for i, img in enumerate(img_list):
+        if img.shape != size:
+            raise ValueError(f"image: {i} size not match size: {size}")
 
 
 def get_random_img(num: int, img_from: t.Callable) -> T.Img:
@@ -45,7 +55,7 @@ def number_to_string(number: int, length: int) -> t.List[str]:
     return list(str(number).zfill(length))
 
 
-def empty_check():
+def empty_check(*args, **kwargs):
     """do nothing function"""
     pass
 
