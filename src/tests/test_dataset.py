@@ -1,5 +1,24 @@
 from meterviewer import dataset
 import pathlib
+import pytest
+
+from tests.utils import show_img
+
+
+@pytest.fixture
+def root_path() -> pathlib.Path:
+    return pathlib.Path(r"D:\Store\MeterData")
+
+
+def test_read_random_img(root_path):
+    im = dataset.read_rand_img(root_path, "M1L1XL", 5)
+    show_img(im)
+
+
+def test_read_random_digit(root_path):
+    path_gen = dataset.read_single_digt(lambda: root_path, dataset.path_fusion, "M1L1XL", 0)()
+    p = next(path_gen)
+    assert pathlib.Path(p).exists()
 
 
 def test_dataset_list():

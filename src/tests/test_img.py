@@ -1,15 +1,15 @@
 from meterviewer import img
-from matplotlib import pyplot as plt
 
 # import functools
+# from matplotlib import pyplot as plt
+from tests.utils import show_img
 
 
-def show_img(img):
-    # TODO: img valid test. use a gui to validate.
-    is_show = 0
-    if is_show:
-        plt.imshow(img)
-        plt.show()
+def test_number_to_string():
+    assert img.number_to_string(1, 5) == list("00001")
+    assert img.number_to_string(10, 5) == ["0", "0", "0", "1", "0"]
+    assert img.number_to_string(100, 5) == list("00100")
+    assert img.number_to_string(1000, 5) == list("01000")
 
 
 def test_join():

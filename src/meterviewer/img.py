@@ -2,17 +2,16 @@
 
 import typing as t
 import numpy as np
+from . import types as T
 
-Img = np.ndarray
 
-
-def join_img(imglist: t.List[Img], check_func: t.Callable) -> Img:
+def join_img(imglist: t.List[T.Img], check_func: t.Callable) -> T.Img:
     # merge images vertically
     check_func()
     return np.hstack(imglist)
 
 
-def get_random_img(num: int, img_from: t.Callable) -> Img:
+def get_random_img(num: int, img_from: t.Callable) -> T.Img:
     """get random img
     num: digit num of img
     """
@@ -20,7 +19,7 @@ def get_random_img(num: int, img_from: t.Callable) -> Img:
     return get_img(num)
 
 
-def check_img_size(img: Img, size: t.Tuple[int, int], then: t.Callable[[Img], t.Any]) -> bool | t.Any:
+def check_img_size(img: T.Img, size: t.Tuple[int, int], then: t.Callable[[T.Img], t.Any]) -> bool | t.Any:
     if img.shape == size:
         return then(img)
     return False
@@ -34,17 +33,16 @@ def img_from(folder: str = ""):
     return get_img
 
 
-def get_img_list(nums: t.List[int]) -> t.List[Img]:
+def get_img_list(nums: t.List[int]) -> t.List[T.Img]:
     imgs = []
     for i in nums:
         imgs.append(get_random_img(int(i), lambda: None))
     return imgs
 
 
-def number_to_string(number: int) -> t.List[str]:
-    num_s: str = str(number)
-    num_l = num_s.split("")
-    return num_l
+def number_to_string(number: int, length: int) -> t.List[str]:
+    # create a string list from number, with fixed length.
+    return list(str(number).zfill(length))
 
 
 def empty_check():
@@ -52,6 +50,6 @@ def empty_check():
     pass
 
 
-def gen_block_img(number: int):
-    num_l = [int(i) for i in number_to_string(number)]
+def gen_block_img(number: int, length: int):
+    num_l = [int(i) for i in number_to_string(number, length)]
     return join_img(get_img_list(num_l), empty_check)
