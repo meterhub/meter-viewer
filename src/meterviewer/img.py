@@ -1,11 +1,17 @@
 # process image, to fit the training proposals.
 
+import sys
 import typing as t
 import numpy as np
 
 # from matplotlib import pyplot as plt
 from . import types as T
 from PIL import Image
+from matplotlib import pyplot as plt
+
+
+def np_to_img(data: np.ndarray) -> T.ImgList:
+    return list(data)
 
 
 def resize_img(img: T.Img, size: t.List[int]) -> T.Img:
@@ -77,5 +83,13 @@ def empty_check(*args, **kwargs):
 
 
 def gen_block_img(number: int, length: int):
+    # inside memory to generate
     num_l = [int(i) for i in number_to_string(number, length)]
     return join_img(get_img_list(num_l), empty_check)
+
+
+def show_img(img, is_stop):
+    plt.imshow(img)
+    plt.show()
+    if is_stop:
+        sys.exit(-1)
