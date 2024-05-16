@@ -9,8 +9,6 @@ from PIL import Image
 
 
 def resize_img(img: T.Img, size: t.List[int]) -> T.Img:
-    if not size:
-        size = list(img.shape)
     return np.asarray(Image.fromarray(img).resize(size), dtype=np.uint8)
 
 
