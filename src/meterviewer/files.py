@@ -4,6 +4,13 @@ import numpy as np
 from . import types as T
 
 
+def write_shape(img: T.ImgList, nums: int = 3):
+    debug_file = pathlib.Path("debug.log")
+    with open(debug_file, "w") as f:
+        for i in range(nums):
+            f.write(f"img_{i} shape is: {img[i].shape}\n")
+
+
 def scan_pics(path: pathlib.Path) -> t.Iterator[pathlib.Path]:
     """scan pics in path"""
     for p in path.iterdir():
@@ -37,6 +44,6 @@ def save_to_disk(filename: str, data: np.ndarray):
         np.save(f, data)
 
 
-def load_from_disk(filename, constraint: t.Callable):
+def load_from_disk(filename):
     with open(filename, "rb") as f:
         return np.load(f)
