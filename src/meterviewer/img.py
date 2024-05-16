@@ -11,7 +11,7 @@ from PIL import Image
 def resize_img(img: T.Img, size: t.List[int]) -> T.Img:
     if not size:
         size = list(img.shape)
-    return np.asarray(Image.fromarray(img).resize(size))
+    return np.asarray(Image.fromarray(img).resize(size), dtype=np.uint8)
 
 
 def resize_imglist(imglist: T.ImgList, size: t.Optional[t.List[int]] = None) -> T.ImgList:

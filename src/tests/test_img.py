@@ -1,13 +1,8 @@
 from meterviewer import img
-import numpy as np
 
 # import functools
 # from matplotlib import pyplot as plt
-from tests.utils import show_img
-
-
-def gen_img(size=(35, 25, 3)):
-    return np.random.randint(0, 255, size=size, dtype=np.uint8)
+from tests.utils import show_img, gen_img
 
 
 def test_resize_imglist():
