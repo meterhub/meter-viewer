@@ -9,6 +9,9 @@ def test_resize_imglist():
     imglist = [gen_img(size=(35, 25, 3)), gen_img(size=(34, 25, 3))]
     img.resize_imglist(imglist, size=[35, 25])
 
+    imglist = [gen_img(size=(31, 170, 3)), gen_img(size=(31, 175, 3))]
+    img.resize_imglist(imglist)
+
 
 def test_resize_img():
 

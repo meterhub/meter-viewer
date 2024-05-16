@@ -4,17 +4,34 @@
 
 import os
 import typing as t
-from string import Template
 import pathlib
 import functools
-import numpy as np
+
+# import numpy as np
 from matplotlib import pyplot as plt
 import random
 
 from . import img, files, types as T
 
 
+def view_dataset_on_disk(prefix_name: pathlib.Path, load_from_disk: t.Callable, show: bool = True):
+    if not show:
+        return
+
+    assert prefix_name.exists()
+    x = load_from_disk(prefix_name / T.x_name)
+    x = img.np_to_img(x)
+    view_dataset(3, x)
+
+
+def view_dataset(num: int, imglist: T.ImgList):
+    for im in imglist[:num]:
+        plt.imshow(im)
+        plt.show()
+
+
 def join_with_fix(imglist: T.ImgList, check_func: t.Callable, fix_func: t.Callable) -> T.Img:
+    """修饰 join_func"""
     # merge images horizontally
     try:
         return img.join_img(imglist, check_func)
@@ -24,19 +41,8 @@ def join_with_fix(imglist: T.ImgList, check_func: t.Callable, fix_func: t.Callab
     return img.join_img(imglist, check_func)
 
 
-def create_datasets(
-    root: pathlib.Path,
-    train_nums: int,
-    test_nums: int,
-    get_dataset_list: t.Callable,
-):
-    # write meta config file.
-    # dataset: M8L5XL
-    datasets = get_dataset_list(root)
-
-    for length in [5, 6, 7, 8]:
-        # block_imgs = generate_block_img(root, str_digits, get_dataset)
-        raise Exception("not implement.")
+def dataset_length_list() -> t.List[int]:
+    return [5, 6, 7, 8]
 
 
 def create_labels_func(
@@ -68,6 +74,8 @@ def create_dataset(
         im = gen_block_img(digit)
         imgs.append(im)
 
+    # files.write_shape(imgs, 3)
+    raise Exception('error here.')
     imgs = img.resize_imglist(imgs)
     save_dataset(imgs, str_digits)
 
@@ -108,7 +116,12 @@ def get_dataset_list(root: pathlib.Path) -> t.Iterator[pathlib.Path]:
             yield pathlib.Path(dir)
 
 
-def read_single_digt(get_root_path: t.Callable, path_fusion: t.Callable, dataset_name: str, num: int) -> t.Callable:
+def read_single_digt(
+    get_root_path: t.Callable,
+    path_fusion: t.Callable,
+    dataset_name: str,
+    num: int,
+) -> t.Callable:
     assert num in range(0, 10), "num must be 0~9"
     p: pathlib.Path = get_root_path() / path_fusion(get_root_path(), dataset_name, num)
     return functools.partial(files.scan_pics, p)

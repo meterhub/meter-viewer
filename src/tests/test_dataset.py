@@ -11,8 +11,17 @@ def root_path() -> pathlib.Path:
     return pathlib.Path(r"D:\Store\MeterData")
 
 
+def test_view_on_disk():
+    dataset.view_dataset_on_disk(
+        prefix_name=pathlib.Path(r"D:\Store\MeterData\generated"),
+        load_from_disk=files.load_from_disk,
+        show=True,
+    )
+
+
 def test_create_dataset(root_path):
-    gen_block = functools.partial(
+    P = functools.partial
+    gen_block = P(
         dataset.generate_block_img,
         root_path=root_path,
         join_func=dataset.join_with_resize,
@@ -22,7 +31,7 @@ def test_create_dataset(root_path):
     path = pathlib.Path(r"D:\Store\MeterData\generated")
     path.mkdir(exist_ok=True)
 
-    filesave = functools.partial(
+    filesave = P(
         files.save_img_labels,
         prefix_name=path,
         save_to_disk=files.save_to_disk,
@@ -46,7 +55,7 @@ def test_generate_block_img(root_path):
     show_img(im)
 
     im = dataset.generate_block_img(
-        ["1", "2", "3", "5"],
+        ["1", "2", "3", "5", "6"],
         root_path,
         dataset.join_with_resize,
         lambda: "M1L1XL",

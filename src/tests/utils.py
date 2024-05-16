@@ -9,7 +9,7 @@ def visualize_check(img, title):
 
 def show_img(img):
     # TODO: img valid test. use a gui to validate.
-    is_show = 0
+    is_show = 1
     if is_show:
         plt.imshow(img)
         plt.show()
