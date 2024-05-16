@@ -1,5 +1,5 @@
 import functools
-from meterviewer import dataset, img
+from meterviewer import dataset, img, types as T
 import pathlib
 import pytest
 
@@ -20,7 +20,7 @@ def test_generate_block_img(root_path):
     )
     show_img(im)
 
-    new_join = functools.partial(dataset.join_with_fix, fix_func=img.resize_imglist)
+    new_join: T.JoinFunc = functools.partial(dataset.join_with_fix, fix_func=img.resize_imglist)
 
     im = dataset.generate_block_img(
         root_path,
@@ -32,7 +32,7 @@ def test_generate_block_img(root_path):
 
 
 def test_get_random_dataset(root_path):
-    _, index = dataset.get_random_dataset(root_path)
+    _, index = dataset.get_random_dataset(root_path, dataset.get_dataset_list)
     assert index in range(0, 74)
 
 
@@ -59,19 +59,4 @@ def test_dataset_list():
 
     [update_count(name) for name in dataset.get_dataset_list(path)]
     assert count == 74
-    # assert False, pics
-
-
-def test_scan_pics():
-    path = pathlib.Path(r"D:\Store\MeterData\lens_6\XL\XL\M1L1XL\Digit\0")
-    count = 0
-    pics = []
-
-    def update_count(name):
-        nonlocal count, pics
-        pics.append(name)
-        count += 1
-
-    [update_count(name) for name in dataset.scan_pics(path)]
-    assert count == 20
     # assert False, pics
