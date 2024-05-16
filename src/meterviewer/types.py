@@ -10,3 +10,6 @@ DigitInt = t.List[int]
 
 CheckFunc = t.Callable[[t.Any], t.Any]
 JoinFunc = t.Callable[[ImgList, CheckFunc], Img]
+
+x_name: str = "x_train.npy"
+y_name: str = "y_train.npy"

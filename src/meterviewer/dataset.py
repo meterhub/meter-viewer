@@ -68,7 +68,7 @@ def create_dataset(
         im = gen_block_img(digit)
         imgs.append(im)
 
-    # img.resize_imglist(img_list)
+    imgs = img.resize_imglist(imgs)
     save_dataset(imgs, str_digits)
 
 

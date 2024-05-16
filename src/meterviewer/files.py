@@ -28,8 +28,8 @@ def save_img_labels(
     labels_ = [transform_label(label) for label in labels]
     y_train = np.vstack(labels_)
 
-    save_to_disk(str(prefix_name / "x_train.npy"), x_train)
-    save_to_disk(str(prefix_name / "y_train.npy"), y_train)
+    save_to_disk(str(prefix_name / T.x_name), x_train)
+    save_to_disk(str(prefix_name / T.y_name), y_train)
 
 
 def save_to_disk(filename: str, data: np.ndarray):
