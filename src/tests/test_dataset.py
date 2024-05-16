@@ -14,6 +14,7 @@ def test_dataset_list():
 
     [update_count(name) for name in dataset.get_dataset_list(path)]
     assert count == 74
+    # assert False, pics
 
 
 def test_scan_pics():

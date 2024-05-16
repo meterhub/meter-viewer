@@ -1,4 +1,5 @@
 # 统一数据集表示
+import os
 import typing as t
 from string import Template
 import pathlib
@@ -20,9 +21,9 @@ def scan_pics(path: pathlib.Path) -> t.Iterator[pathlib.Path]:
 
 
 def get_dataset_list(root: pathlib.Path) -> t.Iterator[pathlib.Path]:
-    for p in root.iterdir():
-        if p.is_dir():
-            yield p
+    for dir in os.listdir(root):
+        if os.path.isdir(root / dir):
+            yield pathlib.Path(dir)
 
 
 def read_single_digt(get_root_path: t.Callable, path_fusion: t.Callable, dataset_name: str, num: int) -> t.Callable:
