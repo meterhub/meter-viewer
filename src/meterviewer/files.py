@@ -1,5 +1,35 @@
+import pathlib
 import typing as t
 import numpy as np
+from . import types as T
+
+
+def scan_pics(path: pathlib.Path) -> t.Iterator[pathlib.Path]:
+    """scan pics in path"""
+    for p in path.iterdir():
+        yield p
+
+
+def transform_img(img: T.Img) -> T.Img:
+    """reshape image (35,25,3) to (1, 35, 25, 3)"""
+    return np.expand_dims(img, axis=0)
+
+
+def transform_label(label: T.DigitStr) -> T.Label:
+    label_ = [int(i) for i in label]
+    return np.expand_dims(np.array(label_), axis=0)
+
+
+def save_img_labels(
+    imgs: t.List[T.Img], labels: t.List[T.DigitStr], prefix_name: pathlib.Path, save_to_disk: t.Callable
+):
+    imgs = [np.expand_dims(img, axis=0) for img in imgs]
+    x_train = np.vstack(imgs)
+    labels_ = [transform_label(label) for label in labels]
+    y_train = np.vstack(labels_)
+
+    save_to_disk(str(prefix_name / "x_train.npy"), x_train)
+    save_to_disk(str(prefix_name / "y_train.npy"), y_train)
 
 
 def save_to_disk(filename: str, data: np.ndarray):
