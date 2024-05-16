@@ -1,14 +1,15 @@
 [[base]]
-root_dir="D:/Store/MeterData"
-description="This config file is to store the path of the data, let the user easy to use."
+root_dir = "D:/Store/MeterData"
+description = "This config file is to store the path of the data, let the user easy to use."
 
 [[5digit]]
-base_folder= "D:/Store/MeterData/lens_6/XL/merge_np"
+base_folder = "D:/Store/MeterData/lens_6/XL/merge_np"
 
 [[5digit.block]]
 
 [[6digit]]
-base_folder="D:/Store/MeterData/lens_6/XL/merge_np"
+base_folder = "D:/Store/MeterData/lens_6/XL/merge_np"
+dataset_folder = "lens_6/XL/XL"
 
 [[6digit.single]]
 folder = "Digit"
