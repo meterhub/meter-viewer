@@ -11,7 +11,7 @@ def test_reshape():
     # test concat
     im1 = files.transform_img(img)
     im2 = files.transform_img(img)
-    assert np.vstack([im1, im2]).shape == (2, 35, 25, 3)
+    assert np.vstack([im1, im2, im2, im2]).shape == (4, 35, 25, 3)
 
 
 def test_transform_label():
