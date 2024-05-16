@@ -1,5 +1,5 @@
 import functools
-from meterviewer import dataset, img, types as T
+from meterviewer import dataset, img, files
 import pathlib
 import pytest
 
@@ -11,21 +11,44 @@ def root_path() -> pathlib.Path:
     return pathlib.Path(r"D:\Store\MeterData")
 
 
+def test_create_dataset(root_path):
+    gen_block = functools.partial(
+        dataset.generate_block_img,
+        root_path=root_path,
+        join_func=dataset.join_with_resize,
+        get_dataset=lambda: "M1L1XL",
+    )
+
+    path = pathlib.Path(r"D:\Store\MeterData\generated")
+    path.mkdir(exist_ok=True)
+
+    filesave = functools.partial(
+        files.save_img_labels,
+        prefix_name=path,
+        save_to_disk=files.save_to_disk,
+    )
+
+    dataset.create_dataset(
+        length=5,
+        nums=10,
+        gen_block_img=gen_block,
+        save_dataset=filesave,
+    )
+
+
 def test_generate_block_img(root_path):
     im = dataset.generate_block_img(
-        root_path,
         ["1", "2", "3", "4"],
+        root_path,
         img.join_img,
         lambda: "M1L1XL",
     )
     show_img(im)
 
-    new_join: T.JoinFunc = functools.partial(dataset.join_with_fix, fix_func=img.resize_imglist)
-
     im = dataset.generate_block_img(
-        root_path,
         ["1", "2", "3", "5"],
-        new_join,
+        root_path,
+        dataset.join_with_resize,
         lambda: "M1L1XL",
     )
     show_img(im)

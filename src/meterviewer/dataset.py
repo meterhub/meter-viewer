@@ -55,12 +55,12 @@ def create_labels_func(
 
 
 def create_dataset(
-    lenght: int,
+    length: int,
     nums: int,
     gen_block_img: t.Callable[[T.DigitStr], T.Img],
-    save_dataset: t.Callable,
+    save_dataset: t.Callable[[T.ImgList, t.List[T.DigitStr]], None],
 ):
-    create_label = create_labels_func(lenght)
+    create_label = create_labels_func(length)
     _, str_digits = create_label(nums)
 
     imgs = []
@@ -68,6 +68,7 @@ def create_dataset(
         im = gen_block_img(digit)
         imgs.append(im)
 
+    # img.resize_imglist(img_list)
     save_dataset(imgs, str_digits)
 
 
@@ -78,10 +79,10 @@ def get_random_dataset(root: pathlib.Path, get_dataset_list: t.Callable) -> t.Tu
 
 
 def generate_block_img(
+    the_digit: T.DigitStr,
     root_path: pathlib.Path,
-    the_digit: t.List[str],
     join_func: T.JoinFunc,
-    get_dataset: t.Callable,
+    get_dataset: t.Callable[[], str | pathlib.Path],
 ) -> T.Img:
     img_list = []
     for digit in the_digit:
@@ -111,3 +112,6 @@ def read_single_digt(get_root_path: t.Callable, path_fusion: t.Callable, dataset
     assert num in range(0, 10), "num must be 0~9"
     p: pathlib.Path = get_root_path() / path_fusion(get_root_path(), dataset_name, num)
     return functools.partial(files.scan_pics, p)
+
+
+join_with_resize: T.JoinFunc = functools.partial(join_with_fix, fix_func=img.resize_imglist)
