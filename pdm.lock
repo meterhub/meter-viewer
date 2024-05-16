@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:c1c9aeb23ddcfd080a19f64aae1a09d29c0708a96ce5c9d046828ea56bf4af0b"
+content_hash = "sha256:a88b8248e87c0d170801593d34baf4e47774df2cc61089ff6f132c697a9191b2"
 
 [[package]]
 name = "anyio"
