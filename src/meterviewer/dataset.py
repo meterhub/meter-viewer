@@ -6,9 +6,22 @@ import typing as t
 from string import Template
 import pathlib
 import functools
+import numpy as np
 from matplotlib import pyplot as plt
+import random
+
 from . import img
 from . import types as T
+
+
+def join_with_fix(imglist: T.ImgList, check_func: t.Callable, fix_func: t.Callable) -> T.Img:
+    # merge images horizontally
+    try:
+        return img.join_img(imglist, check_func)
+    except ValueError as e:
+        print(e)
+        imglist = fix_func(imglist)
+    return img.join_img(imglist, check_func)
 
 
 def create_dataset(
@@ -24,10 +37,27 @@ def create_dataset(
     num_len = [5, 6, 7, 8]
     for length in num_len:
         for num in range(10**length):
-            str_digits = img.number_to_string(num, length)
-            for digit in str_digits:
-                for dataset in datasets:
-                    im = read_rand_img(root, dataset, digit)
+            str_digits: t.List[str] = img.number_to_string(num, length)
+            # block_imgs = generate_block_img(root, str_digits, get_dataset)
+
+
+def get_random_dataset(root: pathlib.Path) -> t.Tuple[pathlib.Path, int]:
+    datasets = list(get_dataset_list(root))
+    random_index = random.randint(0, len(datasets) - 1)
+    return datasets[random_index], random_index
+
+
+def generate_block_img(
+    root_path: pathlib.Path,
+    the_digit: t.List[str],
+    join_func: t.Callable[[T.ImgList, t.Callable], T.Img],
+    get_dataset: t.Callable,
+) -> T.Img:
+    img_list = []
+    for digit in the_digit:
+        im = read_rand_img(root_path, get_dataset(), digit)
+        img_list.append(im)
+    return join_func(img_list, img.size_check)
 
 
 def read_rand_img(root: pathlib.Path, dataset: str | pathlib.Path, digit: int | str) -> T.Img:
