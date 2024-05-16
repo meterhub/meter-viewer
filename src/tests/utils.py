@@ -1,3 +1,4 @@
+import numpy as np
 from matplotlib import pyplot as plt
 
 
@@ -8,7 +9,11 @@ def visualize_check(img, title):
 
 def show_img(img):
     # TODO: img valid test. use a gui to validate.
-    is_show = 1
+    is_show = 0
     if is_show:
         plt.imshow(img)
         plt.show()
+
+
+def gen_img(size=(35, 25, 3)):
+    return np.random.randint(0, 255, size=size, dtype=np.uint8)
