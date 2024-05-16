@@ -2,10 +2,28 @@
 
 import typing as t
 import numpy as np
+
+# from matplotlib import pyplot as plt
 from . import types as T
+from PIL import Image
 
 
-def join_img(imglist: t.List[T.Img], check_func: t.Callable) -> T.Img:
+def resize_img(img: T.Img, size: t.List[int]) -> T.Img:
+    if not size:
+        size = list(img.shape)
+    return np.asarray(Image.fromarray(img).resize(size))
+
+
+def resize_imglist(imglist: T.ImgList, size: t.Optional[t.List[int]] = None) -> T.ImgList:
+    if not size:
+        size = list(imglist[0].shape[:2])
+    return [resize_img(img, size) for img in imglist]
+
+
+def join_img(
+    imglist: T.ImgList,
+    check_func: t.Callable[[t.Any], t.Any],
+) -> T.Img:
     # merge images vertically
     check_func(imglist)
     return np.hstack(imglist)
@@ -17,8 +35,8 @@ def size_check(img_list: t.List[T.Img], size: t.Optional[t.List[int]] = None):
         size = list(img_list[0].shape)
 
     for i, img in enumerate(img_list):
-        if img.shape != size:
-            raise ValueError(f"image: {i} size not match size: {size}")
+        if list(img.shape) != size:
+            raise ValueError(f"image: {i} size: {img.shape}, not match size: {size}")
 
 
 def get_random_img(num: int, img_from: t.Callable) -> T.Img:
