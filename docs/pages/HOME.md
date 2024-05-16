@@ -1,2 +1,6 @@
 - features
 	- create a dataformat for meter dataset.
+- problems
+	- 进位状态不一致。这导致不同数位进位状态不太准确，失去了原本的判断依据。
+	- 需要筛选出处于进位状态的数据，来重新生成。
+	-

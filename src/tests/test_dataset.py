@@ -37,7 +37,15 @@ def test_create_dataset(root_path):
         save_to_disk=files.save_to_disk,
     )
 
-    dataset.create_dataset(
+    def check_imgs(imglist):
+        size = imglist[0].shape
+        show_img(imglist[0])
+        imgs = img.resize_imglist(imglist)
+        for im in imgs:
+            show_img(im)
+            assert size == im.shape
+
+    dataset.create_dataset(check_imgs=lambda x: None)(
         length=5,
         nums=10,
         gen_block_img=gen_block,

@@ -15,7 +15,10 @@ def np_to_img(data: np.ndarray) -> T.ImgList:
 
 
 def resize_img(img: T.Img, size: t.List[int]) -> T.Img:
-    return np.asarray(Image.fromarray(img).resize(size), dtype=np.uint8)
+    # resize will reverse the size. height -> weight, weight -> height
+    im = np.asarray(Image.fromarray(img).resize(list(reversed(size))), dtype=np.uint8)
+    assert list(im.shape[:2]) == size, (im.shape, size)
+    return im
 
 
 def resize_imglist(imglist: T.ImgList, size: t.Optional[t.List[int]] = None) -> T.ImgList:
@@ -83,7 +86,7 @@ def empty_check(*args, **kwargs):
 
 
 def gen_block_img(number: int, length: int):
-    # inside memory to generate
+    """inside memory to generate, use as a sample function."""
     num_l = [int(i) for i in number_to_string(number, length)]
     return join_img(get_img_list(num_l), empty_check)
 

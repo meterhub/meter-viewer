@@ -61,23 +61,28 @@ def create_labels_func(
 
 
 def create_dataset(
-    length: int,
-    nums: int,
-    gen_block_img: t.Callable[[T.DigitStr], T.Img],
-    save_dataset: t.Callable[[T.ImgList, t.List[T.DigitStr]], None],
+    check_imgs: t.Callable[[T.ImgList], None],
 ):
-    create_label = create_labels_func(length)
-    _, str_digits = create_label(nums)
+    def inner(
+        length: int,
+        nums: int,
+        gen_block_img: t.Callable[[T.DigitStr], T.Img],
+        save_dataset: t.Callable[[T.ImgList, t.List[T.DigitStr]], None],
+    ):
+        create_label = create_labels_func(length)
+        _, str_digits = create_label(nums)
 
-    imgs = []
-    for digit in str_digits:
-        im = gen_block_img(digit)
-        imgs.append(im)
+        imgs = []
+        for digit in str_digits:
+            im = gen_block_img(digit)
+            imgs.append(im)
 
-    # files.write_shape(imgs, 3)
-    raise Exception('error here.')
-    imgs = img.resize_imglist(imgs)
-    save_dataset(imgs, str_digits)
+        # files.write_shape(imgs, 3)
+        check_imgs(imgs)
+        imgs = img.resize_imglist(imgs)
+        save_dataset(imgs, str_digits)
+
+    return inner
 
 
 def get_random_dataset(root: pathlib.Path, get_dataset_list: t.Callable) -> t.Tuple[pathlib.Path, int]:
