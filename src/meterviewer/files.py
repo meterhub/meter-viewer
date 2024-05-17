@@ -3,6 +3,17 @@ import typing as t
 import numpy as np
 from . import types as T
 
+import toml
+
+
+def write_toml(filename: pathlib.Path, data):
+    try:
+        with open(filename, "w") as f:
+            toml.dump(data, f)
+        print(f"Data written to '{filename}' successfully.")
+    except Exception as e:
+        print(f"Error writing to '{filename}': {e}")
+
 
 def write_shape(img: T.ImgList, nums: int = 3):
     debug_file = pathlib.Path("debug.log")

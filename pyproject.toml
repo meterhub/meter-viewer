@@ -11,6 +11,7 @@ dependencies = [
     "numpy>=1.26.4",
     "pandas>=2.2.2",
     "pillow>=10.3.0",
+    "toml>=0.10.2",
 ]
 requires-python = "==3.12.*"
 readme = "README.md"
@@ -23,4 +24,8 @@ distribution = false
 [tool.pdm.dev-dependencies]
 dev = [
     "pytest>=8.2.0",
+    "-e file:///${PROJECT_ROOT}/#egg=meterviewer",
 ]
+
+[tool.pdm.scripts]
+notebook = 'pdm run jupyter-notebook .'

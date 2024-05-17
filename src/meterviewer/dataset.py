@@ -14,14 +14,46 @@ import random
 from . import img, files, types as T
 
 
-def view_dataset_on_disk(prefix_name: pathlib.Path, load_from_disk: t.Callable, show: bool = True):
+def get_x_train(path: pathlib.Path):
+    return files.load_from_disk(path / T.x_name)
+
+
+def get_y_train(path: pathlib.Path):
+    return files.load_from_disk(path / T.y_name)
+
+
+def get_details(path: pathlib.Path, x: T.ImgDataset, y: T.LabelData):
+    data = {}
+    data["path"] = str(path)
+    data["x_shape"] = x.shape
+    data["y_shape"] = y.shape
+
+
+def show_details(
+    get_x_train,
+    get_y_train,
+    get_details,
+    write_to_file: t.Callable[[t.Any], None],
+):
+    x = get_x_train()
+    y = get_y_train()
+    details = get_details(x, y)
+    write_to_file(details)
+
+
+def view_dataset_on_disk(
+    prefix_name: pathlib.Path,
+    load_from_disk: t.Callable,
+    show: bool = True,
+    nums: int = 3,
+):
     if not show:
         return
 
     assert prefix_name.exists()
     x = load_from_disk(prefix_name / T.x_name)
     x = img.np_to_img(x)
-    view_dataset(3, x)
+    view_dataset(nums, x)
 
 
 def view_dataset(num: int, imglist: T.ImgList):
