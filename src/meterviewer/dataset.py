@@ -5,6 +5,7 @@
 import os
 import typing as t
 import pathlib
+import datetime
 import functools
 
 # import numpy as np
@@ -22,11 +23,22 @@ def get_y_train(path: pathlib.Path):
     return files.load_from_disk(path / T.y_name)
 
 
-def get_details(path: pathlib.Path, x: T.ImgDataset, y: T.LabelData):
+def get_details(path: pathlib.Path, x: T.ImgDataset, y: T.LabelData) -> t.Dict:
     data = {}
-    data["path"] = str(path)
-    data["x_shape"] = x.shape
-    data["y_shape"] = y.shape
+
+    def create_sub(name):
+        data[name] = {}
+
+    for name in ["Dataset", "Meta"]:
+        create_sub(name)
+
+    data["Dataset"]["path"] = str(path)
+    data["Meta"]["config.create_time"] = datetime.datetime.now()
+    data["Dataset"]["created_time"] = ""
+    data["Dataset"]["updated_time"] = ""
+    data["Dataset"]["x_shape"] = x.shape
+    data["Dataset"]["y_shape"] = y.shape
+    return data
 
 
 def show_details(

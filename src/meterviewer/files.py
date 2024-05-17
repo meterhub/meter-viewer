@@ -6,6 +6,16 @@ from . import types as T
 import toml
 
 
+def read_toml(filename: pathlib.Path) -> t.Optional[t.Dict]:
+    try:
+        with open(filename, "r") as f:
+            data = toml.load(f)
+            print(f"Read '{filename}' successfully.")
+            return data
+    except Exception as e:
+        print(f"Error to read '{filename}': {e}")
+
+
 def write_toml(filename: pathlib.Path, data):
     try:
         with open(filename, "w") as f:
