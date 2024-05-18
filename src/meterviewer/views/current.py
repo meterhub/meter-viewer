@@ -3,14 +3,16 @@ import pathlib
 from meterviewer import dataset, files, types as T
 
 
-def view_merge_np(current_dataset: str, view_dataset: t.Callable = dataset.view_dataset, train=True):
+def view_merge_np(
+    current_dataset: str,
+    view_dataset: t.Callable = dataset.view_dataset,
+    get_x_y: T.NameFunc = lambda: (T.x_name, T.y_name),
+):
     """view already handled data."""
     pp = pathlib.Path(current_dataset)
 
-    if train:
-        view_func = dataset.view_dataset_on_disk(T.x_name)
-    else:
-        view_func = dataset.view_dataset_on_disk(T.x_test)
+    x_name, _ = get_x_y()
+    view_func = dataset.view_dataset_on_disk(x_name)
 
     view_func(
         prefix_name=pp,
@@ -27,7 +29,7 @@ def get_x_y_name() -> t.Tuple[str, str]:
     return T.x_name, T.y_name
 
 
-def write_details(current_dataset: str, get_xy_name: t.Callable = get_x_y_name):
+def write_details(current_dataset: str, get_xy_name: T.NameFunc = get_x_y_name):
     pp = pathlib.Path(current_dataset)
 
     def write_to_file(details, overwrite=True):
