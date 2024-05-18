@@ -8,9 +8,9 @@ def view_merge_np(current_dataset: str, view_dataset: t.Callable = dataset.view_
     pp = pathlib.Path(current_dataset)
 
     if train:
-        view_func = dataset.view_dataset_on_disk_train
+        view_func = dataset.view_dataset_on_disk(T.x_name)
     else:
-        view_func = dataset.view_dataset_on_disk_test
+        view_func = dataset.view_dataset_on_disk(T.x_test)
 
     view_func(
         prefix_name=pp,
@@ -23,7 +23,11 @@ def read_details(current_dataset: str) -> t.Optional[t.Dict]:
     return files.read_toml(pathlib.Path(current_dataset) / "details.toml")
 
 
-def write_details(current_dataset: str):
+def get_x_y_name() -> t.Tuple[str, str]:
+    return T.x_name, T.y_name
+
+
+def write_details(current_dataset: str, get_xy_name: t.Callable = get_x_y_name):
     pp = pathlib.Path(current_dataset)
 
     def write_to_file(details, overwrite=True):
@@ -33,9 +37,11 @@ def write_details(current_dataset: str):
             return
         return files.write_toml(p, details)
 
+    x_name, y_name = get_xy_name()
+
     dataset.show_details(
-        get_x_train=lambda: files.load_from_disk(pp / T.x_name),
-        get_y_train=lambda: files.load_from_disk(pp / T.y_name),
+        get_x_train=lambda: files.load_from_disk(pp / x_name),
+        get_y_train=lambda: files.load_from_disk(pp / y_name),
         get_details=lambda x, y: dataset.get_details(pp, x, y),
         write_to_file=write_to_file,
     )

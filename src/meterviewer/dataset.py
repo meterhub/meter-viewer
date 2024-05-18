@@ -83,9 +83,6 @@ def view_dataset_on_disk(name: str):
 
     return mmm
 
-view_dataset_on_disk_train = view_dataset_on_disk(T.x_name)
-view_dataset_on_disk_test = view_dataset_on_disk(T.x_test)
-
 
 def view_dataset_in_rows(num: int, imglist: T.ImgList):
     # 创建一个 GridSpec 实例，1行3列
