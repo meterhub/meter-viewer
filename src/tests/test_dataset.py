@@ -1,5 +1,5 @@
 import functools
-from meterviewer import dataset, img, files
+from meterviewer import dataset, img, files, types as T
 import pathlib
 import pytest
 
@@ -12,9 +12,11 @@ def root_path() -> pathlib.Path:
 
 
 def test_view_on_disk():
-    dataset.view_dataset_on_disk(
+    f = dataset.view_dataset_on_disk(T.x_name)
+    f(
         prefix_name=pathlib.Path(r"D:\Store\MeterData\generated"),
         load_from_disk=files.load_from_disk,
+        view_dataset=dataset.view_dataset,
         show=True,
     )
 
