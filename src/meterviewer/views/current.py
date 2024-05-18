@@ -3,11 +3,16 @@ import pathlib
 from meterviewer import dataset, files, types as T
 
 
-def view_merge_np(current_dataset: str, view_dataset: t.Callable = dataset.view_dataset):
+def view_merge_np(current_dataset: str, view_dataset: t.Callable = dataset.view_dataset, train=True):
     """view already handled data."""
     pp = pathlib.Path(current_dataset)
 
-    dataset.view_dataset_on_disk(
+    if train:
+        view_func = dataset.view_dataset_on_disk_train
+    else:
+        view_func = dataset.view_dataset_on_disk_test
+
+    view_func(
         prefix_name=pp,
         view_dataset=view_dataset,
         load_from_disk=files.load_from_disk,

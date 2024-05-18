@@ -16,6 +16,8 @@ JoinFunc = t.Callable[[ImgList, CheckFunc], Img]
 
 x_name: str = "x_train.npy"
 y_name: str = "y_train.npy"
+x_test: str = "x_test.npy"
+y_test: str = "y_test.npy"
 
 
 def isImgDataset(x: t.Any) -> bool:

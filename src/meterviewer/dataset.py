@@ -15,12 +15,24 @@ import random
 from . import img, files, types as T
 
 
-def get_x_train(path: pathlib.Path):
-    return files.load_from_disk(path / T.x_name)
+def get_data(path: pathlib.Path, name: str):
+    return files.load_from_disk(path / name)
 
 
-def get_y_train(path: pathlib.Path):
-    return files.load_from_disk(path / T.y_name)
+def generate_func() -> t.List[t.Callable[[pathlib.Path], T.ImgDataset]]:
+    funcs = []
+    names: t.List[str] = [T.x_name, T.y_name, T.x_test, T.y_test]
+    for n in names:
+
+        def get_func(path: pathlib.Path, name: str = n):
+            return get_data(path, name)
+
+        funcs.append(get_func)
+
+    return funcs
+
+
+get_x_train, get_y_train, get_x_test, get_y_test = generate_func()
 
 
 def get_details(path: pathlib.Path, x: T.ImgDataset, y: T.LabelData) -> t.Dict:
@@ -53,25 +65,32 @@ def show_details(
     write_to_file(details)
 
 
-def view_dataset_on_disk(
-    prefix_name: pathlib.Path,
-    load_from_disk: t.Callable,
-    view_dataset: t.Callable,
-    show: bool = True,
-    nums: int = 3,
-):
-    if not show:
-        return
+def view_dataset_on_disk(name: str):
+    def mmm(
+        prefix_name: pathlib.Path,
+        load_from_disk: t.Callable,
+        view_dataset: t.Callable,
+        show: bool = True,
+        nums: int = 3,
+    ):
+        if not show:
+            return
 
-    assert prefix_name.exists()
-    x = load_from_disk(prefix_name / T.x_name)
-    x = img.np_to_img(x)
-    view_dataset(nums, x)
+        assert prefix_name.exists()
+        x = load_from_disk(prefix_name / name)
+        x = img.np_to_img(x)
+        view_dataset(nums, x)
+
+    return mmm
+
+view_dataset_on_disk_train = view_dataset_on_disk(T.x_name)
+view_dataset_on_disk_test = view_dataset_on_disk(T.x_test)
 
 
 def view_dataset_in_rows(num: int, imglist: T.ImgList):
     # 创建一个 GridSpec 实例，1行3列
     from matplotlib.gridspec import GridSpec
+
     fig = plt.figure(figsize=(15, 5))
     gs = GridSpec(1, 3, figure=fig)
 
