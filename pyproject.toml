@@ -12,6 +12,7 @@ dependencies = [
     "pandas>=2.2.2",
     "pillow>=10.3.0",
     "toml>=0.10.2",
+    "opencv-python>=4.9.0.80",
 ]
 requires-python = "==3.12.*"
 readme = "README.md"

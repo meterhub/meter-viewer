@@ -43,10 +43,14 @@ def get_rectangle(filename: P) -> T.Rect:
     return rect
 
 
-def img_filename_to_xml(filepath: P) -> P:
+def get_xml_config_path(img_path: P) -> P:
     """filename -> test.png or test.jpg"""
-    dataset_path = filepath.parent
+    dataset_path = img_path.parent
     config_p = P(dataset_path) / "baocun"
-    assert filepath.suffix in (".jpg", ".jpeg")
-    filename = filepath.name[: -len(filepath.suffix)] + ".xml"
+    assert img_path.suffix in (".jpg", ".jpeg")
+    filename = img_path.name[: -len(img_path.suffix)] + ".xml"
     return config_p / filename
+
+
+def get_xml_config(img_path: P) -> t.Tuple[str, T.Rect]:
+    return read_xml(get_xml_config_path(img_path))
