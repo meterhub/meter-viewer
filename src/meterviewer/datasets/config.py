@@ -2,8 +2,7 @@
 from pathlib import Path as P
 import xml.etree.ElementTree as ET
 import typing as t
-from meterviewer import types as T
-from . import funcs as F
+from meterviewer import types as T, func as F
 
 
 class RectO(object):
