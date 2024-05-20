@@ -1,8 +1,9 @@
 import functools
-from meterviewer import dataset, img, files, types as T
+from meterviewer import img, files, types as T
 import pathlib
 import pytest
 
+from meterviewer.datasets import dataset
 from tests.utils import show_img
 
 

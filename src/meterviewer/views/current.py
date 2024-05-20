@@ -1,6 +1,7 @@
 import typing as t
 import pathlib
-from meterviewer import dataset, files, types as T
+from meterviewer import files, types as T
+from meterviewer.datasets import dataset
 
 
 def view_merge_np(

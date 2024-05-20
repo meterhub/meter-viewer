@@ -27,3 +27,6 @@ def isImgDataset(x: t.Any) -> bool:
 
 def isLabelData(y: t.Any) -> bool:
     return isinstance(y, np.ndarray) and len(y.shape) == 2
+
+
+Rect = t.TypedDict("Rect", {"xmin": str, "ymin": str, "xmax": str, "ymax": str})

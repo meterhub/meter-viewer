@@ -1,7 +1,9 @@
 import typing as t
 
-from meterviewer import dataset, types as T
+from meterviewer import types as T
 from pathlib import Path as P
+
+from meterviewer.datasets import dataset
 from . import current
 
 

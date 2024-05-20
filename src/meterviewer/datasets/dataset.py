@@ -12,7 +12,7 @@ import functools
 from matplotlib import pyplot as plt
 import random
 
-from . import img, files, types as T
+from .. import img, files, types as T
 
 
 def get_data(path: pathlib.Path, name: str):
@@ -30,9 +30,6 @@ def generate_func() -> t.List[t.Callable[[pathlib.Path], T.ImgDataset]]:
         funcs.append(get_func)
 
     return funcs
-
-
-get_x_train, get_y_train, get_x_test, get_y_test = generate_func()
 
 
 def get_details(path: pathlib.Path, x: T.ImgDataset, y: T.LabelData) -> t.Dict:
@@ -216,3 +213,8 @@ def read_single_digt(
 
 
 join_with_resize: T.JoinFunc = functools.partial(join_with_fix, fix_func=img.resize_imglist)
+
+
+# def walk_dataset(dataset: str) -> t.Iterator[T.Img, T.DigitStr]:
+#     """get img and dataset"""
+#     pass
