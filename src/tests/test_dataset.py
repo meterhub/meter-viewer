@@ -1,15 +1,9 @@
 import functools
 from meterviewer import img, files, types as T
 import pathlib
-import pytest
 
 from meterviewer.datasets import dataset
 from tests.utils import show_img
-
-
-@pytest.fixture
-def root_path() -> pathlib.Path:
-    return pathlib.Path(r"D:\Store\MeterData")
 
 
 def test_view_on_disk():
