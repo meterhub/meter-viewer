@@ -43,8 +43,10 @@ def get_rectangle(filename: P) -> T.Rect:
     return rect
 
 
-def get_rectangle_complex(dataset_path: P, filename: P):
+def img_filename_to_xml(filepath: P) -> P:
     """filename -> test.png or test.jpg"""
+    dataset_path = filepath.parent
     config_p = P(dataset_path) / "baocun"
-    config_path = str(config_p)[: -len(filename.suffix)] + ".xml"
-    pass
+    assert filepath.suffix in (".jpg", ".jpeg")
+    filename = filepath.name[: -len(filepath.suffix)] + ".xml"
+    return config_p / filename
