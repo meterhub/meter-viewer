@@ -24,8 +24,8 @@ def test_transform_label():
     assert files.transform_label(label).shape == (1, 5)
 
 
-def test_scan_pics():
-    path = pathlib.Path(r"D:\Store\MeterData\lens_6\XL\XL\M1L1XL\Digit\0")
+def test_scan_pics(root_path):
+    path = root_path / pathlib.Path(r"lens_6/XL/XL/M1L1XL/Digit/0")
     count = 0
     pics = []
 

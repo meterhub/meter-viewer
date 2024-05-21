@@ -6,10 +6,10 @@ from meterviewer.datasets import dataset
 from tests.utils import show_img
 
 
-def test_view_on_disk():
+def test_view_on_disk(root_path):
     f = dataset.view_dataset_on_disk(T.x_name)
     f(
-        prefix_name=pathlib.Path(r"D:\Store\MeterData\generated"),
+        prefix_name=root_path / r"generated",
         load_from_disk=files.load_from_disk,
         view_dataset=dataset.view_dataset,
         show=True,
@@ -25,7 +25,7 @@ def test_create_dataset(root_path):
         get_dataset=lambda: "M1L1XL",
     )
 
-    path = pathlib.Path(r"D:\Store\MeterData\generated")
+    path = root_path / pathlib.Path(r"generated")
     path.mkdir(exist_ok=True)
 
     filesave = P(
@@ -84,8 +84,8 @@ def test_read_random_digit(root_path):
     assert pathlib.Path(p).exists()
 
 
-def test_dataset_list():
-    path = pathlib.Path(r"D:\Store\MeterData\lens_6\XL\XL")
+def test_dataset_list(root_path):
+    path = root_path / pathlib.Path("lens_6/XL/XL")
     count = 0
     pics = []
 
