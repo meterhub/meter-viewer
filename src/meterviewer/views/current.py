@@ -23,7 +23,7 @@ def view_merge_np(
 
 
 def read_details(current_dataset: str) -> t.Optional[t.Dict]:
-    return files.read_toml(pathlib.Path(current_dataset) / "details.toml")
+    return files.read_toml(pathlib.Path(current_dataset) / "details.gen.toml")
 
 
 def get_x_y_name() -> t.Tuple[str, str]:
@@ -34,7 +34,7 @@ def write_details(current_dataset: str, get_xy_name: T.NameFunc = get_x_y_name):
     pp = pathlib.Path(current_dataset)
 
     def write_to_file(details, overwrite=True):
-        p = pp / "details.toml"
+        p = pp / "details.gen.toml"
         if not overwrite and p.exists():
             print("Failed to write, file exists")
             return

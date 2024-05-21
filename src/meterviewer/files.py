@@ -7,6 +7,21 @@ import hashlib
 import toml
 
 
+def use_smart_name(dataset: pathlib.Path) -> T.NameFunc:
+    x_name_list = ["x_train.npy", "x_all.npy", "x.npy"]
+    y_name_list = ["y_train.npy", "y_all.npy", "y.npy"]
+
+    for x, y in zip(x_name_list, y_name_list):
+        if (dataset / pathlib.Path(x)).exists() and (dataset / pathlib.Path(y)).exists():
+
+            def get_x_y():
+                return x, y
+
+            return get_x_y
+    else:
+        raise Exception("No valid npy files found")
+
+
 def compute_md5(file_path, chunk_size=8192):
     """
     Compute the MD5 hash of a file.

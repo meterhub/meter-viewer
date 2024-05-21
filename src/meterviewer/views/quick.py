@@ -1,10 +1,16 @@
-import typing as t
-
-from meterviewer import types as T
+from meterviewer import types as T, files
 from pathlib import Path as P
 
 from meterviewer.datasets import dataset
 from . import current
+
+
+def more_quick_view(
+    current_dataset: P,
+    write_config=True,
+):
+    name_func = files.use_smart_name(current_dataset)
+    return quick_view(str(current_dataset), name_func, write_config)
 
 
 def quick_view(
@@ -23,6 +29,4 @@ def quick_view(
 
 # from meterviewer.views.quick import fast_preview
 def fast_preview(current_dataset: P):
-    current.view_merge_np(str(current_dataset))
-    current.write_details(str(current_dataset))
-    return current_dataset
+    return more_quick_view(current_dataset)
