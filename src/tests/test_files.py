@@ -4,6 +4,11 @@ from meterviewer import files
 from .utils import gen_img
 
 
+def test_md5():
+    res = files.compute_md5("src/tests/for_md5")
+    assert res == "5093b7d2c218eaebde04b58b20491ef6"
+
+
 def test_reshape():
     img = gen_img(size=(35, 25, 3))
     assert files.transform_img(img).shape == (1, 35, 25, 3)

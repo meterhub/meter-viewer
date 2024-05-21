@@ -2,8 +2,29 @@ import pathlib
 import typing as t
 import numpy as np
 from . import types as T
+import hashlib
 
 import toml
+
+
+def compute_md5(file_path, chunk_size=8192):
+    """
+    Compute the MD5 hash of a file.
+
+    Args:
+        file_path (str): The path to the file.
+        chunk_size (int): The size of each chunk to read from the file.
+
+    Returns:
+        str: The MD5 hash of the file in hexadecimal format.
+    """
+    md5_hash = hashlib.md5()
+
+    with open(file_path, "rb") as f:
+        while chunk := f.read(chunk_size):
+            md5_hash.update(chunk)
+
+    return md5_hash.hexdigest()
 
 
 def read_toml(filename: pathlib.Path) -> t.Optional[t.Dict]:
@@ -65,6 +86,6 @@ def save_to_disk(filename: str, data: np.ndarray):
         np.save(f, data)
 
 
-def load_from_disk(filename):
+def load_from_disk(filename) -> np.ndarray:
     with open(filename, "rb") as f:
         return np.load(f)
