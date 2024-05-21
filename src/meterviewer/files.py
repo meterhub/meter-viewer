@@ -89,3 +89,10 @@ def save_to_disk(filename: str, data: np.ndarray):
 def load_from_disk(filename) -> np.ndarray:
     with open(filename, "rb") as f:
         return np.load(f)
+
+
+def load_from_disk_with_md5(filename, with_md5: str) -> t.Tuple[np.ndarray, str]:
+    md5 = ""
+    if with_md5:
+        md5 = compute_md5(filename)
+    return load_from_disk(filename), md5
