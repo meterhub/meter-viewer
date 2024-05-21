@@ -15,17 +15,13 @@ import random
 from .. import img, files, types as T
 
 
-def get_data(path: pathlib.Path, name: str):
-    return files.load_from_disk(path / name)
-
-
 def generate_func() -> t.List[t.Callable[[pathlib.Path], T.ImgDataset]]:
     funcs = []
     names: t.List[str] = [T.x_name, T.y_name, T.x_test, T.y_test]
     for n in names:
 
         def get_func(path: pathlib.Path, name: str = n):
-            return get_data(path, name)
+            return files.load_from_disk(path / name)
 
         funcs.append(get_func)
 

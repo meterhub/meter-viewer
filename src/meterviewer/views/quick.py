@@ -18,9 +18,12 @@ def quick_view(
     get_x_y_name: T.NameFunc,
     write_config=True,
 ):
+    def get_data(path: P, name: str):
+        return files.load_from_disk(path / name)
+
     x_name, y_name = get_x_y_name()
-    x = dataset.get_data(P(current_dataset), x_name)
-    y = dataset.get_data(P(current_dataset), y_name)
+    x = get_data(P(current_dataset), x_name)
+    y = get_data(P(current_dataset), y_name)
     current.view_merge_np(current_dataset, get_x_y=get_x_y_name)
     if write_config:
         current.write_details(current_dataset, get_xy_name=get_x_y_name)
