@@ -7,6 +7,9 @@ Label = np.ndarray
 ImgDataset = np.ndarray
 LabelData = np.ndarray
 
+
+Func = t.Callable
+
 ImgList = t.List[Img]
 DigitStr = t.List[str]
 DigitInt = t.List[int]

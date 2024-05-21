@@ -19,3 +19,10 @@ def quick_view(
     if write_config:
         current.write_details(current_dataset, get_xy_name=get_x_y_name)
     return x, y
+
+
+# from meterviewer.views.quick import fast_preview
+def fast_preview(current_dataset: P):
+    current.view_merge_np(str(current_dataset))
+    current.write_details(str(current_dataset))
+    return current_dataset
