@@ -6,7 +6,7 @@ from meterviewer.datasets import dataset
 
 def view_merge_np(
     current_dataset: str,
-    view_dataset: t.Callable = dataset.view_dataset,
+    view_dataset: t.Callable[[int, T.ImgList], None] = dataset.view_dataset,
     get_x_y: T.NameFunc = lambda: (T.x_name, T.y_name),
 ):
     """view already handled data."""
