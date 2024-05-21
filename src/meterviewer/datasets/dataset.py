@@ -32,7 +32,11 @@ def generate_func() -> t.List[t.Callable[[pathlib.Path], T.ImgDataset]]:
     return funcs
 
 
-def get_details(path: pathlib.Path, x: T.ImgDataset, y: T.LabelData) -> t.Dict:
+def get_details(
+    path: pathlib.Path,
+    x: T.ImgDataset,
+    y: T.LabelData,
+) -> t.Dict:
     data = {}
 
     def create_sub(name):
@@ -51,13 +55,12 @@ def get_details(path: pathlib.Path, x: T.ImgDataset, y: T.LabelData) -> t.Dict:
 
 
 def show_details(
-    get_x_train,
-    get_y_train,
-    get_details,
-    write_to_file: t.Callable[[t.Any], None],
+    get_x_train: t.Callable,
+    get_y_train: t.Callable,
+    get_details: t.Callable[[t.Any, t.Any], t.Dict],
+    write_to_file: t.Callable[[t.Dict], None],
 ):
-    x = get_x_train()
-    y = get_y_train()
+    x, y = get_x_train(), get_y_train()
     details = get_details(x, y)
     write_to_file(details)
 
