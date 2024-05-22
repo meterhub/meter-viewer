@@ -94,6 +94,6 @@ def test_dataset_list(root_path):
         pics.append(name)
         count += 1
 
-    [update_count(name) for name in dataset.get_dataset_list(root_path)]
+    dataset.handle_datasets(root_path, update_count)
     assert count == 74
     # assert False, pics

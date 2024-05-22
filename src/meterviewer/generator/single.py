@@ -102,11 +102,11 @@ def generate_single(
         write(root_path, digit, type_)
 
     def inner(filename):
-        datasets = dataset.get_dataset_list(root_path)
-        for dataset_name in datasets:
-            # types_ only one
+        def handle_dataset(dataset_name: str):
             imgs, values, types_ = get_random_img(str(dataset_name))
             for im, v in zip(imgs, values):
                 handle_img(im, v, filename, types_)
+
+        dataset.handle_datasets(root_path, handle_dataset)
 
     return inner
