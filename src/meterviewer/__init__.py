@@ -1,3 +1,4 @@
-from meterviewer import func
+from meterviewer import func, types
 
 F = func
+T = types
