@@ -2,6 +2,10 @@ from meterviewer.datasets import config, dataset
 from meterviewer import F
 
 
+def test_create_db(root_path):
+    config.create_db(root_path)
+
+
 def test_read_single_digit(root_path):
     p = config.read_xml(root_path / r"lens_6/XL/XL/M1L1XL" / "config" / "res.xml", config.read_single_digit)
 
@@ -11,7 +15,7 @@ def test_read_single_digit(root_path):
 
 
 def test_exist_dataset(root_path):
-    assert dataset.path(root_path, r"M1L3XL").exists()
+    assert dataset.get_dataset_path(root_path, r"M1L3XL").exists()
 
 
 def test_read_xml(root_path):

@@ -85,7 +85,7 @@ def test_read_random_digit(root_path):
 
 
 def test_dataset_list(root_path):
-    path = root_path / pathlib.Path("lens_6/XL/XL")
+    # path = root_path / pathlib.Path("lens_6/XL/XL")
     count = 0
     pics = []
 
@@ -94,6 +94,6 @@ def test_dataset_list(root_path):
         pics.append(name)
         count += 1
 
-    [update_count(name) for name in dataset.get_dataset_list(path)]
+    [update_count(name) for name in dataset.get_dataset_list(root_path)]
     assert count == 74
     # assert False, pics

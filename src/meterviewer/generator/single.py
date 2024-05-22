@@ -1,6 +1,6 @@
 # generate single digit
 from meterviewer.datasets import dataset
-from meterviewer import T, img
+from meterviewer import T, img, files
 import pathlib
 from pathlib import Path as P
 from datetime import datetime
@@ -80,7 +80,7 @@ def generate_block(length: int, get_random_number: t.Callable[[int], t.List[int]
 
 def img_selector(root_path: P):
     def get_random_img(dataset_name: str) -> t.Tuple[T.ImgList, t.List[str], t.Literal["normal", "digit"]]:
-        pass
+        dp = dataset.get_dataset_path(root_path, dataset_name)
 
     return get_random_img
 

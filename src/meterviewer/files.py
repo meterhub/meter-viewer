@@ -71,7 +71,8 @@ def write_shape(img: T.ImgList, nums: int = 3):
 def scan_pics(path: pathlib.Path) -> t.Iterator[pathlib.Path]:
     """scan pics in path"""
     for p in path.iterdir():
-        yield p
+        if p.suffix in [".jpg", ".png", ".jpeg"]:
+            yield p
 
 
 def transform_img(img: T.Img) -> T.Img:

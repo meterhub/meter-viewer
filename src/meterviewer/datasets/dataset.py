@@ -191,15 +191,29 @@ def read_rand_img(root: pathlib.Path, dataset: str | pathlib.Path, digit: int | 
     return im
 
 
-def path_fusion(root: pathlib.Path, dataset_name: str, num: int):
-    p = root / "lens_6" / "XL" / "XL" / dataset_name / "Digit" / str(num)
+def get_dataset_path(root: pathlib.Path, dataset_name: str) -> pathlib.Path:
+    p = root / "lens_6" / "XL" / "XL" / dataset_name
     return p
 
 
-def get_dataset_list(root: pathlib.Path) -> t.Iterator[pathlib.Path]:
+def path_fusion(root: pathlib.Path, dataset_name: str, num: int):
+    p = get_dataset_path(root, dataset_name) / "Digit" / str(num)
+    return p
+
+
+def get_dataset_list(
+    root: pathlib.Path,
+    default_func: t.Callable = lambda: pathlib.Path("lens_6/XL/XL"),
+) -> t.Iterator[pathlib.Path]:
+    root = root / default_func()
     for dir in os.listdir(root):
         if os.path.isdir(root / dir):
             yield pathlib.Path(dir)
+
+
+def handle_datasets(root: pathlib.Path, handle_func: t.Callable):
+    for dataset in get_dataset_list(root):
+        handle_func(dataset)
 
 
 def read_single_digt(

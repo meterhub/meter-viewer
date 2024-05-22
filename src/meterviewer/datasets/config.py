@@ -5,6 +5,21 @@ import xml.etree.ElementTree as ET
 import typing as t
 
 from meterviewer import types as T, func as F
+from meterviewer.datasets import dataset
+from meterviewer import littledb
+
+
+def create_db(root_path: P):
+    db_name = "items.db"
+
+    def handle_dataset(dataset_name: str):
+        dataset_path = dataset.get_dataset_path(root_path, dataset_name)
+        littledb.create_db(str(dataset_path / db_name))
+
+    dataset.handle_datasets(
+        root_path,
+        handle_func=handle_dataset,
+    )
 
 
 @dataclass
@@ -19,7 +34,12 @@ class RectO(object):
         assert self.xmin != "" and self.ymin != "" and self.xmax != "" and self.ymax != "", self
 
     def to_dict(self) -> T.Rect:
-        return {"xmin": self.xmin, "ymin": self.ymin, "xmax": self.xmax, "ymax": self.ymax}
+        return {
+            "xmin": self.xmin,
+            "ymin": self.ymin,
+            "xmax": self.xmax,
+            "ymax": self.ymax,
+        }
 
     def __str__(self):
         return f"RectO({self.xmin}, {self.ymin}, {self.xmax}, {self.ymax})"
