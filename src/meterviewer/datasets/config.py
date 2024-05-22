@@ -63,7 +63,7 @@ def read_single_digit(root: t.Iterable):
             else:
                 rect = set_rect(rect, subchild)
         rect.check()
-        assert no != -1, 'cannot find no number'
+        assert no != -1, "cannot find no number"
         return no, rect
 
     def set_rect(rect: RectO, sub) -> RectO:
@@ -113,13 +113,29 @@ def get_rectangle(filename: P) -> T.Rect:
     return rect
 
 
-def get_xml_config_path(img_path: P) -> P:
-    """filename -> test.png or test.jpg"""
+def get_xml_config_path(img_path: P, types: t.Literal["value", "block", "single"] = "value") -> P:
+    """filename (test.png or test.jpg) to config (res.xml or suffix.xml)"""
     dataset_path = img_path.parent
-    config_p = P(dataset_path) / "baocun"
-    assert img_path.suffix in (".jpg", ".jpeg")
-    filename = img_path.name[: -len(img_path.suffix)] + ".xml"
-    return config_p / filename
+
+    def value_path():
+        config_p = P(dataset_path) / "baocun"
+        assert img_path.suffix in (".jpg", ".jpeg")
+        filename = img_path.name[: -len(img_path.suffix)] + ".xml"
+        return config_p / filename
+
+    def block_path():
+        return P(dataset_path) / "config" / "block.xml"
+
+    def single_path():
+        return P(dataset_path) / "config" / "res.xml"
+
+    funcs: t.Mapping[str, t.Callable] = {
+        "value": value_path,
+        "block": block_path,
+        "single": single_path,
+    }
+
+    return funcs[types]()
 
 
 def get_xml_config(img_path: P) -> t.Tuple[str, T.Rect]:

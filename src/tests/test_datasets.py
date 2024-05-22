@@ -1,4 +1,5 @@
 from meterviewer.datasets import config, dataset
+from meterviewer import F
 
 
 def test_read_single_digit(root_path):
@@ -20,5 +21,12 @@ def test_read_xml(root_path):
 
 
 def test_img_to_xml(root_path):
-    p = config.get_xml_config_path(root_path / r"lens_6/XL/XL/M1L3XL" / "2018-11-23-12-16-01.jpg")
-    assert p.exists(), p
+    path_list = [
+        config.get_xml_config_path(root_path / r"lens_6/XL/XL/M1L3XL" / "2018-11-23-12-16-01.jpg"),
+        config.get_xml_config_path(root_path / r"lens_6/XL/XL/M1L3XL" / "2018-11-23-12-16-01.jpg", "single"),
+    ]
+
+    def path_exist(p):
+        assert p.exists(), p
+
+    F.must_loop(path_list, path_exist, custom_error=Exception)
