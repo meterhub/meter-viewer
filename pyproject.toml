@@ -26,6 +26,7 @@ distribution = false
 dev = [
     "pytest>=8.2.0",
     "-e file:///${PROJECT_ROOT}/#egg=meterviewer",
+    "ruff>=0.4.4",
 ]
 
 [tool.pdm.scripts]
