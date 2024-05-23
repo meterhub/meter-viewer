@@ -192,7 +192,7 @@ def get_dataset_list(
             yield pathlib.Path(dir)
 
 
-def handle_datasets(root: pathlib.Path, handle_func: t.Callable):
+def handle_datasets(root: pathlib.Path, handle_func: t.Callable[[pathlib.Path], None]):
     """handle"""
     for dataset in get_dataset_list(root):
         handle_func(dataset)

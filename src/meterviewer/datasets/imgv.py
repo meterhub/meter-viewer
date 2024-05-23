@@ -1,6 +1,8 @@
 """view image and value"""
 
-from meterviewer.datasets import dataset, config
+import typing as t
+from meterviewer.datasets import config
+from meterviewer import T
 from PIL import ImageFile
 from pathlib import Path as P
 from matplotlib import pyplot as plt
@@ -9,7 +11,7 @@ from matplotlib import pyplot as plt
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
-def view_one_img_v(filepath: P):
+def view_one_img_v(filepath: P) -> t.Tuple[T.Img, str, T.Rect]:
     """同时浏览图片和值"""
     im = plt.imread(str(filepath))
     v, rect = config.get_xml_config(filepath)

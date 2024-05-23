@@ -1,0 +1,38 @@
+"""generate database"""
+
+import typing as t
+from meterviewer.datasets import dataset, imgv, single
+from meterviewer import T, files, littledb
+from pathlib import Path as P
+
+
+def is_carry(val: str):
+    return val[-1] in ("0", "9")
+
+
+dbInsertFunc = t.Callable[[str, int, bool], None]
+
+
+def generate_for_one_dataset(dataset: P, insert: dbInsertFunc):
+    assert dataset.is_absolute()
+    for img_file in files.scan_pics(dataset):
+        _, v, _ = imgv.view_one_img_v(img_file)
+        # transform str to int
+        val = int(v)
+
+        insert(str(img_file), val, is_carry(v))
+
+
+def generate_db_for_all(root: P, db_path: P):
+    # insert to one database.
+    assert not db_path.is_absolute()
+
+    insert = littledb.create_db(str(db_path))
+
+    def generate_one(dataset: P):
+        return generate_for_one_dataset(single.get_dataset_path(root, str(dataset)), insert)
+
+    dataset.handle_datasets(
+        root,
+        generate_one,
+    )
