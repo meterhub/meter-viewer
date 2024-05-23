@@ -111,17 +111,6 @@ def view_dataset(num: int, imglist: T.ImgList):
         plt.show()
 
 
-def join_with_fix(imglist: T.ImgList, check_func: t.Callable, fix_func: t.Callable) -> T.Img:
-    """修饰 join_func"""
-    # merge images horizontally
-    try:
-        return img.join_img(imglist, check_func)
-    except ValueError as e:
-        print(e)
-        imglist = fix_func(imglist)
-    return img.join_img(imglist, check_func)
-
-
 def dataset_length_list() -> t.List[int]:
     return [5, 6, 7, 8]
 
@@ -144,6 +133,8 @@ def create_labels_func(
 def create_dataset(
     check_imgs: t.Callable[[T.ImgList], None],
 ):
+    """创建新的数据库"""
+
     def inner(
         length: int,
         nums: int,
@@ -177,6 +168,7 @@ def generate_block_img(
     root_path: pathlib.Path,
     join_func: T.JoinFunc,
     get_dataset: t.Callable[[], str | pathlib.Path],
+    read_rand_img: t.Callable[[pathlib.Path, str | pathlib.Path, int | str], T.Img],
 ) -> T.Img:
     img_list = []
     for digit in the_digit:
@@ -185,19 +177,8 @@ def generate_block_img(
     return join_func(img_list, img.size_check)
 
 
-def read_rand_img(root: pathlib.Path, dataset: str | pathlib.Path, digit: int | str) -> T.Img:
-    get_one = read_single_digt(lambda: root, path_fusion, dataset_name=str(dataset), num=int(digit))
-    im = plt.imread(next(get_one()))
-    return im
-
-
 def get_dataset_path(root: pathlib.Path, dataset_name: str) -> pathlib.Path:
     p = root / "lens_6" / "XL" / "XL" / dataset_name
-    return p
-
-
-def path_fusion(root: pathlib.Path, dataset_name: str, num: int):
-    p = get_dataset_path(root, dataset_name) / "Digit" / str(num)
     return p
 
 
@@ -212,24 +193,23 @@ def get_dataset_list(
 
 
 def handle_datasets(root: pathlib.Path, handle_func: t.Callable):
+    """handle"""
     for dataset in get_dataset_list(root):
         handle_func(dataset)
 
 
-def read_single_digt(
-    get_root_path: t.Callable,
-    path_fusion: t.Callable,
-    dataset_name: str,
-    num: int,
-) -> t.Callable:
-    assert num in range(0, 10), "num must be 0~9"
-    p: pathlib.Path = get_root_path() / path_fusion(get_root_path(), dataset_name, num)
-    return functools.partial(files.scan_pics, p)
+def join_with_fix(imglist: T.ImgList, check_func: t.Callable, fix_func: t.Callable) -> T.Img:
+    """修饰 join_func"""
+    # merge images horizontally
+    try:
+        return img.join_img(imglist, check_func)
+    except ValueError as e:
+        print(e)
+        imglist = fix_func(imglist)
+    return img.join_img(imglist, check_func)
 
 
 join_with_resize: T.JoinFunc = functools.partial(join_with_fix, fix_func=img.resize_imglist)
-
-
 # def walk_dataset(dataset: str) -> t.Iterator[T.Img, T.DigitStr]:
 #     """get img and dataset"""
 #     pass

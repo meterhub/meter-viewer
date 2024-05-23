@@ -2,7 +2,7 @@ import functools
 from meterviewer import img, files, types as T
 import pathlib
 
-from meterviewer.datasets import dataset
+from meterviewer.datasets import dataset, single
 from tests.utils import show_img
 
 
@@ -23,6 +23,7 @@ def test_create_dataset(root_path):
         root_path=root_path,
         join_func=dataset.join_with_resize,
         get_dataset=lambda: "M1L1XL",
+        read_rand_img=single.read_rand_img,
     )
 
     path = root_path / pathlib.Path(r"generated")
@@ -56,6 +57,7 @@ def test_generate_block_img(root_path):
         root_path,
         img.join_img,
         lambda: "M1L1XL",
+        single.read_rand_img,
     )
     show_img(im)
 
@@ -64,6 +66,7 @@ def test_generate_block_img(root_path):
         root_path,
         dataset.join_with_resize,
         lambda: "M1L1XL",
+        single.read_rand_img,
     )
     show_img(im)
 
@@ -74,12 +77,12 @@ def test_get_random_dataset(root_path):
 
 
 def test_read_random_img(root_path):
-    im = dataset.read_rand_img(root_path, "M1L1XL", 5)
+    im = single.read_rand_img(root_path, "M1L1XL", 5)
     show_img(im)
 
 
 def test_read_random_digit(root_path):
-    path_gen = dataset.read_single_digt(lambda: root_path, dataset.path_fusion, "M1L1XL", 0)()
+    path_gen = single.read_single_digt(lambda: root_path, single.path_fusion, "M1L1XL", 0)()
     p = next(path_gen)
     assert pathlib.Path(p).exists()
 
