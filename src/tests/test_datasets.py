@@ -3,7 +3,7 @@ from meterviewer import F
 
 
 def test_read_single_digit(root_path):
-    p = config.read_xml(root_path / r"lens_6/XL/XL/M1L1XL" / "config" / "res.xml", config.read_single_digit_rect)
+    p = config.read_single_digit_rect(root_path / r"lens_6/XL/XL/M1L1XL" / "config" / "res.xml")
 
     assert len(p) == 6
     p: list[config.RectO]
@@ -15,7 +15,9 @@ def test_exist_dataset(root_path):
 
 
 def test_read_xml(root_path):
-    v, r = config.read_xml(root_path / r"lens_6/XL/XL/M1L3XL" / "baocun" / "2018-11-23-12-16-01.xml", config.read_rect)
+    v, r = config.read_xml(
+        root_path / r"lens_6/XL/XL/M1L3XL" / "baocun" / "2018-11-23-12-16-01.xml", config.read_rect_from_node
+    )
     assert v == "000994"
     assert r.get("xmin") == "79"
 

@@ -40,7 +40,7 @@ def read_xml(filename: P, read_func: t.Callable[[t.Any], t.Any]):
     return read_func(root)
 
 
-def read_rect(root) -> t.Tuple[str, T.Rect]:
+def read_rect_from_node(root: t.Iterable) -> t.Tuple[str, T.Rect]:
     val, rect_dict = "", RectO()
     for child in root:
         # find object
@@ -58,63 +58,78 @@ def read_rect(root) -> t.Tuple[str, T.Rect]:
     return val, rect_dict.to_dict()
 
 
-def read_single_digit_rect(root: t.Iterable) -> t.List[RectO]:
-    def find_no(node) -> t.Tuple[int, RectO]:
-        no = -1
-        rect = RectO()
-        for subchild in node:
-            if subchild.tag == "no":
-                no = int(subchild.text.strip())
-            else:
-                rect = set_rect(rect, subchild)
-        rect.check()
-        assert no != -1, "cannot find no number"
-        return no, rect
+def read_single_digit_rect(filename):
+    def func(root: t.Iterable) -> t.List[RectO]:
+        def find_no(node) -> t.Tuple[int, RectO]:
+            no = -1
+            rect = RectO()
+            for subchild in node:
+                if subchild.tag == "no":
+                    no = int(subchild.text.strip())
+                else:
+                    rect = set_rect(rect, subchild)
+            rect.check()
+            assert no != -1, "cannot find no number"
+            return no, rect
 
-    def set_rect(rect: RectO, sub) -> RectO:
-        assert hasattr(rect, sub.tag), (sub.tag, sub.text)
-        setattr(rect, sub.tag, sub.text)
-        assert getattr(rect, sub.tag) != ""
-        return rect
+        def set_rect(rect: RectO, sub) -> RectO:
+            assert hasattr(rect, sub.tag), (sub.tag, sub.text)
+            setattr(rect, sub.tag, sub.text)
+            assert getattr(rect, sub.tag) != ""
+            return rect
 
-    def num_check():
-        seta = {0, 1, 2, 3, 4, 5}
-        setb = set()
+        def num_check():
+            seta = {0, 1, 2, 3, 4, 5}
+            setb = set()
 
-        def is_valid():
-            return seta == setb, (seta, setb)
+            def is_valid():
+                return seta == setb, (seta, setb)
 
-        def set_num(no):
-            setb.add(no)
+            def set_num(no):
+                setb.add(no)
 
-        return set_num, is_valid
+            return set_num, is_valid
 
-    digit_rect = [RectO() for _ in range(6)]
-    set_num, is_valid = num_check()
-    is_loop, set_loop = F.looped()
+        digit_rect = [RectO() for _ in range(6)]
+        set_num, is_valid = num_check()
+        is_loop, set_loop = F.looped()
 
-    for child in root:
-        if child.tag == "digit":
-            no, rect = find_no(child)
-            _ = set_loop(), set_num(no)
-            digit_rect[no] = rect
+        for child in root:
+            if child.tag == "digit":
+                no, rect = find_no(child)
+                _ = set_loop(), set_num(no)
+                digit_rect[no] = rect
 
-    assert is_loop(), "node has no child"
-    cond, _ = is_valid()
-    assert cond
+        assert is_loop(), "node has no child"
+        cond, _ = is_valid()
+        assert cond
 
-    # return digit_rect, root, find_no, find_rect
-    return digit_rect
+        # return digit_rect, root, find_no, find_rect
+        return digit_rect
+
+    return read_xml(filename, func)
 
 
 def get_single_digit_values(filename: P) -> t.Tuple[str, T.Rect]:
-    val, _ = read_xml(filename, read_single_digit_rect)
+    val, _ = read_xml(filename, read_rect_from_node)
     block_pos = read_xml(filename, read_single_digit_rect)
     return val, block_pos
 
 
+typeOfrect = t.Literal["single", "block"]
+
+
+def read_rect_from_file(filepath: P, type_: typeOfrect):
+    assert filepath.suffix == ".xml"
+    function_map: t.Mapping[typeOfrect, t.Callable] = {
+        "single": get_rectangle,
+        "block": read_single_digit_rect,
+    }
+    return function_map[type_](filepath)
+
+
 def get_rectangle(filename: P) -> T.Rect:
-    _, rect = read_xml(filename, read_rect)
+    _, rect = read_xml(filename, read_rect_from_node)
     return rect
 
 
@@ -144,4 +159,4 @@ def get_xml_config_path(img_path: P, types: t.Literal["value", "block", "single"
 
 
 def get_xml_config(img_path: P) -> t.Tuple[str, T.Rect]:
-    return read_xml(get_xml_config_path(img_path), read_rect)
+    return read_xml(get_xml_config_path(img_path), read_rect_from_node)
