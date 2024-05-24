@@ -2,7 +2,7 @@
 from meterviewer import types as T
 
 
-def cut_img(img: T.Img, rect: T.Rect):
+def cut_img(img: T.Img, rect: T.Rect) -> T.Img:
     def to_int(rect: T.Rect):
         return int(rect["xmin"]), int(rect["ymin"]), int(rect["xmax"]), int(rect["ymax"])
 

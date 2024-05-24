@@ -36,3 +36,16 @@ def generate_db_for_all(root: P, db_path: P):
         root,
         generate_one,
     )
+
+
+def create_db(root_path: P):
+    db_name = "items.db"
+
+    def handle_dataset(dataset_name: P):
+        dataset_path = dataset.get_dataset_path(root_path, str(dataset_name))
+        littledb.create_db(str(dataset_path / db_name))
+
+    dataset.handle_datasets(
+        root_path,
+        handle_func=handle_dataset,
+    )

@@ -5,21 +5,6 @@ import xml.etree.ElementTree as ET
 import typing as t
 
 from meterviewer import types as T, func as F
-from meterviewer.datasets import dataset
-from meterviewer import littledb
-
-
-def create_db(root_path: P):
-    db_name = "items.db"
-
-    def handle_dataset(dataset_name: str):
-        dataset_path = dataset.get_dataset_path(root_path, dataset_name)
-        littledb.create_db(str(dataset_path / db_name))
-
-    dataset.handle_datasets(
-        root_path,
-        handle_func=handle_dataset,
-    )
 
 
 @dataclass
@@ -122,7 +107,7 @@ def read_single_digit(root: t.Iterable):
     return digit_rect
 
 
-def get_single_digit(filename: P) -> t.Tuple[str, T.Rect]:
+def get_single_digit_values(filename: P) -> t.Tuple[str, T.Rect]:
     val, _ = read_xml(filename, read_single_digit)
     pos = read_xml(filename, read_single_digit)
     return val, pos

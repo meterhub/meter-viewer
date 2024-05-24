@@ -30,6 +30,6 @@ def root_path() -> pathlib.Path:
     elif get_system_type() == "Windows":
         return pathlib.Path(r"D:\Store\MeterData")
     elif get_system_type() == "Linux":
-        return pathlib.Path('~/Work/Dataset/MeterData').expanduser()
+        return pathlib.Path("~/Work/Dataset/MeterData").expanduser()
     else:
         raise Exception("Not work under Linux now. 2024-05-21.")

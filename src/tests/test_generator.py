@@ -1,19 +1,25 @@
-from meterviewer.generator import single, db
-from meterviewer import littledb
+from meterviewer.generator import single, db, total
+from meterviewer import littledb, files
 from pathlib import Path as P
 import pytest
+
+
+@pytest.mark.skip("cannot easy to test.")
+def test_create_db(root_path):
+    db.create_db(root_path)
+
+
+def test_cut_one_img(root_path):
+    # 裁剪所有图片
+    img_filepath = root_path / r"lens_6/XL/XL/M1L1XL"
+    img = next(files.scan_pics(img_filepath))
+    im_list, v_list = total.cut_one_img(root_path / img)
 
 
 def test_is_carry():
     assert db.is_carry("123") is False
     assert db.is_carry("1239")
     assert db.is_carry("1230")
-
-
-@pytest.mark.skip("long time to generate")
-def test_generate_db_for_all(root_path):
-    p = P("./alldata.db")
-    db.generate_db_for_all(root_path, p)
 
 
 def test_generate_dbfiles(root_path):

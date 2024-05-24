@@ -2,10 +2,6 @@ from meterviewer.datasets import config, dataset
 from meterviewer import F
 
 
-def test_create_db(root_path):
-    config.create_db(root_path)
-
-
 def test_read_single_digit(root_path):
     p = config.read_xml(root_path / r"lens_6/XL/XL/M1L1XL" / "config" / "res.xml", config.read_single_digit)
 
