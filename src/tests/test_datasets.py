@@ -3,7 +3,7 @@ from meterviewer import F
 
 
 def test_read_single_digit(root_path):
-    p = config.read_xml(root_path / r"lens_6/XL/XL/M1L1XL" / "config" / "res.xml", config.read_single_digit)
+    p = config.read_xml(root_path / r"lens_6/XL/XL/M1L1XL" / "config" / "res.xml", config.read_single_digit_rect)
 
     assert len(p) == 6
     p: list[config.RectO]

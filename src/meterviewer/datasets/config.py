@@ -58,7 +58,7 @@ def read_rect(root) -> t.Tuple[str, T.Rect]:
     return val, rect_dict.to_dict()
 
 
-def read_single_digit(root: t.Iterable):
+def read_single_digit_rect(root: t.Iterable) -> t.List[RectO]:
     def find_no(node) -> t.Tuple[int, RectO]:
         no = -1
         rect = RectO()
@@ -108,8 +108,8 @@ def read_single_digit(root: t.Iterable):
 
 
 def get_single_digit_values(filename: P) -> t.Tuple[str, T.Rect]:
-    val, _ = read_xml(filename, read_single_digit)
-    block_pos = read_xml(filename, read_single_digit)
+    val, _ = read_xml(filename, read_single_digit_rect)
+    block_pos = read_xml(filename, read_single_digit_rect)
     return val, block_pos
 
 
