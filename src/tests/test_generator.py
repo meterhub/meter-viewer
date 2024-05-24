@@ -3,6 +3,8 @@ from meterviewer import littledb, files
 from pathlib import Path as P
 import pytest
 
+from tests.utils import show_img
+
 
 @pytest.mark.skip("cannot easy to test.")
 def test_create_db(root_path):
@@ -14,6 +16,10 @@ def test_cut_one_img(root_path):
     img_filepath = root_path / r"lens_6/XL/XL/M1L1XL"
     img = next(files.scan_pics(img_filepath))
     im_list, v_list = total.cut_one_img(root_path / img)
+
+    # might be changed when img changed.
+    assert v_list[0] == "0"
+    show_img(im_list[-1])
 
 
 def test_is_carry():

@@ -58,7 +58,7 @@ def read_rect_from_node(root: t.Iterable) -> t.Tuple[str, T.Rect]:
     return val, rect_dict.to_dict()
 
 
-def read_single_digit_rect(filename):
+def read_single_digit_rect(filename) -> t.List[RectO]:
     def func(root: t.Iterable) -> t.List[RectO]:
         def find_no(node) -> t.Tuple[int, RectO]:
             no = -1
@@ -119,13 +119,14 @@ def get_single_digit_values(filename: P) -> t.Tuple[str, T.Rect]:
 typeOfrect = t.Literal["single", "block"]
 
 
-def read_rect_from_file(filepath: P, type_: typeOfrect):
-    assert filepath.suffix == ".xml"
-    function_map: t.Mapping[typeOfrect, t.Callable] = {
-        "single": get_rectangle,
-        "block": read_single_digit_rect,
+def read_rect_from_file(xml_path: P, type_: typeOfrect):
+    assert xml_path.suffix == ".xml"
+    function_map: t.Mapping[typeOfrect, t.Callable[[P], t.Any]] = {
+        "single": read_single_digit_rect,
+        "block": get_rectangle,
     }
-    return function_map[type_](filepath)
+    func = function_map[type_]
+    return func(xml_path)
 
 
 def get_rectangle(filename: P) -> T.Rect:

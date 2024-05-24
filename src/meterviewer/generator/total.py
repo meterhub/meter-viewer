@@ -6,12 +6,19 @@ from meterviewer.datasets import dataset, single, config, imgv
 from meterviewer import files, img, T
 from meterviewer.imgs import cut
 from pathlib import Path as P
-from matplotlib import pyplot as plt
 
 
 def cut_one_img(filepath: P) -> t.Tuple[T.ImgList, T.DigitStr]:
     im, val, pos = imgv.view_one_img_v(filepath)
-    im1 = cut.cut_img(im, pos)
+    xml_path = config.get_xml_config_path(filepath, "single")
+    pos_list = config.read_rect_from_file(xml_path, "single")
+
+    assert isinstance(pos_list, t.List)
+    im_list = []
+    for pos in pos_list:
+        im1 = cut.cut_img(im, rect=pos.to_dict())
+        im_list.append(im1)
+    return im_list, list(val)
 
 
 def cut_all_img(dbfiles: P):
