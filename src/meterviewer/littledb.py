@@ -1,5 +1,6 @@
 # create a little db for storing the images and values
 
+import typing as t
 from typing import List
 from typing import Optional
 from sqlalchemy import ForeignKey
@@ -22,7 +23,11 @@ def create_db(filepath: str):
             session.add(item)
             session.commit()
 
-        return insert_one
+        def insert_all(items: t.List[Item]):
+            session.add_all(items)
+            session.commit()
+
+        return insert_one, insert_all
 
 
 class Base(DeclarativeBase):

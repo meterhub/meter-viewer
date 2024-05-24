@@ -31,7 +31,7 @@ def test_is_carry():
 def test_generate_dbfiles(root_path):
     dataset_path = root_path / r"lens_6/XL/XL/M1L1XL"
     db_path = dataset_path / "items-temp.db"
-    insert_one = littledb.create_db(db_path)
+    insert_one, _ = littledb.create_db(db_path)
     db.generate_for_one_dataset(dataset_path, insert_one)
 
 

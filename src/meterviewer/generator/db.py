@@ -27,7 +27,7 @@ def generate_db_for_all(root: P, db_path: P):
     # insert to one database.
     assert not db_path.is_absolute()
 
-    insert = littledb.create_db(str(db_path))
+    insert, _ = littledb.create_db(str(db_path))
 
     def generate_one(dataset: P):
         return generate_for_one_dataset(single.get_dataset_path(root, str(dataset)), insert)
