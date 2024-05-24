@@ -6,10 +6,7 @@ from meterviewer import T, files
 from pathlib import Path as P
 
 from meterviewer.models import littledb
-
-
-def is_carry(val: str):
-    return val[-1] in ("0", "9")
+from meterviewer.values import is_carry
 
 
 dbInsertFunc = t.Callable[[str, int, bool], None]

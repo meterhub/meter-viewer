@@ -29,12 +29,6 @@ def test_cut_one_img(root_path):
     show_img(im_list[-1])
 
 
-def test_is_carry():
-    assert db.is_carry("123") is False
-    assert db.is_carry("1239")
-    assert db.is_carry("1230")
-
-
 def test_generate_dbfiles(root_path):
     dataset_path = root_path / r"lens_6/XL/XL/M1L1XL"
     db_path = dataset_path / "items-temp.db"
