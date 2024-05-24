@@ -2,7 +2,7 @@
 
 import functools
 import typing as t
-from meterviewer.datasets import dataset, single, config
+from meterviewer.datasets import dataset, single, config, imgv
 from meterviewer import files, img, T
 from meterviewer.imgs import cut
 from pathlib import Path as P
@@ -10,8 +10,7 @@ from matplotlib import pyplot as plt
 
 
 def cut_one_img(filepath: P) -> t.Tuple[T.ImgList, T.DigitStr]:
-    im = plt.imread(filepath)
-    val, pos = config.get_single_digit_values(filepath)
+    im, val, pos = imgv.view_one_img_v(filepath)
     im1 = cut.cut_img(im, pos)
 
 

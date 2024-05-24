@@ -109,8 +109,8 @@ def read_single_digit(root: t.Iterable):
 
 def get_single_digit_values(filename: P) -> t.Tuple[str, T.Rect]:
     val, _ = read_xml(filename, read_single_digit)
-    pos = read_xml(filename, read_single_digit)
-    return val, pos
+    block_pos = read_xml(filename, read_single_digit)
+    return val, block_pos
 
 
 def get_rectangle(filename: P) -> T.Rect:
