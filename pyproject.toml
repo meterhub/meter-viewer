@@ -20,6 +20,10 @@ readme = "README.md"
 license = {text = "MIT"}
 
 
+[project.optional-dependencies]
+gui = [
+    "nicegui>=1.4.25",
+]
 [tool.pdm]
 distribution = false
 
@@ -32,3 +36,4 @@ dev = [
 
 [tool.pdm.scripts]
 notebook = 'pdm run jupyter-notebook .'
+nicegui = 'pdm run python src/meterviewer/labeling/main.py'
