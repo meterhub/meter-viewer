@@ -1,8 +1,9 @@
 from meterviewer.generator import single, db, total
-from meterviewer import littledb, files
+from meterviewer import files
 from pathlib import Path as P
 import pytest
 
+from meterviewer.models import littledb
 from tests.utils import show_img
 
 

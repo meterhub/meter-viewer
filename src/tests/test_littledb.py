@@ -1,4 +1,4 @@
-from meterviewer import littledb
+from meterviewer.models import littledb
 from meterviewer.datasets import dataset
 from pathlib import Path as P
 

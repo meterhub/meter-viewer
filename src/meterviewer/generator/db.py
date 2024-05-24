@@ -2,8 +2,10 @@
 
 import typing as t
 from meterviewer.datasets import dataset, imgv, single
-from meterviewer import T, files, littledb
+from meterviewer import T, files
 from pathlib import Path as P
+
+from meterviewer.models import littledb
 
 
 def is_carry(val: str):
