@@ -141,7 +141,7 @@ def get_xml_config_path(img_path: P, types: t.Literal["value", "block", "single"
     def value_path():
         config_p = P(dataset_path) / "baocun"
         assert img_path.suffix in (".jpg", ".jpeg")
-        filename = img_path.name[: -len(img_path.suffix)] + ".xml"
+        filename = img_path.stem + ".xml"
         return config_p / filename
 
     def block_path():
