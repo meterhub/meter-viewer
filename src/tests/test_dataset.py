@@ -43,7 +43,7 @@ def test_create_dataset(root_path):
             show_img(im)
             assert size == im.shape
 
-    dataset.create_dataset(check_imgs=lambda x: None)(
+    dataset.create_dataset_func(check_imgs=lambda x: None)(
         length=5,
         nums=10,
         gen_block_img=gen_block,

@@ -1,4 +1,4 @@
-"""create new generated dataset"""
+"""create new generated dataset, generate all suitable images."""
 
 import functools
 import typing as t
@@ -6,6 +6,7 @@ from meterviewer.datasets import dataset, single, config, imgv
 from meterviewer import files, img, T
 from meterviewer.imgs import cut
 from pathlib import Path as P
+from PIL import Image
 
 
 def cut_one_img(filepath: P) -> t.Tuple[T.ImgList, T.DigitStr]:
@@ -21,13 +22,32 @@ def cut_one_img(filepath: P) -> t.Tuple[T.ImgList, T.DigitStr]:
     return im_list, list(val)
 
 
-def cut_all_img(dbfiles: P):
-    pass
+SaveFunc = t.Callable[[T.Img, str, int], t.Any]
+
+
+def create_save_func(dataset_path: P, original_filepath: P) -> SaveFunc:
+    assert dataset_path.exists(), f"the dataset: {dataset_path} should exist"
+
+    def save_to_disk(im: T.Img, val: str, i: int):
+        folder = dataset_path / val
+        folder.mkdir(exist_ok=True)
+        Image.fromarray(im).save(folder / f"{original_filepath.stem}_{i}.png")
+
+    return save_to_disk
+
+
+def cut_save_one(root_path: P, filepath: P):
+
+    def cut_save(filepath: P, save_to_disk: SaveFunc):
+        """切割图片并保存到磁盘上."""
+        im_list, val = cut_one_img(filepath)
+        for i, im in enumerate(im_list):
+            save_to_disk(im, val[i], i)
+
+    cut_save(filepath, create_save_func(root_path / "./generated", filepath))
 
 
 def generate_dataset(root_path: P):
-    P = functools.partial
-
     def gen_block(
         the_digit: T.DigitStr,
     ):
@@ -42,7 +62,7 @@ def generate_dataset(root_path: P):
     path = root_path / "generated"
     path.mkdir(exist_ok=True)
 
-    filesave = P(
+    filesave = functools.partial(
         files.save_img_labels,
         prefix_name=path,
         save_to_disk=files.save_to_disk,
@@ -56,7 +76,8 @@ def generate_dataset(root_path: P):
             img.show_img(im, is_stop=0)
             assert size == im.shape
 
-    dataset.create_dataset(check_imgs=lambda x: None)(
+    create_dataset = dataset.create_dataset_func(check_imgs=lambda x: None)
+    create_dataset(
         length=5,
         nums=10,
         gen_block_img=gen_block,

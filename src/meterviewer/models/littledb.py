@@ -12,6 +12,12 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 
 
+def get_session(filepath: str):
+    engine = create_engine(f"sqlite:///{filepath}", echo=True)
+    with Session(engine) as session:
+        return session
+
+
 def create_db(filepath: str):
     engine = create_engine(f"sqlite:///{filepath}", echo=True)
     Base.metadata.create_all(engine)

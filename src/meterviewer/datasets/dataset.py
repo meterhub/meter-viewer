@@ -130,16 +130,20 @@ def create_labels_func(
     return generate_nums
 
 
-def create_dataset(
+GenBlockImgFunc = t.Callable[[T.DigitStr], T.Img]
+SaveDatasetFunc = t.Callable[[T.ImgList, t.List[T.DigitStr]], None]
+
+
+def create_dataset_func(
     check_imgs: t.Callable[[T.ImgList], None],
-):
+) -> t.Callable[[int, int, GenBlockImgFunc, SaveDatasetFunc], None]:
     """创建新的数据库"""
 
     def inner(
         length: int,
         nums: int,
-        gen_block_img: t.Callable[[T.DigitStr], T.Img],
-        save_dataset: t.Callable[[T.ImgList, t.List[T.DigitStr]], None],
+        gen_block_img: GenBlockImgFunc,
+        save_dataset: SaveDatasetFunc,
     ):
         create_label = create_labels_func(length)
         _, str_digits = create_label(nums)

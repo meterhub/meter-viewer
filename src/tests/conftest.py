@@ -6,6 +6,11 @@ from pathlib import Path as P
 
 
 @pytest.fixture
+def alldata() -> P:
+    return P("alldata.db")
+
+
+@pytest.fixture
 def remove_files() -> t.Generator[t.Callable[[P], None], None, None]:
     filepath_list = []
 

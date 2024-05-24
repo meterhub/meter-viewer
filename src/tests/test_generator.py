@@ -3,11 +3,17 @@ from meterviewer import files
 from pathlib import Path as P
 import pytest
 
-from meterviewer.models import littledb
+from meterviewer.models import littledb, func
 from tests.utils import show_img
 
 
-@pytest.mark.skip("cannot easy to test.")
+@pytest.mark.skip("会改变generated目录中的数据")
+def test_total(root_path, alldata):
+    item = func.get_first_item(alldata)
+    total.cut_save_one(root_path, P(item.filename))
+
+
+@pytest.mark.skip("这个函数会产生数据库 items.db，不应该直接测试")
 def test_create_db(root_path):
     db.create_db(root_path)
 
