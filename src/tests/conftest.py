@@ -2,6 +2,19 @@ import pytest
 import pathlib
 import platform
 import typing as t
+from pathlib import Path as P
+
+
+@pytest.fixture
+def remove_files() -> t.Generator[t.Callable[[P], None], None, None]:
+    filepath_list = []
+
+    def func(filep: P):
+        filepath_list.append(filep)
+
+    yield func
+    for filepath in filepath_list:
+        filepath.unlink()
 
 
 @pytest.fixture
