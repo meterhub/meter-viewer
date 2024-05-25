@@ -1,6 +1,7 @@
 # create a little db for storing the images and values
 
 import typing as t
+import pathlib
 from typing import List
 from typing import Optional
 from sqlalchemy import ForeignKey
@@ -12,7 +13,8 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 
 
-def get_session(filepath: str):
+def get_session(filepath: str | pathlib.Path):
+    filepath = str(filepath)
     engine = create_engine(f"sqlite:///{filepath}", echo=True)
     with Session(engine) as session:
         return session
@@ -46,6 +48,7 @@ class Item(Base):
     filename: Mapped[str] = mapped_column(String(30))
     value: Mapped[int] = mapped_column()
     is_carry: Mapped[bool] = mapped_column()
+    carry_num: Mapped[int] = mapped_column()
 
     def __repr__(self) -> str:
         return f"Item(id={self.id!r}, filename={self.filename!r}, value={self.value!r})"
