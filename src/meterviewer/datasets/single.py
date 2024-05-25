@@ -2,6 +2,7 @@
 
 import typing as t
 import functools
+import random
 import pathlib
 from .dataset import get_dataset_path
 from meterviewer import files, T
@@ -16,7 +17,10 @@ def path_fusion(root: pathlib.Path, dataset_name: str, num: int):
 
 def read_rand_img(root: pathlib.Path, dataset: str | pathlib.Path, digit: int | str) -> T.Img:
     get_one = read_single_digt(lambda: root, path_fusion, dataset_name=str(dataset), num=int(digit))
-    im = plt.imread(next(get_one()))
+    all_imgs = list(get_one())
+    length = len(all_imgs)
+    i = random.randint(0, length - 1)
+    im = plt.imread(all_imgs[i])
     return im
 
 
