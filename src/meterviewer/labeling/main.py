@@ -1,9 +1,26 @@
-from turtle import onkey
+import pathlib
+import typing as t
 from nicegui import ui
 from nicegui.events import ValueChangeEventArguments, KeyEventArguments
 from meterviewer import files
 from meterviewer.datasets import dataset
 from meterviewer.labeling.config import get_root_path
+from meterviewer.models import func
+
+
+def get_image_path(root_path: pathlib.Path, type_: t.Literal["filesys", "db"]):
+    def from_filesystem():
+        for dataset_name in dataset.get_dataset_list(root_path):
+            img_p = files.scan_pics(dataset.get_dataset_path(root_path, str(dataset_name)))
+            yield img_p, dataset_name, "invalid"
+
+    def from_db():
+        dbpath = "alldata.db"
+        items = func.get_carry_items(dbpath)
+        for item in items:
+            yield item.filename, pathlib.Path(item.filename).parent, id
+
+    return from_db()
 
 
 def show(event: ValueChangeEventArguments):
@@ -34,24 +51,18 @@ def main():
 
     _ = ui.keyboard(handle_key)
 
-    def get_image_path():
-        for dataset_name in dataset.get_dataset_list(root_path):
-            img_p = files.scan_pics(dataset.get_dataset_path(root_path, str(dataset_name)))
-            yield img_p, dataset_name
-
-    dataset_g = get_image_path()
-    img_path_g, dataset_name = next(dataset_g)
-
-    image_name = str(next(img_path_g))
+    dataset_g = get_image_path(root_path=root_path, type_="db")
+    img_path, dataset_name, id = next(dataset_g)
     carry_v = None
 
     def set_img_value():
-        nonlocal carry_v
+        nonlocal carry_v, img_path, id
         if carry_v is None:
             return
-        print(f"image_name: {image_name}")
+        print(f"image_name: {img_path}")
         print(f"value_set: {carry_v}")
-        current_img.source = next(img_path_g)
+        img_path, dataset_name, id = next(dataset_g)
+        current_img.source = img_path
         toggle1.set_value(None)
 
     def set_value(event: ValueChangeEventArguments):
@@ -61,7 +72,7 @@ def main():
 
     ui.markdown(f"dataset: {dataset_name}, count: 1/20222")
     with ui.row():
-        current_img = ui.image(image_name).classes("w-[540px]")
+        current_img = ui.image(img_path).classes("w-[540px]")
 
     with ui.row():
         toggle1 = ui.toggle([0, 1, 2, 3, 4, 5, 6], value=carry_v, on_change=set_value)
