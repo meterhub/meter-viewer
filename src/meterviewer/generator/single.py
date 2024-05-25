@@ -102,7 +102,7 @@ def generate_single(
         write(root_path, digit, type_)
 
     def inner(filename):
-        def handle_dataset(dataset_name: str):
+        def handle_dataset(dataset_name: str | pathlib.Path):
             imgs, values, types_ = get_random_img(str(dataset_name))
             for im, v in zip(imgs, values):
                 handle_img(im, v, filename, types_)
