@@ -1,9 +1,10 @@
+import toml
 import pathlib
 import typing as t
 from nicegui import ui
 from nicegui.events import ValueChangeEventArguments, KeyEventArguments
 from meterviewer.labeling.config import get_root_path
-from . import views
+from meterviewer.labeling import views
 
 
 def get_image_path(root_path: pathlib.Path, type_: t.Literal["filesys", "db"]):
@@ -40,12 +41,13 @@ def main():
 
     _ = ui.keyboard(handle_key)
 
-    dataset_g = get_image_path(root_path=root_path, type_="db")
+    # dataset_g = get_image_path(root_path=root_path, type_="db")
+    dataset_g = views.filesystem.view_dataset(root_path=root_path)
     img_path, dataset_name, id = next(dataset_g)
     carry_v = None
 
     def set_img_value():
-        nonlocal carry_v, img_path, id
+        nonlocal carry_v, img_path, id, dataset_name
         if carry_v is None:
             return
         print(f"image_name: {img_path}")
@@ -54,9 +56,20 @@ def main():
         current_img.source = img_path
         toggle1.set_value(None)
 
+    # make sure which dataset to use.
+    collect_set = set()
+
+    def add_data():
+        collect_set.add(dataset_name)
+
+    def write_data():
+        with open("temp.toml", "w") as f:
+            toml.dump({"dataset": list(collect_set)}, f)
+
     def set_value(event: ValueChangeEventArguments):
         nonlocal carry_v
         carry_v = event.value
+        add_data()
         set_img_value()
 
     ui.markdown(f"dataset: {dataset_name}, count: 1/20222")
@@ -69,6 +82,7 @@ def main():
     with ui.row():
         ui.button("previous")
         ui.button("confirm", on_click=lambda: set_img_value())
+        ui.button("write", on_click=write_data)
     # ui.link("And many more...", "/documentation").classes("mt-8")
 
     ui.run()
