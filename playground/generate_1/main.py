@@ -51,7 +51,7 @@ def main():
             assert size == im.shape
 
     dataset.create_dataset_func(check_imgs=lambda x: None)(
-        length=5,
+        length=8,
         nums=10,
         gen_block_img=gen_block,
         save_dataset=filesave,
