@@ -86,7 +86,10 @@ def transform_label(label: T.DigitStr) -> T.Label:
 
 
 def save_img_labels(
-    imgs: t.List[T.Img], labels: t.List[T.DigitStr], prefix_name: pathlib.Path, save_to_disk: t.Callable
+    imgs: t.List[T.Img],
+    labels: t.List[T.DigitStr],
+    prefix_name: pathlib.Path,
+    save_to_disk: t.Callable,
 ):
     imgs = [np.expand_dims(img, axis=0) for img in imgs]
     x_train = np.vstack(imgs)
