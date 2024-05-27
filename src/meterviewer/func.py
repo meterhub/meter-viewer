@@ -36,3 +36,23 @@ def looped():
         loop = True
 
     return is_loop, set_loop
+
+
+Result = t.TypeVar("Result")
+
+
+def try_again(
+    total: int,
+    retry_f: t.Callable[[], Result],
+    is_validate_func: t.Callable[[t.Any], bool],
+) -> Result:
+    i = 0
+    res: t.Optional[Result] = None
+    while not is_validate_func(res):
+        res = retry_f()
+        i += 1
+        if i == total:
+            raise Exception("Cannot find valid result")
+
+    assert res, "res must be valid"
+    return res

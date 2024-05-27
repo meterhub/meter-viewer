@@ -2,6 +2,13 @@ import pytest
 from meterviewer import func as F
 
 
+def test_try_again():
+    assert F.try_again(5, lambda: 1, lambda x: x == 1) == 1
+
+    with pytest.raises(Exception):
+        assert F.try_again(5, lambda: 1, lambda x: x == 2) == 1
+
+
 def test_must_loop():
     def func(x):
         assert x == 1
