@@ -77,12 +77,12 @@ def test_get_random_dataset(root_path):
 
 
 def test_read_random_img(root_path):
-    im = single.read_rand_img(root_path, "M1L1XL", 5)
+    im = single.read_rand_img(root_path, lambda: "M1L1XL", 5)
     show_img(im)
 
 
 def test_read_random_digit(root_path):
-    path_gen = single.read_single_digt(lambda: root_path, single.path_fusion, "M1L1XL", 0)()
+    path_gen = single.read_single_digit(root_path, lambda: "M1L1XL", 0)()
     p = next(path_gen)
     assert pathlib.Path(p).exists()
 
