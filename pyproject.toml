@@ -27,6 +27,7 @@ gui = [
 ]
 notebook = [
     "pandoc>=2.3",
+    "nbconvert>=7.16.4",
 ]
 [tool.pdm]
 distribution = false
