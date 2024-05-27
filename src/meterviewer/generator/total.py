@@ -48,15 +48,20 @@ def cut_save_one(root_path: P, filepath: P):
 
 
 def generate_dataset(root_path: P):
+    def read_rand_img(digit: int | str):
+        return single.read_rand_img(
+            digit=digit,
+            root=root_path,
+            get_dataset=lambda: "M1L1XL",
+        )
+
     def gen_block(
         the_digit: T.DigitStr,
     ):
         return dataset.generate_block_img(
             the_digit=the_digit,
-            root_path=root_path,
             join_func=dataset.join_with_resize,
-            get_dataset=lambda: "M1L1XL",
-            read_rand_img=single.read_rand_img,
+            read_rand_img=read_rand_img,
         )
 
     path = root_path / "generated"

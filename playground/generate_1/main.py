@@ -27,12 +27,18 @@ def main():
     P = functools.partial
     root_path = get_root_path()
 
+    def read_rand_img(digit: int | str):
+        return single.read_rand_img(
+            digit=digit,
+            root=root_path,
+            get_dataset=get_dataset,
+            promise=True,
+        )
+
     gen_block = P(
         dataset.generate_block_img,
-        root_path=root_path,
         join_func=dataset.join_with_resize,
-        get_dataset=get_dataset,
-        read_rand_img=P(single.read_rand_img, promise=True),
+        read_rand_img=read_rand_img,
     )
 
     generated_path = root_path / pathlib.Path(r"generated")

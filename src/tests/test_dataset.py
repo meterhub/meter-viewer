@@ -18,12 +18,18 @@ def test_view_on_disk(root_path):
 
 def test_create_dataset(root_path):
     P = functools.partial
+
+    def read_rand_img(digit: int | str):
+        return single.read_rand_img(
+            digit=digit,
+            root=root_path,
+            get_dataset=lambda: "M1L1XL",
+        )
+
     gen_block = P(
         dataset.generate_block_img,
-        root_path=root_path,
         join_func=dataset.join_with_resize,
-        get_dataset=lambda: "M1L1XL",
-        read_rand_img=single.read_rand_img,
+        read_rand_img=read_rand_img,
     )
 
     path = root_path / pathlib.Path(r"generated")
@@ -52,21 +58,24 @@ def test_create_dataset(root_path):
 
 
 def test_generate_block_img(root_path):
+    def read_rand_img(digit: int | str):
+        return single.read_rand_img(
+            digit=digit,
+            root=root_path,
+            get_dataset=lambda: "M1L1XL",
+        )
+
     im = dataset.generate_block_img(
         ["1", "2", "3", "4"],
-        root_path,
         img.join_img,
-        lambda: "M1L1XL",
-        single.read_rand_img,
+        read_rand_img,
     )
     show_img(im)
 
     im = dataset.generate_block_img(
         ["1", "2", "3", "5", "6"],
-        root_path,
         dataset.join_with_resize,
-        lambda: "M1L1XL",
-        single.read_rand_img,
+        read_rand_img,
     )
     show_img(im)
 

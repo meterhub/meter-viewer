@@ -119,14 +119,12 @@ def get_random_dataset(root: pathlib.Path, get_dataset_list: t.Callable) -> t.Tu
 
 def generate_block_img(
     the_digit: T.DigitStr,
-    root_path: pathlib.Path,
     join_func: T.JoinFunc,
-    get_dataset: t.Callable[[], str | pathlib.Path],
-    read_rand_img: t.Callable[[pathlib.Path, t.Callable[[], str | pathlib.Path], int | str], T.Img],
+    read_rand_img: t.Callable[[int | str], T.Img],
 ) -> T.Img:
     img_list = []
     for digit in the_digit:
-        im = read_rand_img(root_path, get_dataset, digit)
+        im = read_rand_img(digit)
         img_list.append(im)
     return join_func(img_list, img.size_check)
 
