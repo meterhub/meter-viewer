@@ -6,17 +6,27 @@ import random
 import pathlib
 from .dataset import get_dataset_path
 from meterviewer import files, T
+from meterviewer import func
 from matplotlib import pyplot as plt
 
 
-def path_fusion(root: pathlib.Path, dataset_name: str, num: int):
+def path_fusion(
+    root: pathlib.Path,
+    dataset_name: str,
+    num: int,
+):
     """return single digit"""
     p = get_dataset_path(root, dataset_name) / "Digit" / str(num)
     return p
 
 
-def read_rand_img(root: pathlib.Path, get_dataset: t.Callable[[], str | pathlib.Path], digit: int | str) -> T.Img:
-    get_one = read_single_digit(root, get_dataset=get_dataset, num=int(digit))
+def read_rand_img(
+    root: pathlib.Path,
+    get_dataset: t.Callable[[], str | pathlib.Path],
+    digit: int | str,
+    promise=False,
+) -> T.Img:
+    get_one = read_single_digit(root, get_dataset=get_dataset, num=int(digit), promise=promise)
     all_imgs = list(get_one())
     length = len(all_imgs)
     i = random.randint(0, length - 1)
@@ -28,7 +38,17 @@ def read_single_digit(
     root_path: pathlib.Path,
     get_dataset: t.Callable[[], str | pathlib.Path],
     num: int,
-) -> t.Callable:
+    promise: bool,
+):
+    """promised return"""
     assert num in range(0, 10), "num must be 0~9"
-    p: pathlib.Path = path_fusion(root_path, str(get_dataset()), num)
+
+    def might_fail_func() -> pathlib.Path:
+        return path_fusion(root_path, str(get_dataset()), num)
+
+    if promise:
+        p = func.try_again(5, might_fail_func, lambda p: p.exists())
+    else:
+        p = might_fail_func()
+
     return functools.partial(files.scan_pics, p)

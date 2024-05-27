@@ -82,7 +82,7 @@ def test_read_random_img(root_path):
 
 
 def test_read_random_digit(root_path):
-    path_gen = single.read_single_digit(root_path, lambda: "M1L1XL", 0)()
+    path_gen = single.read_single_digit(root_path, lambda: "M1L1XL", 0, promise=False)()
     p = next(path_gen)
     assert pathlib.Path(p).exists()
 
