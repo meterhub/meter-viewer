@@ -30,5 +30,5 @@ def read_single_digit(
     num: int,
 ) -> t.Callable:
     assert num in range(0, 10), "num must be 0~9"
-    p: pathlib.Path = root_path / path_fusion(root_path, str(get_dataset()), num)
+    p: pathlib.Path = path_fusion(root_path, str(get_dataset()), num)
     return functools.partial(files.scan_pics, p)
