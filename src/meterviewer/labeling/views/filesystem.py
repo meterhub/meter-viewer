@@ -2,9 +2,10 @@ import typing as t
 from meterviewer import files
 from meterviewer.datasets import dataset
 import pathlib
+from .types import viewReturn
 
 
-def from_filesystem(root_path: pathlib.Path) -> t.Generator[t.Tuple[pathlib.Path, pathlib.Path, str], None, None]:
+def from_filesystem(root_path: pathlib.Path) -> viewReturn:
     for dataset_name in dataset.get_dataset_list(root_path):
         img_p = files.scan_pics(dataset.get_dataset_path(root_path, str(dataset_name)))
         img_p = list(img_p)
