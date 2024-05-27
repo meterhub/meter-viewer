@@ -16,7 +16,7 @@ def from_filesystem(root_path: pathlib.Path) -> viewReturn:
 def view_dataset(root_path: pathlib.Path) -> viewReturn:
     def get_images(dataset_path: pathlib.Path):
         # lookup 3 images.
-        pics = list(files.scan_pics(dataset_path))[:3]
+        pics = list(files.scan_pics(dataset_path))[:1]
         return pics
 
     datasets = dataset.get_dataset_list(root_path)

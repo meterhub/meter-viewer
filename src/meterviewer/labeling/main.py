@@ -7,10 +7,15 @@ from meterviewer.labeling.config import get_root_path
 from meterviewer.labeling import views
 
 
-def get_image_path(root_path: pathlib.Path, type_: t.Literal["filesys", "db"]):
-    if type_ == "filesys":
+def get_image_path(root_path: pathlib.Path, mode: t.Literal["filesys", "db", "quick_view"]):
+    if mode == "filesys":
         return views.filesystem.from_filesystem(root_path=root_path)
-    return views.db.from_db()
+    elif mode == "quick_view":
+        return views.filesystem.view_dataset(root_path=root_path)
+    elif mode == "db":
+        return views.db.from_db()
+    else:
+        raise ValueError("mode not found.")
 
 
 def show(event: ValueChangeEventArguments):
@@ -41,8 +46,7 @@ def main():
 
     _ = ui.keyboard(handle_key)
 
-    # dataset_g = get_image_path(root_path=root_path, type_="db")
-    dataset_g = views.filesystem.view_dataset(root_path=root_path)
+    dataset_g = get_image_path(root_path=root_path, mode="quick_view")
     img_path, dataset_name, id = next(dataset_g)
     carry_v = None
 
@@ -54,13 +58,15 @@ def main():
         print(f"value_set: {carry_v}")
         img_path, dataset_name, id = next(dataset_g)
         current_img.source = img_path
+        mrk.content = f"dataset: {dataset_name}, count: {id}/20222"
         toggle1.set_value(None)
 
     # make sure which dataset to use.
     collect_set = set()
 
-    def add_data():
-        collect_set.add(dataset_name)
+    def add_data(value):
+        if value == "1" or value == 1:
+            collect_set.add(dataset_name)
 
     def write_data():
         with open("temp.toml", "w") as f:
@@ -69,10 +75,10 @@ def main():
     def set_value(event: ValueChangeEventArguments):
         nonlocal carry_v
         carry_v = event.value
-        add_data()
+        add_data(carry_v)
         set_img_value()
 
-    ui.markdown(f"dataset: {dataset_name}, count: 1/20222")
+    mrk = ui.markdown(f"dataset: {dataset_name}, count: 1/20222")
     with ui.row():
         current_img = ui.image(img_path).classes("w-[540px]")
 
