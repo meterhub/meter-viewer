@@ -1,8 +1,11 @@
-def my_gen(start: int):
-    for i in range(start, start + 5):
-        yield i
+import numpy as np
+from meterviewer import img
+from PIL import Image
 
 
-def gen2():
-    for g in [my_gen(2), my_gen(3)]:
-        yield g
+def test_gen_pics():
+    im = np.zeros([30, 120, 3], dtype=np.uint8)
+    im = Image.fromarray(im)
+    filename = "/tmp/test.png"
+    im.save(filename)
+    img.show_img(im, is_stop=False)
