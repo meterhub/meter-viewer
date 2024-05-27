@@ -25,6 +25,9 @@ license = {text = "MIT"}
 gui = [
     "nicegui>=1.4.25",
 ]
+notebook = [
+    "pandoc>=2.3",
+]
 [tool.pdm]
 distribution = false
 
