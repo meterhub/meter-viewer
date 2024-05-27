@@ -2,25 +2,14 @@ import pathlib
 import typing as t
 from nicegui import ui
 from nicegui.events import ValueChangeEventArguments, KeyEventArguments
-from meterviewer import files
-from meterviewer.datasets import dataset
 from meterviewer.labeling.config import get_root_path
-from meterviewer.models import func
+from . import views
 
 
 def get_image_path(root_path: pathlib.Path, type_: t.Literal["filesys", "db"]):
-    def from_filesystem():
-        for dataset_name in dataset.get_dataset_list(root_path):
-            img_p = files.scan_pics(dataset.get_dataset_path(root_path, str(dataset_name)))
-            yield img_p, dataset_name, "invalid"
-
-    def from_db():
-        dbpath = "alldata.db"
-        items = func.get_carry_items(dbpath)
-        for item in items:
-            yield item.filename, pathlib.Path(item.filename).parent, id
-
-    return from_db()
+    if type_ == "filesys":
+        return views.filesystem.from_filesystem(root_path=root_path)
+    return views.db.from_db()
 
 
 def show(event: ValueChangeEventArguments):

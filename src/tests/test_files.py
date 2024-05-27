@@ -1,4 +1,5 @@
 import pathlib
+import typing as t
 import numpy as np
 from meterviewer import files
 from .utils import gen_img
@@ -27,7 +28,7 @@ def test_transform_label():
 def test_scan_pics(root_path):
     path = root_path / pathlib.Path(r"lens_6/XL/XL/M1L1XL/Digit/0")
     count = 0
-    pics = []
+    pics: t.List[pathlib.Path] = []
 
     def update_count(name):
         nonlocal count, pics
@@ -36,4 +37,7 @@ def test_scan_pics(root_path):
 
     [update_count(name) for name in files.scan_pics(path)]
     assert count == 20
+    assert pics[0].parent.name == "0"
+    # path like this:
+    # PosixPath('/home/svtter/Work/Dataset/MeterData/lens_6/XL/XL/M1L1XL/Digit/0/4_2018-11-23-19-21-01.jpg')
     # assert False, pics
