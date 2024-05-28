@@ -65,6 +65,14 @@ def dataset_length_list() -> t.List[int]:
     return [5, 6, 7, 8]
 
 
+def create_str_with_fill(
+    number: int,
+    length: int,
+    total: int,
+) -> T.DigitStr:
+    return fill_digit(img.number_to_string(number, length), total)
+
+
 def create_labels_func(
     length: int,
     total: int,
@@ -78,7 +86,7 @@ def create_labels_func(
             number = random.randint(0, 10**length)
             numbers.append(number)
             str_digits.append(
-                fill_digit(img.number_to_string(number, length), total),
+                create_str_with_fill(number, length, total),
             )
         return numbers, str_digits
 
@@ -92,17 +100,15 @@ SaveDatasetFunc = t.Callable[[T.ImgList, t.List[T.DigitStr]], None]
 def create_dataset_func(
     check_imgs: t.Callable[[T.ImgList], None],
     total: int,
-) -> t.Callable[[int, int, GenBlockImgFunc, SaveDatasetFunc], None]:
+) -> t.Callable[[int, int, GenBlockImgFunc], t.Tuple[t.List[T.Img], t.List[T.DigitStr]]]:
     """创建新的数据库"""
 
     def inner(
         length: int,
-        nums: int,
+        value: int,
         gen_block_img: GenBlockImgFunc,
-        save_dataset: SaveDatasetFunc,
     ):
-        create_label = create_labels_func(length, total)
-        _, str_digits = create_label(nums)
+        _, str_digits = create_labels_func(length, total)(value)
 
         imgs = []
         for digit in str_digits:
@@ -112,7 +118,7 @@ def create_dataset_func(
         # files.write_shape(imgs, 3)
         check_imgs(imgs)
         imgs = img.resize_imglist(imgs)
-        save_dataset(imgs, str_digits)
+        return imgs, str_digits
 
     return inner
 
@@ -156,12 +162,13 @@ def handle_datasets(root: pathlib.Path, handle_func: t.Callable[[pathlib.Path], 
         handle_func(dataset)
 
 
-def fill_digit(digit: T.DigitStr, total_length: int):
+def fill_digit(digit: T.DigitStr, total_length: int) -> T.DigitStr:
+    digit2 = digit.copy()
     if len(digit) < 5:
         raise ValueError(f"digit lenght must > 5, {digit}")
 
     if len(digit) < total_length:
-        digit.append("x" * (total_length - len(digit)))
+        digit2.extend(["x"] * (total_length - len(digit)))
     else:
         raise ValueError(f"digit lenght must < {total_length}, {digit}")
-    return digit
+    return digit2

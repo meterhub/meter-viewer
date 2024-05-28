@@ -7,8 +7,29 @@ from meterviewer.datasets import dataset, single
 from tests.utils import show_img
 
 
+def test_create_label():
+    assert dataset.create_str_with_fill(1234, 5, 8) == ["0", "1", "2", "3", "4", "x", "x", "x"]
+    assert dataset.create_str_with_fill(12340, 5, 8) == ["1", "2", "3", "4", "0", "x", "x", "x"]
+
+
+def test_python_syntax():
+    arr = ["1", "2", "3", "4"]
+    arr.extend(["x"] * 3)
+    assert arr == list("1234xxx")
+    assert arr == ["1", "2", "3", "4", "x", "x", "x"]
+
+    arr = list("1234")
+    arr.extend(["x"] * 3)
+    assert arr == list("1234xxx")
+
+
 def test_fill_digit():
-    assert dataset.fill_digit(list("12312"), 7), "12312xx"
+    assert dataset.fill_digit(list("12312"), 7) == list("12312xx")
+    assert dataset.fill_digit(list("01234"), 8) == list("01234xxx")
+    assert dataset.fill_digit(["0", "1", "2", "3", "4"], 8) == ["0", "1", "2", "3", "4", "x", "x", "x"]
+    assert list("12312xx") == ["1", "2", "3", "1", "2", "x", "x"]
+    assert list("1212xx") == ["1", "2", "1", "2", "x", "x"]
+    assert list("0123") == ["0", "1", "2", "3"]
 
     with pytest.raises(ValueError):
         dataset.fill_digit(list("12312"), 4)
@@ -58,12 +79,12 @@ def test_create_dataset(root_path):
             show_img(im)
             assert size == im.shape
 
-    dataset.create_dataset_func(check_imgs=lambda x: None, total=9)(
+    imgs, labels = dataset.create_dataset_func(check_imgs=lambda x: None, total=9)(
         length=5,
         nums=10,
         gen_block_img=gen_block,
-        save_dataset=filesave,
     )
+    filesave(imgs=imgs, labels=labels)
 
 
 def test_generate_block_img(root_path):
