@@ -6,13 +6,13 @@ import os
 import typing as t
 import pathlib
 import datetime
-import functools
 
 # import numpy as np
 import random
 
 from .. import img, files, types as T
 from .view import view_dataset_in_rows, view_dataset, view_dataset_on_disk  # noqa
+from .join import join_with_fix, join_with_resize  # noqa
 
 
 def generate_func() -> t.List[t.Callable[[pathlib.Path], T.ImgDataset]]:
@@ -150,18 +150,12 @@ def handle_datasets(root: pathlib.Path, handle_func: t.Callable[[pathlib.Path], 
         handle_func(dataset)
 
 
-def join_with_fix(imglist: T.ImgList, check_func: t.Callable, fix_func: t.Callable) -> T.Img:
-    """修饰 join_func"""
-    # merge images horizontally
-    try:
-        return img.join_img(imglist, check_func)
-    except ValueError as e:
-        print(e)
-        imglist = fix_func(imglist)
-    return img.join_img(imglist, check_func)
+def fill_digit(digit: T.DigitStr, total_length: int):
+    if len(digit) < 5:
+        raise ValueError(f"digit lenght must > 5, {digit}")
 
-
-join_with_resize: T.JoinFunc = functools.partial(join_with_fix, fix_func=img.resize_imglist)
-# def walk_dataset(dataset: str) -> t.Iterator[T.Img, T.DigitStr]:
-#     """get img and dataset"""
-#     pass
+    if len(digit) < total_length:
+        digit.append("x" * (total_length - len(digit)))
+    else:
+        raise ValueError(f"digit lenght must < {total_length}, {digit}")
+    return digit

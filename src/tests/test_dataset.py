@@ -1,9 +1,18 @@
+import pytest
 import functools
 from meterviewer import img, files, types as T
 import pathlib
 
 from meterviewer.datasets import dataset, single
 from tests.utils import show_img
+
+
+def test_fill_digit():
+    assert dataset.fill_digit(list("12312"), 7), "12312xx"
+
+    with pytest.raises(ValueError):
+        dataset.fill_digit(list("12312"), 4)
+        dataset.fill_digit(list("12"), 4)
 
 
 def test_view_on_disk(root_path):
