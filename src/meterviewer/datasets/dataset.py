@@ -105,10 +105,10 @@ def create_dataset_func(
 
     def inner(
         length: int,
-        value: int,
+        nums: int,
         gen_block_img: GenBlockImgFunc,
     ):
-        _, str_digits = create_labels_func(length, total)(value)
+        _, str_digits = create_labels_func(length, total)(nums)
 
         imgs = []
         for digit in str_digits:

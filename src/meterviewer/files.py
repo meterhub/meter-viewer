@@ -80,8 +80,11 @@ def transform_img(img: T.Img) -> T.Img:
     return np.expand_dims(img, axis=0)
 
 
-def transform_label(label: T.DigitStr) -> T.Label:
-    label_ = [int(i) for i in label]
+def transform_label(label: T.DigitStr, to_int: bool) -> T.Label:
+    if to_int:
+        label_ = [int(i) for i in label]
+    else:
+        label_ = label
     return np.expand_dims(np.array(label_), axis=0)
 
 
@@ -93,7 +96,7 @@ def save_img_labels(
 ):
     imgs = [np.expand_dims(img, axis=0) for img in imgs]
     x_train = np.vstack(imgs)
-    labels_ = [transform_label(label) for label in labels]
+    labels_ = [transform_label(label, False) for label in labels]
     y_train = np.vstack(labels_)
 
     save_to_disk(str(prefix_name / T.x_name), x_train)
