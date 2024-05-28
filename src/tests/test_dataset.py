@@ -58,7 +58,7 @@ def test_create_dataset(root_path):
             show_img(im)
             assert size == im.shape
 
-    dataset.create_dataset_func(check_imgs=lambda x: None)(
+    dataset.create_dataset_func(check_imgs=lambda x: None, total=9)(
         length=5,
         nums=10,
         gen_block_img=gen_block,
@@ -88,6 +88,13 @@ def test_generate_block_img(root_path):
     )
     show_img(im)
 
+    im = dataset.generate_block_img(
+        ["1", "2", "3", "5", "6", "x", "x"],
+        dataset.join_with_resize,
+        read_rand_img,
+    )
+    show_img(im)
+
 
 def test_get_random_dataset(root_path):
     _, index = dataset.get_random_dataset(root_path, dataset.get_dataset_list)
@@ -96,6 +103,9 @@ def test_get_random_dataset(root_path):
 
 def test_read_random_img(root_path):
     im = single.read_rand_img(root_path, lambda: "M1L1XL", 5)
+    show_img(im)
+
+    im = single.read_rand_img(root_path, lambda: "M1L1XL", "x")
     show_img(im)
 
 
