@@ -96,3 +96,7 @@ def show_img(img, is_stop):
     plt.show()
     if is_stop:
         sys.exit(-1)
+
+
+def gen_empty_im(size: t.Tuple[int, int, int]):
+    return np.zeros(size, dtype=np.uint8)
