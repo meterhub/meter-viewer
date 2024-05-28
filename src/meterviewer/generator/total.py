@@ -47,7 +47,9 @@ def cut_save_one(root_path: P, filepath: P):
     cut_save(filepath, create_save_func(root_path / "./generated", filepath))
 
 
-def generate_dataset(root_path: P):
+def generate_dataset(root_path: P, total: int):
+    """total: the total number of digits."""
+
     def read_rand_img(digit: int | str):
         return single.read_rand_img(
             digit=digit,

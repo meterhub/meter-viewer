@@ -6,7 +6,7 @@ import random
 import pathlib
 from .dataset import get_dataset_path
 from meterviewer import files, T
-from meterviewer import func
+from meterviewer import func, img
 from matplotlib import pyplot as plt
 
 
@@ -26,7 +26,16 @@ def read_rand_img(
     digit: int | str,
     promise=False,
 ) -> T.Img:
-    get_one = read_single_digit(root, get_dataset=get_dataset, num=int(digit), promise=promise)
+    if digit == "x":
+        im = img.gen_empty_im((32, 40, 3))
+        return im
+
+    get_one = read_single_digit(
+        root,
+        get_dataset=get_dataset,
+        num=int(digit),
+        promise=promise,
+    )
     all_imgs = list(get_one())
     length = len(all_imgs)
     i = random.randint(0, length - 1)

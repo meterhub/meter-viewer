@@ -67,14 +67,19 @@ def dataset_length_list() -> t.List[int]:
 
 def create_labels_func(
     length: int,
+    total: int,
 ) -> t.Callable[[int], t.Tuple[t.List[int], t.List[T.DigitStr]]]:
+    """total length"""
+
     def generate_nums(train_nums: int):
         numbers = []
         str_digits = []
         for _ in range(train_nums):
             number = random.randint(0, 10**length)
             numbers.append(number)
-            str_digits.append(img.number_to_string(number, length))
+            str_digits.append(
+                fill_digit(img.number_to_string(number, length), total),
+            )
         return numbers, str_digits
 
     return generate_nums
@@ -86,6 +91,7 @@ SaveDatasetFunc = t.Callable[[T.ImgList, t.List[T.DigitStr]], None]
 
 def create_dataset_func(
     check_imgs: t.Callable[[T.ImgList], None],
+    total: int,
 ) -> t.Callable[[int, int, GenBlockImgFunc, SaveDatasetFunc], None]:
     """创建新的数据库"""
 
@@ -95,7 +101,7 @@ def create_dataset_func(
         gen_block_img: GenBlockImgFunc,
         save_dataset: SaveDatasetFunc,
     ):
-        create_label = create_labels_func(length)
+        create_label = create_labels_func(length, total)
         _, str_digits = create_label(nums)
 
         imgs = []
