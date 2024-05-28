@@ -45,7 +45,7 @@ def main():
     generated_path.mkdir(exist_ok=True)
 
     filesave = P(
-        files.save_img_labels,
+        files.save_img_labels_with_default,
         prefix_name=generated_path,
         save_to_disk=files.save_to_disk,
     )
@@ -56,9 +56,9 @@ def main():
         for im in imgs:
             assert size == im.shape
 
-    dataset.create_dataset_func(check_imgs=lambda x: None)(
+    imgs, labels = dataset.create_dataset_func(check_imgs=lambda x: None, total=9)(
         length=8,
         nums=10,
         gen_block_img=gen_block,
-        save_dataset=filesave,
     )
+    filesave(imgs, labels)

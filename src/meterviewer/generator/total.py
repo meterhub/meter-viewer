@@ -70,7 +70,7 @@ def generate_dataset(root_path: P, total: int):
     path.mkdir(exist_ok=True)
 
     filesave = functools.partial(
-        files.save_img_labels,
+        files.save_img_labels_with_default,
         prefix_name=path,
         save_to_disk=files.save_to_disk,
     )

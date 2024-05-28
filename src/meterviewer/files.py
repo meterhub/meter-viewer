@@ -88,19 +88,36 @@ def transform_label(label: T.DigitStr, to_int: bool) -> T.Label:
     return np.expand_dims(np.array(label_), axis=0)
 
 
-def save_img_labels(
+def save_imgs_labels(
+    imgs_labels: t.Tuple[t.List[T.Img], t.List[T.DigitStr]],
+    np_name: t.Callable[[], t.Tuple[pathlib.Path, str, str]],
+    save_to_disk: t.Callable,
+):
+    imgs, labels = imgs_labels
+    imgs = [np.expand_dims(img, axis=0) for img in imgs]
+    labels_ = [transform_label(label, False) for label in labels]
+    x_train = np.vstack(imgs)
+    y_train = np.vstack(labels_)
+
+    prefix_path, x_name, y_name = np_name()
+    save_to_disk(str(prefix_path / x_name), x_train)
+    save_to_disk(str(prefix_path / y_name), y_train)
+
+
+def save_img_labels_with_default(
     imgs: t.List[T.Img],
     labels: t.List[T.DigitStr],
     prefix_name: pathlib.Path,
     save_to_disk: t.Callable,
 ):
-    imgs = [np.expand_dims(img, axis=0) for img in imgs]
-    x_train = np.vstack(imgs)
-    labels_ = [transform_label(label, False) for label in labels]
-    y_train = np.vstack(labels_)
+    def np_name():
+        return prefix_name, T.x_name, T.y_name
 
-    save_to_disk(str(prefix_name / T.x_name), x_train)
-    save_to_disk(str(prefix_name / T.y_name), y_train)
+    return save_imgs_labels(
+        (imgs, labels),
+        np_name,
+        save_to_disk,
+    )
 
 
 def save_to_disk(filename: str, data: np.ndarray):
