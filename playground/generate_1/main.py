@@ -4,8 +4,7 @@ import pathlib
 import random
 import functools
 from meterviewer.datasets import dataset, single
-from meterviewer import files
-from meterviewer import img
+from meterviewer import files, T, img
 from . import config_path
 
 from meterviewer.labeling.config import get_root_path
@@ -27,7 +26,7 @@ def main():
     P = functools.partial
     root_path = get_root_path()
 
-    def read_rand_img(digit: int | str):
+    def read_rand_img(digit: int | str) -> T.Img:
         return single.read_rand_img(
             digit=digit,
             root=root_path,
@@ -56,7 +55,8 @@ def main():
         for im in imgs:
             assert size == im.shape
 
-    imgs, labels = dataset.create_dataset_func(check_imgs=lambda x: None, total=9)(
+    create_dataset = dataset.create_dataset_func(check_imgs=lambda x: None, total=9)
+    imgs, labels = create_dataset(
         length=8,
         nums=10,
         gen_block_img=gen_block,
