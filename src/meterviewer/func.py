@@ -45,6 +45,7 @@ def try_again(
     total: int,
     retry_f: t.Callable[[], Result],
     is_validate_func: t.Callable[[t.Any], bool],
+    fail_message: str,
 ) -> Result:
     i = 0
     res = retry_f()
@@ -52,6 +53,6 @@ def try_again(
         res = retry_f()
         i += 1
         if i == total:
-            raise Exception("Cannot find valid result")
+            raise Exception(f"Cannot find valid result, {fail_message}")
 
     return res
