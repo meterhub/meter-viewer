@@ -56,7 +56,7 @@ def read_single_digit(
         return path_fusion(root_path, str(get_dataset()), num)
 
     if promise:
-        p = func.try_again(10, might_fail_func, lambda p: p.exists(), fail_message=f"cannot num: {num}")
+        p = func.try_again(15, might_fail_func, lambda p: p.exists(), fail_message=f"cannot num: {num}")
     else:
         p = might_fail_func()
 
