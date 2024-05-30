@@ -6,6 +6,7 @@ import os
 import typing as t
 import pathlib
 import datetime
+from tqdm import tqdm
 
 # import numpy as np
 import random
@@ -111,7 +112,7 @@ def create_dataset_func(
         _, str_digits = create_labels_func(length, total)(nums)
 
         imgs = []
-        for digit in str_digits:
+        for digit in tqdm(str_digits):
             im = gen_block_img(digit)
             imgs.append(im)
 

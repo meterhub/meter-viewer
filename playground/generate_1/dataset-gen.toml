@@ -1,6 +1,6 @@
 [generate_config]
 name = "generate 1"
-path = "generated"
+path = "generated_new"
 description = "These dataset has high quality, could be used to generate block image"
 x_name = "x_train.npy"
 y_name = "y_train.npy"

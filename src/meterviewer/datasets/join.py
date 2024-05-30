@@ -2,6 +2,7 @@ import typing as t
 import functools
 from meterviewer import T
 from meterviewer import img
+from loguru import logger
 
 
 def join_with_fix(imglist: T.ImgList, check_func: t.Callable, fix_func: t.Callable) -> T.Img:
@@ -10,7 +11,7 @@ def join_with_fix(imglist: T.ImgList, check_func: t.Callable, fix_func: t.Callab
     try:
         return img.join_img(imglist, check_func)
     except ValueError as e:
-        print(e)
+        logger.warning(e)
         imglist = fix_func(imglist)
     return img.join_img(imglist, check_func)
 
