@@ -11,31 +11,29 @@ from meterviewer.labeling.config import get_root_path
 from loguru import logger
 import sys
 
-config_path = pathlib.Path(__file__).parent / "dataset-gen-5.toml"
 
 # 设置控制台输出的日志级别为 WARNING
 logger.remove()  # 移除默认的控制台输出
-logger.add(sys.stdout, level="ERROR")
+logger.add(sys.stdout, level="INFO")
 
 
-dataset_list: t.List[str] = []
 getList = t.Literal["dataset", "path", "length", "total_nums"]
 
 
-def load_config() -> t.Callable[[getList], t.Any]:
+def load_config(config_path: pathlib.Path) -> t.Callable[[getList], t.Any]:
     data: t.Optional[dict] = None
+    dataset_list: t.List[str] = []
 
     def load_conf() -> dict:
         nonlocal data
         if data is None:
-            if len(dataset_list) == 0:
-                with open(config_path, "r") as f:
-                    data = toml.load(f)
-        assert data is not None, config_path
+            with open(config_path, "r") as f:
+                data = toml.load(f)
+        assert data is not None, (config_path, data)
         return data
 
     def get_dataset() -> str:
-        global dataset_list
+        nonlocal dataset_list
         dataset_list = get_config("dataset")
         return random.choice(dataset_list)
 
@@ -63,9 +61,23 @@ def load_config() -> t.Callable[[getList], t.Any]:
 
 
 def main():
+    config_list = [
+        # "dataset-gen.toml",
+        # "dataset-gen-2.toml",
+        "dataset-gen-3.toml",
+        "dataset-gen-4.toml",
+        "dataset-gen-5.toml",
+    ]
+    parent = pathlib.Path(__file__).parent
+    for config in config_list:
+        logger.info(f"generating dataset with {config}...")
+        generate_dataset(parent / config)
+
+
+def generate_dataset(config_path: pathlib.Path):
     P = functools.partial
     root_path = get_root_path()
-    get_f = load_config()
+    get_f = load_config(config_path=config_path)
 
     def read_rand_img(digit: int | str) -> T.Img:
         return single.read_rand_img(

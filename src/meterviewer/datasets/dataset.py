@@ -131,7 +131,7 @@ def create_dataset_func(
 
         # files.write_shape(imgs, 3)
         check_imgs(imgs)
-        imgs = img.resize_imglist(imgs)
+        imgs = img.resize_imglist(imgs, size=[37, 297])
         return imgs, str_digits
 
     return inner
