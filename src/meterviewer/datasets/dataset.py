@@ -94,8 +94,12 @@ def create_labels_func(
     return generate_nums
 
 
-GenBlockImgFunc = t.Callable[[T.DigitStr], T.Img]
-SaveDatasetFunc = t.Callable[[T.ImgList, t.List[T.DigitStr]], None]
+class GenBlockImgFunc(t.Protocol):
+    def __call__(self, digit: T.DigitStr) -> T.Img: ...
+
+
+class SaveDatasetFunc(t.Protocol):
+    def __call__(self, imgs: T.ImgList, str_digits: t.List[T.DigitStr]) -> None: ...
 
 
 class CreateDatasetFunc(t.Protocol):
