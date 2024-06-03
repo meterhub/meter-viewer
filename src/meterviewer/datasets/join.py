@@ -11,7 +11,7 @@ def join_with_fix(imglist: T.ImgList, check_func: t.Callable, fix_func: t.Callab
     try:
         return img.join_img(imglist, check_func)
     except ValueError as e:
-        logger.warning(e)
+        logger.debug(e)
         imglist = fix_func(imglist)
     return img.join_img(imglist, check_func)
 
