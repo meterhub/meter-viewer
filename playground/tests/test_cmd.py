@@ -1,4 +1,4 @@
-from meterviewer.cmd import create_all
+from playground.generate_db import create_all
 
 
 def test_create(root_path):
