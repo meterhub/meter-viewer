@@ -98,10 +98,19 @@ GenBlockImgFunc = t.Callable[[T.DigitStr], T.Img]
 SaveDatasetFunc = t.Callable[[T.ImgList, t.List[T.DigitStr]], None]
 
 
+class CreateDatasetFunc(t.Protocol):
+    def __call__(
+        self,
+        length: int,
+        nums: int,
+        gen_block_img: GenBlockImgFunc,
+    ) -> t.Tuple[t.List[T.Img], t.List[T.DigitStr]]: ...
+
+
 def create_dataset_func(
     check_imgs: t.Callable[[T.ImgList], None],
     total: int,
-) -> t.Callable[[int, int, GenBlockImgFunc], t.Tuple[t.List[T.Img], t.List[T.DigitStr]]]:
+) -> CreateDatasetFunc:
     """创建新的数据库"""
 
     def inner(

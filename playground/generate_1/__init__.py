@@ -1,6 +1,6 @@
 import pathlib
 
-config_path = pathlib.Path(__file__).parent / "dataset-gen.toml"
+config_path = pathlib.Path(__file__).parent / "dataset-gen-2.toml"
 
 from .main import main
 

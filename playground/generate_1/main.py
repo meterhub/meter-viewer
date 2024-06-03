@@ -1,4 +1,5 @@
 import typing as t
+from arrow import get
 import toml
 import pathlib
 import random
@@ -18,7 +19,7 @@ logger.add(sys.stdout, level="ERROR")
 
 
 dataset_list: t.List[str] = []
-getList = t.Literal["dataset", "path"]
+getList = t.Literal["dataset", "path", "length", "total_nums"]
 
 
 def load_config() -> t.Callable[[getList], t.Any]:
@@ -35,17 +36,26 @@ def load_config() -> t.Callable[[getList], t.Any]:
 
     def get_dataset() -> str:
         global dataset_list
-        data = load_conf()
-        dataset_list = data.get("generate_config").get("dataset")
+        dataset_list = get_config("dataset")
         return random.choice(dataset_list)
 
-    def get_path():
-        return load_conf().get("generate_config").get("path")
+    def get_config(name: str):
+        c = load_conf().get("generate_config", None)
+        if c is None:
+            raise Exception('config "generate_config" not found')
+        return c.get(name)
+
+    pt = functools.partial
+    get_path = pt(get_config, name="path")
+    get_length = pt(get_config, name="length")
+    get_total_nums = pt(get_config, name="total_nums")
 
     def get_func(name: getList) -> t.Callable:
         func_map: t.Mapping[str, t.Callable] = {
             "dataset": get_dataset,
             "path": get_path,
+            "length": get_length,
+            "total_nums": get_total_nums,
         }
         return func_map[name]
 
@@ -88,8 +98,8 @@ def main():
 
     create_dataset = dataset.create_dataset_func(check_imgs=lambda x: None, total=9)
     imgs, labels = create_dataset(
-        length=6,
-        nums=100000,
+        length=get_f("length")(),
+        nums=get_f("total_nums")(),
         gen_block_img=gen_block,
     )
     filesave(imgs, labels)
