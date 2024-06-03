@@ -181,7 +181,7 @@ def fill_digit(digit: T.DigitStr, total_length: int) -> T.DigitStr:
     if len(digit) < 5:
         raise ValueError(f"digit lenght must > 5, {digit}")
 
-    if len(digit) < total_length:
+    if len(digit) <= total_length:
         digit2.extend(["x"] * (total_length - len(digit)))
     else:
         raise ValueError(f"digit lenght must < {total_length}, {digit}")

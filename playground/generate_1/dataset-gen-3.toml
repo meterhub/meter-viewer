@@ -1,11 +1,11 @@
 [generate_config]
-name = "generate 1"
-path = "generated_new"
-description = "These dataset has high quality, could be used to generate block image"
+name = "generate 2"
+path = "generated_new_3"
+description = "These dataset has high quality, could be used to generate block image."
 x_name = "x_train.npy"
 y_name = "y_train.npy"
 total_nums = 100000
-length = 6
+length = 7
 
 dataset = [
     "M2L10XL",

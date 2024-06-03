@@ -1,17 +1,17 @@
 import typing as t
-from arrow import get
 import toml
 import pathlib
 import random
 import functools
 from meterviewer.datasets import dataset, single
 from meterviewer import files, T, img
-from . import config_path
 
 from meterviewer.labeling.config import get_root_path
 
 from loguru import logger
 import sys
+
+config_path = pathlib.Path(__file__).parent / "dataset-gen-5.toml"
 
 # 设置控制台输出的日志级别为 WARNING
 logger.remove()  # 移除默认的控制台输出
@@ -75,11 +75,8 @@ def main():
             promise=True,
         )
 
-    gen_block = P(
-        dataset.generate_block_img,
-        join_func=dataset.join_with_resize,
-        read_rand_img=read_rand_img,
-    )
+    def gen_block(digit: T.DigitStr) -> T.Img:
+        return dataset.generate_block_img(digit, dataset.join_with_resize, read_rand_img)
 
     generated_path = root_path / pathlib.Path(get_f("path")())
     generated_path.mkdir(exist_ok=True)
