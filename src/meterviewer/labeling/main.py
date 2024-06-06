@@ -3,7 +3,7 @@ import pathlib
 import typing as t
 from nicegui import ui
 from nicegui.events import ValueChangeEventArguments, KeyEventArguments
-from meterviewer.labeling.config import get_root_path
+from meterviewer.config import get_root_path
 from meterviewer.labeling import views
 
 

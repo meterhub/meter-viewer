@@ -6,7 +6,7 @@ import functools
 from meterviewer.datasets import dataset, single
 from meterviewer import files, T, img
 
-from meterviewer.labeling.config import get_root_path
+from meterviewer.config import get_root_path
 
 from loguru import logger
 import sys
@@ -62,8 +62,8 @@ def load_config(config_path: pathlib.Path) -> t.Callable[[getList], t.Any]:
 
 def main():
     config_list = [
-        # "dataset-gen.toml",
-        # "dataset-gen-2.toml",
+        "dataset-gen.toml",
+        "dataset-gen-2.toml",
         "dataset-gen-3.toml",
         "dataset-gen-4.toml",
         "dataset-gen-5.toml",
