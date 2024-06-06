@@ -4,6 +4,7 @@ import typing as t
 import functools
 import random
 import pathlib
+from loguru import logger
 from .dataset import get_dataset_path
 from meterviewer import files, T
 from meterviewer import func, img
@@ -52,12 +53,14 @@ def read_single_digit(
     get_dataset: t.Callable[[], str | pathlib.Path],
     num: int,
     promise: bool,
-):
+) -> t.Callable[[], t.Iterator[pathlib.Path]]:
     """promised return"""
     assert num in range(0, 10), "num must be 0~9"
 
     def might_fail_func() -> pathlib.Path:
         return path_fusion(root_path, str(get_dataset()), num)
+
+    logger.debug(f'try folder:  {might_fail_func()}')
 
     if promise:
         p = func.try_again(15, might_fail_func, lambda p: p.exists(), fail_message=f"cannot num: {num}")
