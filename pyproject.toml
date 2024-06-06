@@ -21,7 +21,7 @@ dependencies = [
     "dask>=2024.5.2",
     "distro>=1.9.0",
 ]
-requires-python = "==3.12.*"
+requires-python = ">3.10,<4.0"
 readme = "README.md"
 license = {text = "MIT"}
 
@@ -47,3 +47,13 @@ dev = [
 [tool.pdm.scripts]
 notebook = 'pdm run jupyter-notebook .'
 nicegui = 'pdm run python src/meterviewer/labeling/main.py'
+
+[[tool.pdm.source]]
+name = "pypi"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+verify_ssl = false
+
+# [[tool.pdm.source]]
+# name = "private"
+# url = "https://mirrors.aliyun.com/pypi/simple/"
+# verify_ssl = true
