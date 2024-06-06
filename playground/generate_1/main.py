@@ -14,7 +14,7 @@ import sys
 
 # 设置控制台输出的日志级别为 WARNING
 logger.remove()  # 移除默认的控制台输出
-logger.add(sys.stdout, level="INFO")
+logger.add(sys.stdout, level="DEBUG")
 
 
 getList = t.Literal["dataset", "path", "length", "total_nums"]

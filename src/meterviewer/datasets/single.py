@@ -60,11 +60,19 @@ def read_single_digit(
     def might_fail_func() -> pathlib.Path:
         return path_fusion(root_path, str(get_dataset()), num)
 
-    logger.debug(f'try folder:  {might_fail_func()}')
-
     if promise:
-        p = func.try_again(15, might_fail_func, lambda p: p.exists(), fail_message=f"cannot num: {num}")
+        p = func.try_again(15, might_fail_func, is_validate_func=lambda p: p.exists(), fail_message=f"cannot num: {num}")
     else:
         p = might_fail_func()
 
-    return functools.partial(files.scan_pics, p)
+    logger.debug(f'path: {p}')
+
+    def yield_pics():
+        gen = files.scan_pics(path=p)
+        try:
+            img = next(gen)
+            yield img
+        except StopIteration:
+            raise Exception(f'no images found in dataset {p}')
+
+    return yield_pics
