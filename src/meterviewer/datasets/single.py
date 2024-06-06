@@ -38,6 +38,10 @@ def read_rand_img(
     )
     all_imgs = list(get_one())
     length = len(all_imgs)
+
+    if length == 0:
+        raise Exception(f'Dataset contains no images, dataset: {get_dataset()}')
+
     i = random.randint(0, length - 1)
     im = plt.imread(all_imgs[i])
     return im
