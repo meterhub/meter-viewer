@@ -3,6 +3,7 @@ import numpy as np
 
 Img = np.ndarray
 Label = np.ndarray
+ImgSize = t.Union[t.List[int], t.Tuple[int, int]]
 
 ImgDataset = np.ndarray
 LabelData = np.ndarray

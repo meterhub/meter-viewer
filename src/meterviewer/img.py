@@ -14,14 +14,14 @@ def np_to_img(data: np.ndarray) -> T.ImgList:
     return list(data)
 
 
-def resize_img(img: T.Img, size: t.List[int]) -> T.Img:
+def resize_img(img: T.Img, size: T.ImgSize) -> T.Img:
     # resize will reverse the size. height -> weight, weight -> height
     im = np.asarray(Image.fromarray(img).resize(list(reversed(size))), dtype=np.uint8)
     assert list(im.shape[:2]) == size, (im.shape, size)
     return im
 
 
-def resize_imglist(imglist: T.ImgList, size: t.Optional[t.List[int]] = None) -> T.ImgList:
+def resize_imglist(imglist: T.ImgList, size: t.Optional[T.ImgSize] = None) -> T.ImgList:
     if not size:
         size = list(imglist[0].shape[:2])
     return [resize_img(img, size) for img in imglist]
@@ -54,7 +54,9 @@ def get_random_img(num: int, img_from: t.Callable) -> T.Img:
     return get_img(num)
 
 
-def check_img_size(img: T.Img, size: t.Tuple[int, int], then: t.Callable[[T.Img], t.Any]) -> bool | t.Any:
+def check_img_size(
+    img: T.Img, size: t.Tuple[int, int], then: t.Callable[[T.Img], t.Any]
+) -> bool | t.Any:
     if img.shape == size:
         return then(img)
     return False
