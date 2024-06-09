@@ -17,7 +17,7 @@ def np_to_img(data: np.ndarray) -> T.ImgList:
 def resize_img(img: T.Img, size: T.ImgSize) -> T.Img:
     # resize will reverse the size. height -> weight, weight -> height
     im = np.asarray(Image.fromarray(img).resize(list(reversed(size))), dtype=np.uint8)
-    assert list(im.shape[:2]) == size, (im.shape, size)
+    assert list(im.shape[:2]) == list(size), (im.shape, size)
     return im
 
 
