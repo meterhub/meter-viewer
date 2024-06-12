@@ -34,6 +34,9 @@ notebook = [
     "pandoc>=2.3",
     "nbconvert>=7.16.4",
 ]
+ui = [
+    "streamlit>=1.35.0",
+]
 [tool.pdm]
 distribution = false
 
