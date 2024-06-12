@@ -6,7 +6,8 @@ from meterviewer.config import get_root_path
 
 def our_app():
     st.title("Quick Viewer of Meterdata")
-    # path = st.text_input("Enter the path of the data")
+    root_path = get_root_path()
+    path = st.text_input("Enter the path of the data", value="generated_merged")
     num = st.text_input("Enter the number of data")
     try:
         data_load_state = st.text("reading data...")
@@ -16,9 +17,9 @@ def our_app():
         data_load_state.text("Please enter a number")
         return
 
-    root_path = get_root_path()
-    x_path = root_path / "generated_merged" / "x_test.npy"
-    y_path = root_path / "generated_merged" / "y_test.npy"
+    folder_path = root_path / path
+    x_path = folder_path / "x_test.npy"
+    y_path = folder_path / "y_test.npy"
 
     x = np.load(x_path)
     y = np.load(y_path)

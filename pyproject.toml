@@ -50,6 +50,7 @@ dev = [
 [tool.pdm.scripts]
 notebook = 'pdm run jupyter-notebook .'
 nicegui = 'pdm run python src/meterviewer/labeling/main.py'
+fastview = 'pdm run streamlit run src/meterviewer/fastview/streamui.py '
 
 [[tool.pdm.source]]
 name = "pypi"
