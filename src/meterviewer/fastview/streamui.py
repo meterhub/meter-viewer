@@ -9,6 +9,9 @@ def our_app():
     root_path = get_root_path()
     path = st.text_input("Enter the path of the data", value="generated_merged")
     num = st.text_input("Enter the number of data")
+    x_name = st.text_input("Enter the value of x_name", value="x_test.npy")
+    y_name = st.text_input("Enter the value of y_name", value="y_test.npy")
+
     try:
         data_load_state = st.text("reading data...")
         num = int(num)
@@ -18,8 +21,8 @@ def our_app():
         return
 
     folder_path = root_path / path
-    x_path = folder_path / "x_test.npy"
-    y_path = folder_path / "y_test.npy"
+    x_path = folder_path / x_name
+    y_path = folder_path / y_name
 
     x = np.load(x_path)
     y = np.load(y_path)
