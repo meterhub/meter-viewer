@@ -1,7 +1,7 @@
 import pathlib
 import typing as t
 from meterviewer import T
-from .. import img
+from ..imgs import img
 from matplotlib import pyplot as plt
 
 

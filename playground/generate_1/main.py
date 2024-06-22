@@ -4,12 +4,14 @@ import pathlib
 import random
 import functools
 from meterviewer.datasets import dataset, single
-from meterviewer import files, T, img
+from meterviewer import files, T
 
 from meterviewer.config import get_root_path
 
 from loguru import logger
 import sys
+
+from meterviewer.imgs import img
 
 
 # 设置控制台输出的日志级别为 WARNING
@@ -88,7 +90,9 @@ def generate_dataset(config_path: pathlib.Path):
         )
 
     def gen_block(digit: T.DigitStr) -> T.Img:
-        return dataset.generate_block_img(digit, dataset.join_with_resize, read_rand_img)
+        return dataset.generate_block_img(
+            digit, dataset.join_with_resize, read_rand_img
+        )
 
     generated_path = root_path / pathlib.Path(get_f("path")())
     generated_path.mkdir(exist_ok=True)

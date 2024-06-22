@@ -11,7 +11,9 @@ from tqdm import tqdm
 # import numpy as np
 import random
 
-from .. import img, files, types as T
+from ..imgs import img
+
+from .. import files, types as T
 from .view import view_dataset_in_rows, view_dataset, view_dataset_on_disk  # noqa
 from .join import join_with_fix, join_with_resize  # noqa
 
@@ -137,7 +139,9 @@ def create_dataset_func(
     return inner
 
 
-def get_random_dataset(root: pathlib.Path, get_dataset_list: t.Callable) -> t.Tuple[pathlib.Path, int]:
+def get_random_dataset(
+    root: pathlib.Path, get_dataset_list: t.Callable
+) -> t.Tuple[pathlib.Path, int]:
     datasets = list(get_dataset_list(root))
     random_index = random.randint(0, len(datasets) - 1)
     return datasets[random_index], random_index

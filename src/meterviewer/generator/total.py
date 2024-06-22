@@ -3,8 +3,8 @@
 import functools
 import typing as t
 from meterviewer.datasets import dataset, single, config, imgv
-from meterviewer import files, img, T
-from meterviewer.imgs import cut
+from meterviewer import files, T
+from meterviewer.imgs import cut, img
 from pathlib import Path as P
 from PIL import Image
 
@@ -37,7 +37,6 @@ def create_save_func(dataset_path: P, original_filepath: P) -> SaveFunc:
 
 
 def cut_save_one(root_path: P, filepath: P):
-
     def cut_save(filepath: P, save_to_disk: SaveFunc):
         """切割图片并保存到磁盘上."""
         im_list, val = cut_one_img(filepath)

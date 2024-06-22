@@ -1,4 +1,4 @@
-from meterviewer import img
+from meterviewer.imgs import img
 from PIL import Image
 
 

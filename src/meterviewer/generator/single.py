@@ -1,14 +1,18 @@
 # generate single digit
 from meterviewer.datasets import dataset
-from meterviewer import T, img, files
+from meterviewer import T, files
 import pathlib
 from pathlib import Path as P
 from datetime import datetime
 import typing as t
 import numpy as np
 
+from meterviewer.imgs import img
 
-def write_im(im: T.Img, filename: str) -> t.Callable[[P, int, t.Literal["normal", "digit"]], None]:
+
+def write_im(
+    im: T.Img, filename: str
+) -> t.Callable[[P, int, t.Literal["normal", "digit"]], None]:
     def write_to(
         root_path: P,
         digit: int,
@@ -79,7 +83,9 @@ def generate_block(length: int, get_random_number: t.Callable[[int], t.List[int]
 
 
 def img_selector(root_path: P):
-    def get_random_img(dataset_name: str) -> t.Tuple[T.ImgList, t.List[str], t.Literal["normal", "digit"]]:
+    def get_random_img(
+        dataset_name: str,
+    ) -> t.Tuple[T.ImgList, t.List[str], t.Literal["normal", "digit"]]:
         dp = dataset.get_dataset_path(root_path, dataset_name)
 
     return get_random_img
@@ -87,7 +93,9 @@ def img_selector(root_path: P):
 
 def generate_single(
     root_path: pathlib.Path,
-    get_random_img: t.Callable[[str], t.Tuple[T.ImgList, t.List[str], t.Literal["normal", "digit"]]],
+    get_random_img: t.Callable[
+        [str], t.Tuple[T.ImgList, t.List[str], t.Literal["normal", "digit"]]
+    ],
 ):
     """generate single digit image, split to normal and digit folder"""
 

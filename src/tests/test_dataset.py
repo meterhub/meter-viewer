@@ -1,15 +1,34 @@
 import pytest
 import functools
-from meterviewer import img, files, types as T
+from meterviewer import files, types as T
 import pathlib
 
 from meterviewer.datasets import dataset, single
+from meterviewer.imgs import img
 from tests.utils import show_img
 
 
 def test_create_label():
-    assert dataset.create_str_with_fill(1234, 5, 8) == ["0", "1", "2", "3", "4", "x", "x", "x"]
-    assert dataset.create_str_with_fill(12340, 5, 8) == ["1", "2", "3", "4", "0", "x", "x", "x"]
+    assert dataset.create_str_with_fill(1234, 5, 8) == [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "x",
+        "x",
+        "x",
+    ]
+    assert dataset.create_str_with_fill(12340, 5, 8) == [
+        "1",
+        "2",
+        "3",
+        "4",
+        "0",
+        "x",
+        "x",
+        "x",
+    ]
 
 
 def test_python_syntax():
@@ -26,7 +45,16 @@ def test_python_syntax():
 def test_fill_digit():
     assert dataset.fill_digit(list("12312"), 7) == list("12312xx")
     assert dataset.fill_digit(list("01234"), 8) == list("01234xxx")
-    assert dataset.fill_digit(["0", "1", "2", "3", "4"], 8) == ["0", "1", "2", "3", "4", "x", "x", "x"]
+    assert dataset.fill_digit(["0", "1", "2", "3", "4"], 8) == [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "x",
+        "x",
+        "x",
+    ]
     assert list("12312xx") == ["1", "2", "3", "1", "2", "x", "x"]
     assert list("1212xx") == ["1", "2", "1", "2", "x", "x"]
     assert list("0123") == ["0", "1", "2", "3"]

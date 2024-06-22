@@ -1,4 +1,4 @@
-from meterviewer import img
+from meterviewer.imgs import img
 
 # import functools
 # from matplotlib import pyplot as plt
@@ -14,7 +14,6 @@ def test_resize_imglist():
 
 
 def test_resize_img():
-
     im = gen_img(size=(35, 25, 3))
     img.resize_img(im, size=[35, 25])
 

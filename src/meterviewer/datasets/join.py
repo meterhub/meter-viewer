@@ -1,11 +1,13 @@
 import typing as t
 import functools
 from meterviewer import T
-from meterviewer import img
+from meterviewer.imgs import img
 from loguru import logger
 
 
-def join_with_fix(imglist: T.ImgList, check_func: t.Callable, fix_func: t.Callable) -> T.Img:
+def join_with_fix(
+    imglist: T.ImgList, check_func: t.Callable, fix_func: t.Callable
+) -> T.Img:
     """修饰 join_func"""
     # merge images horizontally
     try:
@@ -16,4 +18,6 @@ def join_with_fix(imglist: T.ImgList, check_func: t.Callable, fix_func: t.Callab
     return img.join_img(imglist, check_func)
 
 
-join_with_resize: T.JoinFunc = functools.partial(join_with_fix, fix_func=img.resize_imglist)
+join_with_resize: T.JoinFunc = functools.partial(
+    join_with_fix, fix_func=img.resize_imglist
+)

@@ -1,5 +1,4 @@
-from meterviewer import img
-from meterviewer.imgs import draw, cut
+from meterviewer.imgs import draw, cut, img
 from meterviewer.datasets import imgv
 from meterviewer import types as T
 from pathlib import Path as P

@@ -5,9 +5,11 @@ import functools
 import random
 import pathlib
 from loguru import logger
+
+from meterviewer.imgs import img
 from .dataset import get_dataset_path
 from meterviewer import files, T
-from meterviewer import func, img
+from meterviewer import func
 from matplotlib import pyplot as plt
 
 
@@ -41,7 +43,7 @@ def read_rand_img(
     length = len(all_imgs)
 
     if length == 0:
-        raise Exception(f'Dataset contains no images, dataset: {get_dataset()}')
+        raise Exception(f"Dataset contains no images, dataset: {get_dataset()}")
 
     i = random.randint(0, length - 1)
     im = plt.imread(all_imgs[i])
@@ -61,11 +63,16 @@ def read_single_digit(
         return path_fusion(root_path, str(get_dataset()), num)
 
     if promise:
-        p = func.try_again(15, might_fail_func, is_validate_func=lambda p: p.exists(), fail_message=f"cannot num: {num}")
+        p = func.try_again(
+            15,
+            might_fail_func,
+            is_validate_func=lambda p: p.exists(),
+            fail_message=f"cannot num: {num}",
+        )
     else:
         p = might_fail_func()
 
-    logger.debug(f'path: {p}')
+    logger.debug(f"path: {p}")
 
     def yield_pics():
         gen = files.scan_pics(path=p)
@@ -73,6 +80,6 @@ def read_single_digit(
             img = next(gen)
             yield img
         except StopIteration:
-            raise Exception(f'no images found in dataset {p}')
+            raise Exception(f"no images found in dataset {p}")
 
     return yield_pics

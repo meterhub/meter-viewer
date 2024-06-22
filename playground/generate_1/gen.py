@@ -4,12 +4,14 @@ import pathlib
 import random
 import functools
 from meterviewer.datasets import dataset, single
-from meterviewer import files, T, img
+from meterviewer import files, T
 
 from meterviewer.config import get_root_path
 
 from loguru import logger
 import sys
+
+from meterviewer.imgs import img
 
 
 getList = t.Literal["dataset", "path", "length", "total_nums"]
@@ -17,6 +19,7 @@ getList = t.Literal["dataset", "path", "length", "total_nums"]
 
 class DatasetGenerator(object):
     """class format definition of dataset generator"""
+
     def __init__(self, config_path: pathlib.Path) -> None:
         self.root_path = get_root_path()
         self.config_path = config_path

@@ -5,7 +5,7 @@ import typing as t
 import numpy as np
 
 # from matplotlib import pyplot as plt
-from . import types as T
+from .. import types as T
 from PIL import Image
 from matplotlib import pyplot as plt
 
@@ -21,7 +21,10 @@ def resize_img(img: T.Img, size: T.ImgSize) -> T.Img:
     return im
 
 
-def resize_imglist(imglist: T.ImgList, size: t.Optional[T.ImgSize] = None) -> T.ImgList:
+def resize_imglist(
+    imglist: T.ImgList,
+    size: t.Optional[T.ImgSize] = None,
+) -> T.ImgList:
     if not size:
         size = list(imglist[0].shape[:2])
     return [resize_img(img, size) for img in imglist]
