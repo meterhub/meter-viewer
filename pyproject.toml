@@ -1,6 +1,6 @@
 [project]
 name = "meterviewer"
-version = "0.1.0"
+version = "1.0.0"
 description = "Default template for PDM package"
 authors = [
     {name = "svtter", email = "svtter@qq.com"},
@@ -21,7 +21,8 @@ dependencies = [
     "dask>=2024.5.2",
     "distro>=1.9.0",
 ]
-requires-python = ">3.10,<4.0"
+# requires-python = ">3.10,<4.0"
+requires-python = "==3.9.*,!=3.9.7"
 readme = "README.md"
 license = {text = "MIT"}
 
