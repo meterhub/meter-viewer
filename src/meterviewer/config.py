@@ -29,7 +29,7 @@ def get_root_path():
     elif get_system_type() == "Windows":
         return pathlib.Path(r"D:\Store\MeterData")
     elif get_system_type() == "Linux":
-        if distro.version() == '24.04':
+        if distro.version() == "24.04":
             return pathlib.Path("~/Work/Dataset/MeterData").expanduser()
         else:
             return pathlib.Path("~/work/Dataset/MeterData").expanduser()

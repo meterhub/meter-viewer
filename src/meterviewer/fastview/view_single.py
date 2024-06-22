@@ -26,6 +26,7 @@ def our_app():
 
     x = np.load(x_path)
     y = np.load(y_path)
+    st.text(f"x_shape: {x.shape}, y_shape: {y.shape}")
 
     st.image(x[num], caption=f"Meterdata {num}")
     st.text(f"Meterdata {num} is {y[num]}")
