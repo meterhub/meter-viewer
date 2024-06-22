@@ -1,5 +1,6 @@
 """handle function based on single, that is dataset_name/[0-9] format"""
 
+from __future__ import annotations
 import typing as t
 import functools
 import random
@@ -25,8 +26,8 @@ def path_fusion(
 
 def read_rand_img(
     root: pathlib.Path,
-    get_dataset: t.Callable[[], str | pathlib.Path],
-    digit: int | str,
+    get_dataset: t.Callable[[], t.Union[str, pathlib.Path]],
+    digit: t.Union[int, str],
     promise=False,
 ) -> T.Img:
     if digit == "x":

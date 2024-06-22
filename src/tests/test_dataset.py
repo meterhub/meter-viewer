@@ -1,3 +1,4 @@
+from __future__ import annotations
 import pytest
 import functools
 from meterviewer import files, types as T

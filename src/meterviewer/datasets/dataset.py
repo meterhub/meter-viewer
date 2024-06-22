@@ -2,6 +2,7 @@
 # 只在一个文件里修改目录，方便快捷
 # 将使用的函数放在参数上，减少依赖
 
+from __future__ import annotations
 import os
 import typing as t
 import pathlib

@@ -1,5 +1,6 @@
 # process image, to fit the training proposals.
 
+from __future__ import annotations
 import sys
 import typing as t
 import numpy as np
@@ -19,6 +20,11 @@ def resize_img(img: T.Img, size: T.ImgSize) -> T.Img:
     im = np.asarray(Image.fromarray(img).resize(list(reversed(size))), dtype=np.uint8)
     assert list(im.shape[:2]) == list(size), (im.shape, size)
     return im
+
+
+def to_gray(im: T.img) -> T.Img:
+    im = Image.fromarray(im).convert("L")
+    return np.asarray(im)
 
 
 def resize_imglist(

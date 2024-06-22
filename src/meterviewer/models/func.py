@@ -1,3 +1,4 @@
+from __future__ import annotations
 from meterviewer.models.littledb import get_session, Item
 from pathlib import Path as P
 from sqlalchemy import ScalarResult, select, text, update
@@ -30,5 +31,7 @@ def update_item(dbpath: P, id: int, carry_num: int):
     if carry_num != 0:
         session.execute(update(Item).where(Item.id == id).values(carry_num=carry_num))
     else:
-        session.execute(update(Item).where(Item.id == id).values(carry_num=carry_num, is_carry=0))
+        session.execute(
+            update(Item).where(Item.id == id).values(carry_num=carry_num, is_carry=0)
+        )
     session.commit()

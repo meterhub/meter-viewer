@@ -1,4 +1,5 @@
 # generate single digit
+from __future__ import annotations
 from meterviewer.datasets import dataset
 from meterviewer import T, files
 import pathlib
