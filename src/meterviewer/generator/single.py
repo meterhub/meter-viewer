@@ -7,7 +7,7 @@ from datetime import datetime
 import typing as t
 import numpy as np
 
-from meterviewer.imgs import img
+from meterviewer.img import process
 
 
 def write_im(
@@ -45,7 +45,7 @@ def generate_total_dataset(
 
     def join_with(imglist: T.ImgList):
         # this join-with will check the size
-        return img.join_img(imglist, img.size_check)
+        return process.join_img(imglist, process.size_check)
 
     def multiple_gen(get_random_number: t.Callable, get_one_img: t.Callable):
         img_list = []

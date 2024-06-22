@@ -6,7 +6,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from meterviewer.config import get_root_path
 from meterviewer.datasets import imgv
-from meterviewer.imgs import draw, cut
+from meterviewer.img import draw, cut
 import pathlib
 
 

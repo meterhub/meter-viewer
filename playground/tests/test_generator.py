@@ -1,10 +1,10 @@
-from meterviewer.imgs import img
+from meterviewer.img import process
 from PIL import Image
 
 
 def test_gen_pics():
-    im = img.gen_empty_im((30, 120, 3))
+    im = process.gen_empty_im((30, 120, 3))
     im = Image.fromarray(im)
     filename = "/tmp/test.png"
     im.save(filename)
-    img.show_img(im, is_stop=False)
+    process.show_img(im, is_stop=False)

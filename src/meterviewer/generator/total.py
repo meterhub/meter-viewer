@@ -4,7 +4,7 @@ import functools
 import typing as t
 from meterviewer.datasets import dataset, single, config, imgv
 from meterviewer import files, T
-from meterviewer.imgs import cut, img
+from meterviewer.img import cut, process
 from pathlib import Path as P
 from PIL import Image
 

@@ -4,7 +4,7 @@ from meterviewer import files, types as T
 import pathlib
 
 from meterviewer.datasets import dataset, single
-from meterviewer.imgs import img
+from meterviewer.img import process
 from tests.utils import show_img
 
 
@@ -102,7 +102,7 @@ def test_create_dataset(root_path):
     def check_imgs(imglist):
         size = imglist[0].shape
         show_img(imglist[0])
-        imgs = img.resize_imglist(imglist)
+        imgs = process.resize_imglist(imglist)
         for im in imgs:
             show_img(im)
             assert size == im.shape
@@ -125,7 +125,7 @@ def test_generate_block_img(root_path):
 
     im = dataset.generate_block_img(
         ["1", "2", "3", "4"],
-        img.join_img,
+        process.join_img,
         read_rand_img,
     )
     show_img(im)

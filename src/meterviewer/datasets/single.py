@@ -6,7 +6,7 @@ import random
 import pathlib
 from loguru import logger
 
-from meterviewer.imgs import img
+from meterviewer.img import process
 from .dataset import get_dataset_path
 from meterviewer import files, T
 from meterviewer import func
@@ -30,7 +30,7 @@ def read_rand_img(
     promise=False,
 ) -> T.Img:
     if digit == "x":
-        im = img.gen_empty_im((32, 40, 3))
+        im = process.gen_empty_im((32, 40, 3))
         return im
 
     get_one = read_single_digit(

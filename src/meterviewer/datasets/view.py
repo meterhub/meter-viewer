@@ -1,7 +1,7 @@
 import pathlib
 import typing as t
 from meterviewer import T
-from ..imgs import img
+from ..img import process
 from matplotlib import pyplot as plt
 
 
@@ -18,7 +18,7 @@ def view_dataset_on_disk(name: str):
 
         assert prefix_name.exists()
         x = load_from_disk(prefix_name / name)
-        x = img.np_to_img(x)
+        x = process.np_to_img(x)
         view_dataset(nums, x)
 
     return mmm

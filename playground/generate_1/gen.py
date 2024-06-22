@@ -11,7 +11,7 @@ from meterviewer.config import get_root_path
 from loguru import logger
 import sys
 
-from meterviewer.imgs import img
+from meterviewer.img import process
 
 
 getList = t.Literal["dataset", "path", "length", "total_nums"]
@@ -89,7 +89,7 @@ class DatasetGenerator(object):
 
         def check_imgs(imglist):
             size = imglist[0].shape
-            imgs = img.resize_imglist(imglist)
+            imgs = process.resize_imglist(imglist)
             for im in imgs:
                 assert size == im.shape
 

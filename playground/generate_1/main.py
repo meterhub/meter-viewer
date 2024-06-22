@@ -11,7 +11,7 @@ from meterviewer.config import get_root_path
 from loguru import logger
 import sys
 
-from meterviewer.imgs import img
+from meterviewer.img import process
 
 
 # 设置控制台输出的日志级别为 WARNING
@@ -105,7 +105,7 @@ def generate_dataset(config_path: pathlib.Path):
 
     def check_imgs(imglist):
         size = imglist[0].shape
-        imgs = img.resize_imglist(imglist)
+        imgs = process.resize_imglist(imglist)
         for im in imgs:
             assert size == im.shape
 

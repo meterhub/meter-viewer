@@ -11,7 +11,7 @@ from tqdm import tqdm
 # import numpy as np
 import random
 
-from ..imgs import img
+from ..img import process
 
 from .. import files, types as T
 from .view import view_dataset_in_rows, view_dataset, view_dataset_on_disk  # noqa
@@ -73,7 +73,7 @@ def create_str_with_fill(
     length: int,
     total: int,
 ) -> T.DigitStr:
-    return fill_digit(img.number_to_string(number, length), total)
+    return fill_digit(process.number_to_string(number, length), total)
 
 
 def create_labels_func(
@@ -133,7 +133,7 @@ def create_dataset_func(
 
         # files.write_shape(imgs, 3)
         check_imgs(imgs)
-        imgs = img.resize_imglist(imgs, size=[37, 297])
+        imgs = process.resize_imglist(imgs, size=[37, 297])
         return imgs, str_digits
 
     return inner
@@ -156,7 +156,7 @@ def generate_block_img(
     for digit in the_digit:
         im = read_rand_img(digit)
         img_list.append(im)
-    return join_func(img_list, img.size_check)
+    return join_func(img_list, process.size_check)
 
 
 def get_dataset_path(root: pathlib.Path, dataset_name: str) -> pathlib.Path:
