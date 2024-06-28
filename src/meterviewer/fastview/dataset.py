@@ -13,6 +13,8 @@ import pathlib
 def main():
     st.title("Quick Viewer of Meter dataset")
     data_path = pathlib.Path("/home/xiuhao/work/Dataset/MeterData/lens_5/XL/DATA")
+
+    dataset_len_ = st.number_input("Dataset length", value=6)
     dataset_name = st.text_input("Dataset name", value="M4L1XL")
     filename = st.text_input("Enter the filename", value="2018-11-23-12-16-01.jpg")
 
