@@ -1,6 +1,8 @@
 """view image and value"""
 
+import pathlib
 import typing as t
+import numpy as np
 from pathlib import Path as P
 
 from loguru import logger
@@ -40,3 +42,10 @@ def save_hash(im: T.Img, index: int):
 def find_files(img_list: T.ImgList):
     for i, img in enumerate(img_list):
         save_hash(img, i)
+
+
+def find_hash_in_numpy(im: T.Img, np_path: pathlib.Path):
+    save_hash(im, -1)
+    x = np.load(np_path)
+    find_files(list(x))
+    return None
