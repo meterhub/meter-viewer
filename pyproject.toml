@@ -41,8 +41,8 @@ dev = [
 
 [tool.pdm.scripts]
 notebook = 'pdm run jupyter-notebook .'
-nicegui = 'pdm run python src//labeling/main.py'
-fastview = 'pdm run streamlit run src/fastview/view_single.py '
+nicegui = 'pdm run python src/labeling/main.py'
+app = 'pdm run streamlit run src/meterviewer/fastview/home.py --browser.gatherUsageStats false'
 
 [[tool.pdm.source]]
 name = "pypi"
