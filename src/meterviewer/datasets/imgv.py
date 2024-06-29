@@ -39,13 +39,19 @@ def save_hash(im: T.Img, index: int):
         raise Exception("Img should not be same.")
 
 
-def find_files(img_list: T.ImgList):
+def find_images(img_list: T.ImgList) -> int:
     for i, img in enumerate(img_list):
-        save_hash(img, i)
+        try:
+            save_hash(img, i)
+        except Exception as e:
+            logger.warning(f"warning: {e} in {i}")
+            return i
+    # index in the np_path
+    return -1
 
 
-def find_hash_in_numpy(im: T.Img, np_path: pathlib.Path):
+def find_hash_in_numpy(im: T.Img, np_path: pathlib.Path) -> int:
     save_hash(im, -1)
     x = np.load(np_path)
-    find_files(list(x))
-    return None
+    res = find_images(list(x))
+    return res
