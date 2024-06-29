@@ -23,8 +23,9 @@ def cmd():
 
     im = x1[num]
     save_img("/tmp/im1.png", im)
+    print("example saved.")
 
-    inx = imgv.find_images(im, x2.tolist())
+    inx = imgv.find_images(x2)
     if inx == -1:
         print("No same image found.")
     else:

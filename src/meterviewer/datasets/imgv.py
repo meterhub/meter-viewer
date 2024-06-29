@@ -5,6 +5,7 @@ import typing as t
 import numpy as np
 from pathlib import Path as P
 
+from tqdm import tqdm
 from loguru import logger
 from matplotlib import pyplot as plt
 from PIL import ImageFile
@@ -40,7 +41,8 @@ def save_hash(im: T.Img, index: int):
 
 
 def find_images(img_list: T.ImgList) -> int:
-    for i, img in enumerate(img_list):
+    logger.debug("start finding...")
+    for i, img in tqdm(enumerate(img_list)):
         try:
             save_hash(img, i)
         except Exception as e:
