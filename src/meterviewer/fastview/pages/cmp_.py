@@ -8,6 +8,7 @@ from matplotlib import pyplot as plt
 
 
 def cmd():
+    st.Page("compare page", title="Tool to compare images")
     root_path = pathlib.Path("/home/xiuhao/work/Dataset/HRCdata")
     dataset_1, dataset_2 = "Test", "Train"
     num = 1
@@ -35,7 +36,7 @@ def cmd():
 
 
 def main():
-    st.title("Tool to resize images.")
+    st.title("Tool to compare images.")
     root_path = pathlib.Path("/home/xiuhao/work/Dataset/HRCdata")
     root_path = st.text_input("Enter the root path", value=str(root_path))
     root_path = pathlib.Path(root_path)
@@ -74,14 +75,17 @@ def main():
     # raise Exception("Not implemented yet")
 
     im = x1[num]
-    inx = imgv.find_images(im, x2.tolist())
-    if inx == -1:
-        st.text("No same image found.")
-    else:
-        st.text("Same image found.")
-        st.image(x2[inx], caption=f"Meterdata {inx}")
+    if st.button("Search"):
+        state = st.text("searching")
+        inx = imgv.find_images(im, x2.tolist())
+        if inx == -1:
+            st.text("No same image found.")
+        else:
+            st.text("Same image found.")
+            st.image(x2[inx], caption=f"Meterdata {inx}")
+        state.text("finished")
 
 
 if __name__ == "__main__":
-    cmd()
-    # main()
+    # cmd()
+    main()

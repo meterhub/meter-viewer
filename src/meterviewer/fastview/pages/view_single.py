@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import pathlib
 import numpy as np
+import os
 from meterviewer.config import get_root_path
 
 
@@ -12,6 +13,8 @@ def our_app():
     root_path = pathlib.Path(root_path)
 
     path = st.text_input("Enter the path of the data", value="generated_merged")
+    st.text(os.listdir(root_path / path))
+
     num = st.text_input("Enter the number of data")
     x_name = st.text_input("Enter the value of x_name", value="x_test.npy")
     y_name = st.text_input("Enter the value of y_name", value="y_test.npy")
@@ -34,7 +37,6 @@ def our_app():
 
     st.image(x[num], caption=f"Meterdata {num}")
     st.text(f"Meterdata {num} is {y[num]}")
-
 
 
 our_app()
