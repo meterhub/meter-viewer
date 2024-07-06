@@ -65,7 +65,7 @@ class DatasetGenerator(object):
 
         return get_func
 
-    def read_rand_img(self, digit: int | str) -> T.Img:
+    def read_rand_img(self, digit: int | str) -> T.NpImage:
         return single.read_rand_img(
             digit=digit,
             root=self.root_path,
@@ -73,7 +73,7 @@ class DatasetGenerator(object):
             promise=True,
         )
 
-    def gen_block(self, digit: T.DigitStr) -> T.Img:
+    def gen_block(self, digit: T.DigitStr) -> T.NpImage:
         return dataset.generate_block_img(
             digit, dataset.join_with_resize, self.read_rand_img
         )

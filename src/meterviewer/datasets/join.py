@@ -7,7 +7,7 @@ from loguru import logger
 
 def join_with_fix(
     imglist: T.ImgList, check_func: t.Callable, fix_func: t.Callable
-) -> T.Img:
+) -> T.NpImage:
     """修饰 join_func"""
     # merge images horizontally
     try:

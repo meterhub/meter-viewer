@@ -18,13 +18,13 @@ def np_to_img(data: np.ndarray) -> T.ImgList:
 def join_img(
     imglist: T.ImgList,
     check_func: t.Callable[[t.Any], t.Any],
-) -> T.Img:
+) -> T.NpImage:
     # merge images vertically
     check_func(imglist)
     return np.hstack(imglist)
 
 
-def get_random_img(num: int, img_from: t.Callable) -> T.Img:
+def get_random_img(num: int, img_from: t.Callable) -> T.NpImage:
     """get random img
     num: digit num of img
     """
@@ -40,7 +40,7 @@ def img_from(folder: str = ""):
     return get_img
 
 
-def get_img_list(nums: t.List[int]) -> t.List[T.Img]:
+def get_img_list(nums: t.List[int]) -> t.List[T.NpImage]:
     imgs = []
     for i in nums:
         imgs.append(get_random_img(int(i), lambda: None))

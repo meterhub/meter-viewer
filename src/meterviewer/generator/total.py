@@ -22,13 +22,13 @@ def cut_one_img(filepath: P) -> t.Tuple[T.ImgList, T.DigitStr]:
     return im_list, list(val)
 
 
-SaveFunc = t.Callable[[T.Img, str, int], t.Any]
+SaveFunc = t.Callable[[T.NpImage, str, int], t.Any]
 
 
 def create_save_func(dataset_path: P, original_filepath: P) -> SaveFunc:
     assert dataset_path.exists(), f"the dataset: {dataset_path} should exist"
 
-    def save_to_disk(im: T.Img, val: str, i: int):
+    def save_to_disk(im: T.NpImage, val: str, i: int):
         folder = dataset_path / val
         folder.mkdir(exist_ok=True)
         Image.fromarray(im).save(folder / f"{original_filepath.stem}_{i}.png")

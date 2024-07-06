@@ -20,7 +20,7 @@ logger.add("./logs/meterviewer-proc.log")
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
-def view_one_img_v(filepath: P) -> t.Tuple[T.Img, str, T.Rect]:
+def view_one_img_v(filepath: P) -> t.Tuple[T.NpImage, str, T.Rect]:
     """同时浏览图片和值"""
     im = plt.imread(str(filepath))
     v, rect = config.get_xml_config(filepath)
@@ -30,7 +30,7 @@ def view_one_img_v(filepath: P) -> t.Tuple[T.Img, str, T.Rect]:
 hash_store = {}
 
 
-def save_hash(im: T.Img, index: int):
+def save_hash(im: T.NpImage, index: int):
     hash = cmp.get_hash(im)
     res = hash_store.get(hash, None)
     if res is None:
@@ -52,7 +52,7 @@ def find_images(img_list: T.ImgList) -> int:
     return -1
 
 
-def find_hash_in_numpy(im: T.Img, np_path: pathlib.Path) -> int:
+def find_hash_in_numpy(im: T.NpImage, np_path: pathlib.Path) -> int:
     save_hash(im, -1)
     x = np.load(np_path)
     res = find_images(list(x))

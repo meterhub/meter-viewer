@@ -29,7 +29,7 @@ def read_rand_img(
     get_dataset: t.Callable[[], t.Union[str, pathlib.Path]],
     digit: t.Union[int, str],
     promise=False,
-) -> T.Img:
+) -> T.NpImage:
     if digit == "x":
         im = process.gen_empty_im((32, 40, 3))
         return im

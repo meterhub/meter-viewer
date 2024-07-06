@@ -12,7 +12,9 @@ def use_smart_name(dataset: pathlib.Path) -> T.NameFunc:
     y_name_list = ["y_train.npy", "y_all.npy", "y.npy"]
 
     for x, y in zip(x_name_list, y_name_list):
-        if (dataset / pathlib.Path(x)).exists() and (dataset / pathlib.Path(y)).exists():
+        if (dataset / pathlib.Path(x)).exists() and (
+            dataset / pathlib.Path(y)
+        ).exists():
 
             def get_x_y():
                 return x, y
@@ -75,7 +77,7 @@ def scan_pics(path: pathlib.Path) -> t.Iterator[pathlib.Path]:
             yield p
 
 
-def transform_img(img: T.Img) -> T.Img:
+def transform_img(img: T.NpImage) -> T.NpImage:
     """reshape image (35,25,3) to (1, 35, 25, 3)"""
     return np.expand_dims(img, axis=0)
 
@@ -89,7 +91,7 @@ def transform_label(label: T.DigitStr, to_int: bool) -> T.Label:
 
 
 def save_imgs_labels(
-    imgs_labels: t.Tuple[t.List[T.Img], t.List[T.DigitStr]],
+    imgs_labels: t.Tuple[t.List[T.NpImage], t.List[T.DigitStr]],
     np_name: t.Callable[[], t.Tuple[pathlib.Path, str, str]],
     save_to_disk: t.Callable,
 ):
@@ -105,7 +107,7 @@ def save_imgs_labels(
 
 
 def save_img_labels_with_default(
-    imgs: t.List[T.Img],
+    imgs: t.List[T.NpImage],
     labels: t.List[T.DigitStr],
     prefix_name: pathlib.Path,
     save_to_disk: t.Callable,

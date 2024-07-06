@@ -12,7 +12,7 @@ from meterviewer.img import process
 
 
 def write_im(
-    im: T.Img, filename: str
+    im: T.NpImage, filename: str
 ) -> t.Callable[[P, int, t.Literal["normal", "digit"]], None]:
     def write_to(
         root_path: P,
@@ -64,8 +64,8 @@ def generate_total_dataset(
 
 def generate_block(length: int, get_random_number: t.Callable[[int], t.List[int]]):
     def gen(
-        get_one_img: t.Callable[[int], T.Img],
-        join_img: t.Callable[[T.ImgList], T.Img],
+        get_one_img: t.Callable[[int], T.NpImage],
+        join_img: t.Callable[[T.ImgList], T.NpImage],
     ):
         """generate single digit image"""
 
@@ -101,7 +101,7 @@ def generate_single(
     """generate single digit image, split to normal and digit folder"""
 
     def handle_img(
-        im: T.Img,
+        im: T.NpImage,
         filename: str,
         digit: int,
         type_: t.Literal["normal", "digit"],

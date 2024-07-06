@@ -98,7 +98,7 @@ def create_labels_func(
 
 
 class GenBlockImgFunc(t.Protocol):
-    def __call__(self, digit: T.DigitStr) -> T.Img: ...
+    def __call__(self, digit: T.DigitStr) -> T.NpImage: ...
 
 
 class SaveDatasetFunc(t.Protocol):
@@ -111,7 +111,7 @@ class CreateDatasetFunc(t.Protocol):
         length: int,
         nums: int,
         gen_block_img: GenBlockImgFunc,
-    ) -> t.Tuple[t.List[T.Img], t.List[T.DigitStr]]: ...
+    ) -> t.Tuple[t.List[T.NpImage], t.List[T.DigitStr]]: ...
 
 
 def create_dataset_func(
@@ -151,8 +151,8 @@ def get_random_dataset(
 def generate_block_img(
     the_digit: T.DigitStr,
     join_func: T.JoinFunc,
-    read_rand_img: t.Callable[[int | str], T.Img],
-) -> T.Img:
+    read_rand_img: t.Callable[[int | str], T.NpImage],
+) -> T.NpImage:
     img_list = []
     for digit in the_digit:
         im = read_rand_img(digit)

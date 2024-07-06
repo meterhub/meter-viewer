@@ -7,7 +7,7 @@ from PIL import Image
 from meterviewer import types as T
 
 
-def resize_img(img: T.Img, size: T.ImgSize) -> T.Img:
+def resize_img(img: T.NpImage, size: T.ImgSize) -> T.NpImage:
     # resize will reverse the size. height -> weight, weight -> height
     im = np.asarray(Image.fromarray(img).resize(list(reversed(size))), dtype=np.uint8)
     assert list(im.shape[:2]) == list(size), (im.shape, size)
@@ -24,14 +24,14 @@ def resize_imglist(
 
 
 def check_img_size(
-    img: T.Img, size: t.Tuple[int, int], then: t.Callable[[T.Img], t.Any]
+    img: T.NpImage, size: t.Tuple[int, int], then: t.Callable[[T.NpImage], t.Any]
 ) -> bool | t.Any:
     if img.shape == size:
         return then(img)
     return False
 
 
-def size_check(img_list: t.List[T.Img], size: t.Optional[t.List[int]] = None):
+def size_check(img_list: t.List[T.NpImage], size: t.Optional[t.List[int]] = None):
     assert img_list != [], "img_list should not be empty"
     if not size:
         size = list(img_list[0].shape)

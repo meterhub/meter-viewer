@@ -1,7 +1,9 @@
 import typing as t
 import numpy as np
 
-Img = np.ndarray
+# Numpy typed Image
+NpImage = np.ndarray
+
 Label = np.ndarray
 ImgSize = t.Union[t.List[int], t.Tuple[int, int]]
 
@@ -11,12 +13,12 @@ LabelData = np.ndarray
 
 Func = t.Callable
 
-ImgList = t.List[Img]
+ImgList = t.List[NpImage]
 DigitStr = t.List[str]
 DigitInt = t.List[int]
 
 CheckFunc = t.Callable[[t.Any], t.Any]
-JoinFunc = t.Callable[[ImgList, CheckFunc], Img]
+JoinFunc = t.Callable[[ImgList, CheckFunc], NpImage]
 NameFunc = t.Callable[[], t.Tuple[str, str]]
 
 x_name: str = "x_train.npy"

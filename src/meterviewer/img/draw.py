@@ -3,7 +3,7 @@ import cv2
 
 
 # draw rectangle on image
-def draw_rectangle(im: T.Img, rect: T.Rect) -> T.Img:
+def draw_rectangle(im: T.NpImage, rect: T.Rect) -> T.NpImage:
     """draw rectangle on image"""
     x0, y0, x1, y1 = rect["xmin"], rect["ymin"], rect["xmax"], rect["ymax"]
     x0, y0, x1, y1 = int(x0), int(y0), int(x1), int(y1)
@@ -14,9 +14,9 @@ def draw_rectangle(im: T.Img, rect: T.Rect) -> T.Img:
 
 # write text on image
 def draw_text(
-    im: T.Img,
+    im: T.NpImage,
     text: str,
-) -> T.Img:
+) -> T.NpImage:
     """write text on image"""
     x, y = 0, 30
     writable_im = im.copy()

@@ -82,7 +82,7 @@ def generate_dataset(config_path: pathlib.Path):
     root_path = get_root_path()
     get_f = load_config(config_path=config_path)
 
-    def read_rand_img(digit: int | str) -> T.Img:
+    def read_rand_img(digit: int | str) -> T.NpImage:
         return single.read_rand_img(
             digit=digit,
             root=root_path,
@@ -90,7 +90,7 @@ def generate_dataset(config_path: pathlib.Path):
             promise=True,
         )
 
-    def gen_block(digit: T.DigitStr) -> T.Img:
+    def gen_block(digit: T.DigitStr) -> T.NpImage:
         return dataset.generate_block_img(
             digit, dataset.join_with_resize, read_rand_img
         )
