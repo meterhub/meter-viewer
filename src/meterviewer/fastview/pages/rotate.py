@@ -1,23 +1,28 @@
 # rotate image.
 import os
 import pathlib
+import typing as t
 import streamlit as st
 import numpy as np
 from meterviewer.config import get_root_path
+from tmd.dataset import NumpyDataset
 
 import torch
-from torchvision import transforms
+from torchvision.transforms import v2
 
 torch.manual_seed(17)
 
 
-def crop_image():
-    transforms = torch.nn.Sequential(
-        transforms.Pad(10, fill=0, padding_mode="constant"),
-        transforms.CenterCrop(10),
-        transforms.ColorJitter(),
+def trans_function():
+    trans = torch.nn.Sequential(
+        v2.Pad(10, fill=0, padding_mode="constant"),
+        v2.RandomRotation(30),
+        # v2.RandomResizedCrop(size=(224, 224), antialias=True),
+        v2.RandomHorizontalFlip(p=0.5),
+        # transforms.CenterCrop(10),
+        v2.ColorJitter(),
     )
-    return transforms
+    return trans
 
 
 def rotate():
@@ -34,23 +39,29 @@ def rotate():
     y_name = st.text_input("Enter the value of y_name", value="y_test.npy")
 
     try:
-        data_load_state = st.text("reading data...")
-        num = int(num)
-        data_load_state.text("Done!")
+        num_v: int = int(num)
     except ValueError:
-        data_load_state.text("Please enter a number")
-        return
+        st.text("Please enter a number")
 
     folder_path = root_path / path
     x_path = folder_path / x_name
     y_path = folder_path / y_name
 
-    x = np.load(x_path)
-    y = np.load(y_path)
-    st.text(f"x_shape: {x.shape}, y_shape: {y.shape}")
+    status = st.text("loading dataset...")
+    ds = NumpyDataset(
+        folder_path,
+        x_path,
+        y_path,
+        transform=trans_function(),
+    )
+    status.text("Done.")
 
-    st.image(x[num], caption=f"Meterdata {num}")
-    st.text(f"Meterdata {num} is {y[num]}")
+    if st.button("Transform"):
+        x, y = ds[num_v]
+        st.text(f"x_shape: {x.size}, y_shape: {y.shape}")
+
+        st.image(x, caption=f"Meterdata {num}")
+        st.text(f"Meterdata {num} is {y}")
 
 
 rotate()
