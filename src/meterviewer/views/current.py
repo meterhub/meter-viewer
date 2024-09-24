@@ -1,3 +1,4 @@
+from __future__ import annotations
 import typing as t
 import pathlib
 from meterviewer import files, types as T
@@ -5,7 +6,7 @@ from meterviewer.datasets import dataset
 
 
 def view_merge_np(
-    current_dataset: str,
+    current_dataset: str | pathlib.Path,
     view_dataset: t.Callable[[int, T.ImgList], None] = dataset.view_dataset,
     get_x_y: T.NameFunc = lambda: (T.x_name, T.y_name),
 ):
@@ -30,7 +31,10 @@ def get_x_y_name() -> t.Tuple[str, str]:
     return T.x_name, T.y_name
 
 
-def write_details(current_dataset: str, get_xy_name: T.NameFunc = get_x_y_name):
+def write_details(
+    current_dataset: str | pathlib.Path,
+    get_xy_name: T.NameFunc = get_x_y_name,
+):
     pp = pathlib.Path(current_dataset)
 
     def write_to_file(details, overwrite=True):
