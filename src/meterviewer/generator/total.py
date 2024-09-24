@@ -1,6 +1,5 @@
 """create new generated dataset, generate all suitable images."""
 
-import functools
 import typing as t
 from meterviewer.datasets import dataset, single, config, imgv
 from meterviewer import files, T
