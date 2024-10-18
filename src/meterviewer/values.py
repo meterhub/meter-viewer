@@ -1,4 +1,4 @@
-"""根据数值判断进位情况"""
+"""根据数值判断进位情况；与数值相关的函数"""
 
 import typing as t
 from . import types as T

@@ -8,6 +8,10 @@ import toml
 
 
 def use_smart_name(dataset: pathlib.Path) -> T.NameFunc:
+    """
+    Determine the appropriate file names for X and Y data in a dataset.
+    Returns a function that provides the correct file names.
+    """
     x_name_list = ["x_train.npy", "x_all.npy", "x.npy"]
     y_name_list = ["y_train.npy", "y_all.npy", "y.npy"]
 
@@ -45,6 +49,9 @@ def compute_md5(file_path, chunk_size=8192):
 
 
 def read_toml(filename: pathlib.Path) -> t.Optional[t.Dict]:
+    """
+    Read and parse a TOML file, returning its contents as a dictionary.
+    """
     try:
         with open(filename, "r") as f:
             data = toml.load(f)
@@ -55,6 +62,9 @@ def read_toml(filename: pathlib.Path) -> t.Optional[t.Dict]:
 
 
 def write_toml(filename: pathlib.Path, data):
+    """
+    Write data to a TOML file.
+    """
     try:
         with open(filename, "w") as f:
             toml.dump(data, f)
@@ -64,6 +74,9 @@ def write_toml(filename: pathlib.Path, data):
 
 
 def write_shape(img: T.ImgList, nums: int = 3):
+    """
+    Write the shapes of the first 'nums' images to a debug log file.
+    """
     debug_file = pathlib.Path("debug.log")
     with open(debug_file, "w") as f:
         for i in range(nums):
@@ -71,18 +84,25 @@ def write_shape(img: T.ImgList, nums: int = 3):
 
 
 def scan_pics(path: pathlib.Path) -> t.Iterator[pathlib.Path]:
-    """scan pics in path"""
+    """
+    Scan a directory for image files (jpg, png, jpeg) and yield their paths.
+    """
     for p in path.iterdir():
         if p.suffix in [".jpg", ".png", ".jpeg"]:
             yield p
 
 
 def transform_img(img: T.NpImage) -> T.NpImage:
-    """reshape image (35,25,3) to (1, 35, 25, 3)"""
+    """
+    Reshape a single image by adding a batch dimension.
+    """
     return np.expand_dims(img, axis=0)
 
 
 def transform_label(label: T.DigitStr, to_int: bool) -> T.Label:
+    """
+    Transform a label string into a numpy array, optionally converting to integers.
+    """
     if to_int:
         label_ = [int(i) for i in label]
     else:
@@ -95,6 +115,9 @@ def save_imgs_labels(
     np_name: t.Callable[[], t.Tuple[pathlib.Path, str, str]],
     save_to_disk: t.Callable,
 ):
+    """
+    Save a list of images and labels to disk as numpy arrays.
+    """
     imgs, labels = imgs_labels
     imgs = [np.expand_dims(img, axis=0) for img in imgs]
     labels_ = [transform_label(label, False) for label in labels]
@@ -112,6 +135,9 @@ def save_img_labels_with_default(
     prefix_name: pathlib.Path,
     save_to_disk: t.Callable,
 ):
+    """
+    Save images and labels to disk using default file names.
+    """
     def np_name():
         return prefix_name, T.x_name, T.y_name
 
@@ -123,16 +149,25 @@ def save_img_labels_with_default(
 
 
 def save_to_disk(filename: str, data: np.ndarray):
+    """
+    Save a numpy array to disk.
+    """
     with open(filename, "wb") as f:
         np.save(f, data)
 
 
 def load_from_disk(filename) -> np.ndarray:
+    """
+    Load a numpy array from disk.
+    """
     with open(filename, "rb") as f:
         return np.load(f)
 
 
 def load_from_disk_with_md5(filename, with_md5: str) -> t.Tuple[np.ndarray, str]:
+    """
+    Load a numpy array from disk and optionally compute its MD5 hash.
+    """
     md5 = ""
     if with_md5:
         md5 = compute_md5(filename)
