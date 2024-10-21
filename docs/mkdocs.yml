@@ -1,1 +1,3 @@
 site_name: Meter Viewer
+theme:
+  name: readthedocs
