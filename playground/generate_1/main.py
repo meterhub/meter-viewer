@@ -1,19 +1,17 @@
 from __future__ import annotations
-import typing as t
-import toml
+
+import functools
 import pathlib
 import random
-import functools
-from meterviewer.datasets import dataset, single
-from meterviewer import files, T
-
-from meterviewer.config import get_root_path
-
-from loguru import logger
 import sys
+import typing as t
 
+import toml
+from loguru import logger
+from meterviewer import T, files
+from meterviewer.config import get_root_path
+from meterviewer.datasets import dataset, single
 from meterviewer.img import process
-
 
 # 设置控制台输出的日志级别为 WARNING
 logger.remove()  # 移除默认的控制台输出
@@ -63,22 +61,7 @@ def load_config(config_path: pathlib.Path) -> t.Callable[[getList], t.Any]:
     return get_func
 
 
-def main():
-    config_list = [
-        "dataset-gen.toml",
-        "dataset-gen-2.toml",
-        "dataset-gen-3.toml",
-        "dataset-gen-4.toml",
-        "dataset-gen-5.toml",
-    ]
-    parent = pathlib.Path(__file__).parent
-    for config in config_list:
-        logger.info(f"generating dataset with {config}...")
-        generate_dataset(parent / config)
-
-
 def generate_dataset(config_path: pathlib.Path):
-    P = functools.partial
     root_path = get_root_path()
     get_f = load_config(config_path=config_path)
 
@@ -98,7 +81,7 @@ def generate_dataset(config_path: pathlib.Path):
     generated_path = root_path / pathlib.Path(get_f("path")())
     generated_path.mkdir(exist_ok=True)
 
-    filesave = P(
+    filesave = functools.partial(
         files.save_img_labels_with_default,
         prefix_name=generated_path,
         save_to_disk=files.save_to_disk,
@@ -117,3 +100,17 @@ def generate_dataset(config_path: pathlib.Path):
         gen_block_img=gen_block,
     )
     filesave(imgs, labels)
+
+
+def main():
+    config_list = [
+        "dataset-gen.toml",
+        "dataset-gen-2.toml",
+        "dataset-gen-3.toml",
+        "dataset-gen-4.toml",
+        "dataset-gen-5.toml",
+    ]
+    parent = pathlib.Path(__file__).parent
+    for config in config_list:
+        logger.info(f"generating dataset with {config}...")
+        generate_dataset(parent / config)

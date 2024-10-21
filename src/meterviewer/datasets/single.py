@@ -1,17 +1,19 @@
 """handle function based on single, that is dataset_name/[0-9] format"""
 
 from __future__ import annotations
-import typing as t
-import functools
-import random
-import pathlib
-from loguru import logger
 
-from meterviewer.img import process
-from .dataset import get_dataset_path
-from meterviewer import files, T
-from meterviewer import func
+import functools
+import pathlib
+import random
+import typing as t
+
+from loguru import logger
 from matplotlib import pyplot as plt
+
+from meterviewer import T, files, func
+from meterviewer.img import process
+
+from .dataset import get_dataset_path
 
 
 def path_fusion(
@@ -30,6 +32,7 @@ def read_rand_img(
     digit: t.Union[int, str],
     promise=False,
 ) -> T.NpImage:
+    """return a random image, single digit."""
     if digit == "x":
         im = process.gen_empty_im((32, 40, 3))
         return im
