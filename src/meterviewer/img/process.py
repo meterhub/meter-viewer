@@ -1,14 +1,16 @@
 # process image, to fit the training proposals.
 
 from __future__ import annotations
+
 import sys
 import typing as t
+
 import numpy as np
+from matplotlib import pyplot as plt
 
 # from matplotlib import pyplot as plt
 from .. import types as T
-from .resize import resize_img, resize_imglist, size_check, check_img_size  # noqa
-from matplotlib import pyplot as plt
+from .resize import check_img_size, resize_img, resize_imglist, size_check  # noqa
 
 
 def np_to_img(data: np.ndarray) -> T.ImgList:
