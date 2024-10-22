@@ -3,20 +3,22 @@
 # 将使用的函数放在参数上，减少依赖
 
 from __future__ import annotations
-import os
-import typing as t
-import pathlib
+
 import datetime
-from tqdm import tqdm
+import os
+import pathlib
 
 # import numpy as np
 import random
+import typing as t
 
+from tqdm import tqdm
+
+from .. import files
+from .. import types as T
 from ..img import process
-
-from .. import files, types as T
-from .view import view_dataset_in_rows, view_dataset, view_dataset_on_disk  # noqa
 from .join import join_with_fix, join_with_resize  # noqa
+from .view import view_dataset, view_dataset_in_rows, view_dataset_on_disk  # noqa
 
 
 def generate_func() -> t.List[t.Callable[[pathlib.Path], T.ImgDataset]]:
@@ -134,6 +136,8 @@ def create_dataset_func(
 
         # files.write_shape(imgs, 3)
         check_imgs(imgs)
+
+        # automatic resize the images
         imgs = process.resize_imglist(imgs, size=[37, 297])
         return imgs, str_digits
 
