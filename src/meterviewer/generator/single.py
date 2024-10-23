@@ -1,31 +1,54 @@
 # generate single digit
 from __future__ import annotations
-from meterviewer.datasets import dataset
-from meterviewer import T, files
+
 import pathlib
-from pathlib import Path as P
-from datetime import datetime
 import typing as t
+from datetime import datetime
+from pathlib import Path as P
+
 import numpy as np
 
+from meterviewer import T, files
+from meterviewer.datasets import dataset
 from meterviewer.img import process
 
 
-def write_im(
+def use_write(
     im: T.NpImage, filename: str
 ) -> t.Callable[[P, int, t.Literal["normal", "digit"]], None]:
+    """
+    Create a function that writes an image to a specific location.
+
+    Args:
+        im (T.NpImage): The image to be written.
+        filename (str): The name of the file to be created.
+
+    Returns:
+        Callable: A function that writes the image to a specified path.
+    """
+
     def write_to(
         root_path: P,
         digit: int,
         type_: t.Literal["normal", "digit"],
     ):
-        # get date
+        """
+        Write the image to a specific location based on the provided parameters.
+
+        Args:
+            root_path (P): The root path where the dataset will be created.
+            digit (int): The digit represented in the image.
+            type_ (Literal["normal", "digit"]): The type of image (normal or digit).
+        """
+        # Get current date for dataset naming
         date = datetime.now().strftime("%Y-%m-%d")
         dataset_path = root_path / f"generated-{date}"
         digit_path = dataset_path / type_ / str(digit)
 
-        # create dir
+        # Create directory if it doesn't exist
         digit_path.mkdir(parents=True, exist_ok=True)
+
+        # Save the image as a numpy array
         np.save(digit_path / filename, im)
 
     return write_to
@@ -107,7 +130,7 @@ def generate_single(
         type_: t.Literal["normal", "digit"],
     ):
         """write to specific folder"""
-        write = write_im(im, filename)
+        write = use_write(im, filename)
         write(root_path, digit, type_)
 
     def inner(filename):
