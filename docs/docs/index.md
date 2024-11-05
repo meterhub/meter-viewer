@@ -2,6 +2,8 @@
 
 meter-viewer is a tool to generate meter images.
 
+相比于最初的名字`viewer`，更多的是实现 geenerate 的功能。
+
 ## Features
 
 1. create a `data format` for meter dataset.
