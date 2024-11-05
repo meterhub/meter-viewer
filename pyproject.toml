@@ -1,6 +1,6 @@
 [project]
 name = "meterviewer"
-version = "1.0.1a"
+version = "1.1.0"
 description = "Default template for PDM package"
 authors = [{ name = "svtter", email = "svtter@qq.com" }]
 dependencies = [
@@ -48,4 +48,10 @@ app = 'pdm run streamlit run src/meterviewer/fastview/home.py --browser.gatherUs
 # verify_ssl = true
 
 [dependency-groups]
-dev = ["pytest>=8.2.0", "ruff>=0.4.4", "mkdocstrings-python>=1.12.2", "devpk"]
+dev = [
+    "pytest>=8.2.0",
+    "ruff>=0.4.4",
+    "mkdocstrings-python>=1.12.2",
+    "devpk",
+    "mkdocs-material>=9.5.43",
+]
