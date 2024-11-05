@@ -1,19 +1,23 @@
 # Usage
 
 
-## Feature
-
 What can meter-viewer do?
 
-### files
+## datasets
+
+::: meterviewer.datasets.config
+
+::: meterviewer.datasets.dataset
+
+## files
 
 ::: meterviewer.files.use_smart_name
 
 
-### func
-
-::: meterviewer.func
-
-### name
+## name
 
 ::: meterviewer.name
+
+## func
+
+::: meterviewer.func
