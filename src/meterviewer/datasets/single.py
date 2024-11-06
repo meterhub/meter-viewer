@@ -1,8 +1,7 @@
-"""handle function based on single, that is dataset_name/[0-9] format"""
+"""处理单个数字数据集的函数，数据集格式为 dataset_name/[0-9]"""
 
 from __future__ import annotations
 
-import functools
 import pathlib
 import random
 import typing as t
@@ -21,7 +20,14 @@ def path_fusion(
     dataset_name: str,
     num: int,
 ):
-    """return single digit"""
+    """生成单个数字图像的路径
+    Args:
+        root: 根目录路径
+        dataset_name: 数据集名称
+        num: 数字(0-9)
+    Returns:
+        对应数字图像的完整路径
+    """
     p = get_dataset_path(root, dataset_name) / "Digit" / str(num)
     return p
 
@@ -32,7 +38,17 @@ def read_rand_img(
     digit: t.Union[int, str],
     promise=False,
 ) -> T.NpImage:
-    """return a random image, single digit."""
+    """随机读取一张数字图像
+    Args:
+        root: 根目录路径
+        get_dataset: 获取数据集名称的函数
+        digit: 要读取的数字或'x'(表示空白图像)
+        promise: 是否确保路径存在
+    Returns:
+        随机选择的数字图像数组
+    Raises:
+        Exception: 当数据集中没有图像时抛出异常
+    """
     if digit == "x":
         im = process.gen_empty_im((32, 40, 3))
         return im
@@ -60,7 +76,18 @@ def read_single_digit(
     num: int,
     promise: bool,
 ) -> t.Callable[[], t.Iterator[pathlib.Path]]:
-    """promised return"""
+    """读取单个数字的所有图像
+    Args:
+        root_path: 根目录路径
+        get_dataset: 获取数据集名称的函数
+        num: 要读取的数字(0-9)
+        promise: 是否确保路径存在
+    Returns:
+        返回一个生成器函数，用于遍历该数字的所有图像路径
+    Raises:
+        AssertionError: 当数字不在0-9范围内时抛出
+        Exception: 当找不到图像时抛出
+    """
     assert num in range(0, 10), "num must be 0~9"
 
     def might_fail_func() -> pathlib.Path:
