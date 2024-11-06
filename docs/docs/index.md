@@ -1,13 +1,17 @@
 # Meter Viewer
 
-meter-viewer is a tool to generate meter images.
-
-相比于最初的名字`viewer`，更多的是实现 geenerate 的功能。
+meter-viewer is a tool to view and generate meter images.
 
 ## Features
 
-1. create a `data format` for meter dataset.
-2. Reuse old dataset format. Make it easy to reuse the library.
+> What can `meter-viewer` do?
+
+1. 读取`MeterData`数据集
+2. Reuse old dataset format `MeterData`. Make it easy to reuse the library.
+3. 使用 `playground/main.py` 可以生成新的数据集。
+
+## TODO
+- [ ] create a `data format` for meter dataset.
 
 ### Problems
 
