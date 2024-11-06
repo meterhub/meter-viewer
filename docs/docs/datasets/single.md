@@ -1,0 +1,3 @@
+# single
+
+::: meterviewer.datasets.single
