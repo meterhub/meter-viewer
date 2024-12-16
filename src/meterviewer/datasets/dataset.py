@@ -8,7 +8,9 @@ import datetime
 import os
 import pathlib
 
-# import numpy as np
+from PIL import Image
+import numpy as np
+
 import random
 import typing as t
 
@@ -154,40 +156,33 @@ class CreateDatasetFunc(t.Protocol):
     ) -> t.Tuple[t.List[T.NpImage], t.List[T.DigitStr]]: ...
 
 
-def create_dataset_func(
-    check_imgs: t.Callable[[T.ImgList], None],
-    total: int,
-) -> CreateDatasetFunc:
-    """创建数据集生成函数
-
-    Args:
-        check_imgs: 图像检查函数
-        total: 填充后的总长度
-
-    Returns:
-        返回一个函数,用于生成包含指定数量和长度的数字图像数据集
-    """
-
+def create_dataset_func(check_imgs: t.Callable[[T.ImgList], None]):
     def inner(
-        length: int,
+        root: pathlib.Path,
+        dataset_list: t.List[str],
+        available_digits: t.Dict[str, t.List[int]],  # 添加 available_digits 参数
         nums: int,
-        gen_block_img: GenBlockImgFunc,
+        gen_block_img: t.Callable[
+            [pathlib.Path, t.List[str], t.Dict[str, t.List[int]], str], t.Tuple[T.NpImage, str]
+        ],
+        target_size: t.Tuple[int, int] = (297, 37),  # 目标尺寸
     ):
-        _, str_digits = create_labels_func(length, total)(nums)
-
         imgs = []
-        for digit in tqdm(str_digits):
-            im = gen_block_img(digit)
-            imgs.append(im)
+        labels = []
 
-        # files.write_shape(imgs, 3)
+        for _ in tqdm(range(nums)):
+            digit = str(random.randint(0, 9))  # 随机选择数字
+            img, new_label = gen_block_img(root, dataset_list, available_digits, digit)  # 传入 available_digits
+            img_resized = Image.fromarray(img).resize(target_size)
+            new_label_array = list(new_label)
+            imgs.append(np.array(img_resized))
+            labels.append(new_label_array)
+
         check_imgs(imgs)
-
-        # automatic resize the images
-        imgs = process.resize_imglist(imgs, size=[37, 297])
-        return imgs, str_digits
+        return imgs, labels
 
     return inner
+
 
 
 def get_random_dataset(
@@ -206,27 +201,120 @@ def get_random_dataset(
     random_index = random.randint(0, len(datasets) - 1)
     return datasets[random_index], random_index
 
-
-def generate_block_img(
-    the_digit: T.DigitStr,
-    join_func: T.JoinFunc,
-    read_rand_img: t.Callable[[int | str], T.NpImage],
-) -> T.NpImage:
-    """生成数字块图像
+def scan_available_digits(root: pathlib.Path, dataset_list: t.List[str]) -> t.Dict[str, t.List[int]]:
+    """
+    扫描数据集中实际包含的数字。
 
     Args:
-        the_digit: 数字字符串
-        join_func: 图像拼接函数
-        read_rand_img: 读取随机图像的函数
+        root: 数据集根目录
+        dataset_list: 数据集名称列表
 
     Returns:
-        拼接后的数字块图像
+        每个数据集中实际可用数字的字典。
     """
-    img_list = []
-    for digit in the_digit:
-        im = read_rand_img(digit)
-        img_list.append(im)
-    return join_func(img_list, process.size_check)
+    available_digits = {}
+    for dataset_name in dataset_list:
+        digit_dir = root / "lens_6" / "XL" / "XL" / dataset_name / "Digit"
+        available_digits[dataset_name] = [
+            int(digit.name) for digit in digit_dir.iterdir() if digit.is_dir() and digit.name.isdigit()
+        ]
+    return available_digits
+
+def generate_block_img(
+    root: pathlib.Path,
+    dataset_list: t.List[str],  # 数据集名称列表
+    available_digits: t.Dict[str, t.List[int]],  # 每个数据集中可用的数字
+    digit: str,  # 用于随机数字选择的参数（可忽略）
+    target_size: t.Tuple[int, int] = (37, 297),  # 目标尺寸 (高度, 宽度)
+    left_replace_width: int = 147,  # 替换区域的总宽度
+) -> t.Tuple[T.NpImage, str]:
+    """
+    从多个数据集中随机选择图像 A 和三个数字图像 B、C、D，
+    替换图像 A 的前三位数字，生成新的图像 E 和对应的标签。
+    第一位和第二位数字替换逻辑调整为数字 0 占比 38%。
+
+    Args:
+        root: 数据集根目录
+        dataset_list: 数据集名称列表
+        available_digits: 每个数据集中可用的数字
+        digit: 不使用，仅占位
+        target_size: 目标尺寸
+        left_replace_width: 替换区域总宽度
+
+    Returns:
+        新生成的图像 E 和对应的标签。
+    """
+    def select_digit_with_probability(digits: t.List[int], probabilities: t.List[float]) -> int:
+        """
+        根据给定的概率分布从数字列表中选择一个数字。
+
+        Args:
+            digits: 数字列表
+            probabilities: 对应的概率分布
+
+        Returns:
+            选择的数字
+        """
+        return random.choices(digits, weights=probabilities, k=1)[0]
+
+    # 随机选择数据集用于图像 A
+    dataset_name_a = random.choice(dataset_list)
+    image_block_dir = root / "lens_6" / "XL" / "XL" / dataset_name_a / "ImageSets_block_zoom"
+    block_imgs = list(image_block_dir.glob("*.jpg"))
+    if not block_imgs:
+        raise Exception(f"No images found in {image_block_dir}")
+    img_a_path = random.choice(block_imgs)
+    img_a = Image.open(img_a_path).convert("RGB")
+
+    # 从文件名解析 A 的标签
+    img_a_label = img_a_path.stem.split("_")[2]
+
+    # 调整图像 A 到目标尺寸
+    img_a = np.array(Image.fromarray(np.array(img_a)).resize(target_size[::-1]))
+
+    # 定义数字选择规则
+    digits = list(range(10))  # 数字 0-9
+    probabilities = [0.38] + [0.62 / 9] * 9  # 数字 0 占 38%，其余数字均匀分布
+
+    # 替换图像的数字
+    replacements = []
+    for i in range(3):
+        while True:
+            dataset_name_b = random.choice(dataset_list)
+            digits_for_dataset = available_digits.get(dataset_name_b, [])
+            if digits_for_dataset:
+                if i == 0:  # 第一位数字
+                    digit = select_digit_with_probability(digits, probabilities)
+                elif i == 1:  # 第二位数字
+                    digit = select_digit_with_probability(digits, probabilities)
+                else:  # 第三位数字，保持随机
+                    digit = random.choice(digits_for_dataset)
+
+                # 检查数字是否存在于数据集
+                if digit in digits_for_dataset:
+                    digit_img_dir = root / "lens_6" / "XL" / "XL" / dataset_name_b / "Digit" / str(digit)
+                    digit_imgs = list(digit_img_dir.glob("*.jpg"))
+                    if digit_imgs:
+                        img_b_path = random.choice(digit_imgs)
+                        img_b = Image.open(img_b_path).convert("RGB")
+                        replacements.append((str(digit), np.array(img_b)))
+                        break
+
+    # 替换图像 A 的前三位数字
+    section_width = left_replace_width // 3  # 每个数字的替换宽度
+    for i, (digit, img_b) in enumerate(replacements):
+        img_b_resized = np.array(Image.fromarray(img_b).resize((section_width, target_size[0])))
+        img_a[:, i * section_width:(i + 1) * section_width, :] = img_b_resized
+
+    # 更新标签
+    new_label = "".join([digit for digit, _ in replacements]) + img_a_label[3:]
+
+    # 确保替换后的图像 E 是目标尺寸
+    img_a = np.array(Image.fromarray(img_a).resize(target_size[::-1]))
+
+    return img_a, new_label
+
+
 
 
 def get_dataset_path(root: pathlib.Path, dataset_name: str) -> pathlib.Path:
