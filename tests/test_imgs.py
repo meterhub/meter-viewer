@@ -1,7 +1,8 @@
-from meterviewer.img import draw, cut, process
-from meterviewer.datasets import imgv
-from meterviewer import types as T
 from pathlib import Path as P
+
+from meterviewer import types as T
+from meterviewer.datasets import imgv
+from meterviewer.img import cut, draw, process
 
 
 def test_cut(root_path):
