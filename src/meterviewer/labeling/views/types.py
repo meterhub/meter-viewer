@@ -8,4 +8,4 @@ FullPath = Path
 
 
 def isFullPath(p: FullPath):
-    return p.is_absolute()
+  return p.is_absolute()

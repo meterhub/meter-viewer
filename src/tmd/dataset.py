@@ -10,29 +10,29 @@ from PIL import Image
 
 
 class NumpyDataset(Dataset):
-    def __init__(
-        self,
-        root: pathlib.Path,
-        x_name: str | pathlib.Path,
-        y_name: str | pathlib.Path,
-        transform: t.Optional[t.Callable] = None,
-        target_transform: t.Optional[t.Callable] = None,
-    ):
-        self.x_name = x_name
-        self.y_name = y_name
-        self.x = np.load(root / x_name)
-        self.y = np.load(root / y_name)
-        self.transform = transform
-        self.target_transform = target_transform
+  def __init__(
+    self,
+    root: pathlib.Path,
+    x_name: str | pathlib.Path,
+    y_name: str | pathlib.Path,
+    transform: t.Optional[t.Callable] = None,
+    target_transform: t.Optional[t.Callable] = None,
+  ):
+    self.x_name = x_name
+    self.y_name = y_name
+    self.x = np.load(root / x_name)
+    self.y = np.load(root / y_name)
+    self.transform = transform
+    self.target_transform = target_transform
 
-    def __getitem__(self, index: int) -> tuple[Image.Image, np.ndarray]:
-        x = self.x[index]
-        y = self.y[index]
+  def __getitem__(self, index: int) -> tuple[Image.Image, np.ndarray]:
+    x = self.x[index]
+    y = self.y[index]
 
-        x = Image.fromarray(x)
+    x = Image.fromarray(x)
 
-        if self.transform:
-            x = self.transform(x)
-        if self.target_transform:
-            y = self.target_transform(y)
-        return x, y
+    if self.transform:
+      x = self.transform(x)
+    if self.target_transform:
+      y = self.target_transform(y)
+    return x, y

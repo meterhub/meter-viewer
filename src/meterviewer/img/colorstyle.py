@@ -4,5 +4,5 @@ from PIL import Image
 
 
 def to_gray(im: T.NpImage) -> T.NpImage:
-    im = Image.fromarray(im).convert("L")
-    return np.asarray(im)
+  im = Image.fromarray(im).convert("L")
+  return np.asarray(im)

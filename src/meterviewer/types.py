@@ -29,11 +29,11 @@ y_test: str = "y_test.npy"
 
 
 def isImgDataset(x: t.Any) -> bool:
-    return isinstance(x, np.ndarray) and len(x.shape) == 4
+  return isinstance(x, np.ndarray) and len(x.shape) == 4
 
 
 def isLabelData(y: t.Any) -> bool:
-    return isinstance(y, np.ndarray) and len(y.shape) == 2
+  return isinstance(y, np.ndarray) and len(y.shape) == 2
 
 
 Rect = t.TypedDict("Rect", {"xmin": str, "ymin": str, "xmax": str, "ymax": str})

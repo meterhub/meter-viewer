@@ -2,9 +2,9 @@ data = {}
 
 
 def useDict(name):
-    data[name] = []
+  data[name] = []
 
-    def insert(item):
-        data[name].append(item)
+  def insert(item):
+    data[name].append(item)
 
-    return insert
+  return insert
