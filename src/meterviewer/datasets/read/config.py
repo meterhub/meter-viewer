@@ -248,4 +248,7 @@ def get_xml_config(img_path: P) -> t.Tuple[str, T.Rect]:
   Returns:
       Tuple[str, T.Rect]: 返回值和矩形框信息的元组
   """
-  return read_xml_to_get(get_xml_config_path(img_path), read_rect_from_node)
+  return read_xml_to_get(
+    filename=get_xml_config_path(img_path),
+    read_func=read_rect_from_node,
+  )
