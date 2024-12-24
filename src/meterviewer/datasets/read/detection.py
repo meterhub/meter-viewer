@@ -25,12 +25,9 @@ def get_random_image_file(root_dir: pathlib.Path) -> pathlib.Path:
 def read_area_img(
   root: pathlib.Path,
   get_dataset: t.Callable[[], t.Union[str, pathlib.Path]],
-  range_: tuple[float, float],
+  # range_: tuple[float, float],
   promise=False,
 ):
-  def might_fail_func() -> pathlib.Path:
-    return root / str(get_dataset())
-
   pass
 
 

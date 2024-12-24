@@ -52,3 +52,7 @@ dev = ["pip>24.0"]
 
 [tool.ruff]
 indent-width = 2
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
