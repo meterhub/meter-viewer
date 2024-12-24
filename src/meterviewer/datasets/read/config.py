@@ -7,6 +7,8 @@ from pathlib import Path as P
 from meterviewer import func as F
 from meterviewer import types as T
 
+from .types import typeOfrect
+
 
 @dataclass
 class RectO(object):
@@ -45,22 +47,6 @@ class RectO(object):
     return self.__str__()
 
 
-def read_xml(filename: P, read_func: t.Callable[[t.Any], t.Any]):
-  """读取并解析XML文件
-
-  Args:
-      filename (P): XML文件路径
-      read_func (Callable): 用于处理XML根节点的回调函数
-
-  Returns:
-      Any: 回调函数的返回结果
-  """
-  # 解析 XML 文件
-  tree = ET.parse(filename)
-  root = tree.getroot()
-  return read_func(root)
-
-
 def read_rect_from_node(root: t.Iterable) -> t.Tuple[str, T.Rect]:
   """从XML节点中读取矩形框信息
 
@@ -85,6 +71,28 @@ def read_rect_from_node(root: t.Iterable) -> t.Tuple[str, T.Rect]:
           setattr(rect_dict, sub.tag, sub.text)
 
   return val, rect_dict.to_dict()
+
+
+def read_xml(filename: P):
+  """读取 xml 文件，获取 root 节点"""
+  tree = ET.parse(filename)
+  return tree.getroot()
+
+
+def read_xml_to_get(
+  filename: P,
+  read_func: t.Callable[[t.Any], t.Any] = read_rect_from_node,
+):
+  """读取并解析XML文件
+
+  Args:
+      filename (P): XML文件路径
+      read_func (Callable): 用于处理XML根节点的回调函数
+
+  Returns:
+      Any: 回调函数的返回结果
+  """
+  return read_func(read_xml(filename))
 
 
 def read_single_digit_rect(filename) -> t.List[RectO]:
@@ -145,7 +153,7 @@ def read_single_digit_rect(filename) -> t.List[RectO]:
     # return digit_rect, root, find_no, find_rect
     return digit_rect
 
-  return read_xml(filename, func)
+  return read_xml_to_get(filename, func)
 
 
 def get_single_digit_values(filename: P) -> t.Tuple[str, T.Rect]:
@@ -157,12 +165,9 @@ def get_single_digit_values(filename: P) -> t.Tuple[str, T.Rect]:
   Returns:
       Tuple[str, T.Rect]: 返回值和矩形框信息的元组
   """
-  val, _ = read_xml(filename, read_rect_from_node)
-  block_pos = read_xml(filename, read_single_digit_rect)
+  val, _ = read_xml_to_get(filename, read_rect_from_node)
+  block_pos = read_xml_to_get(filename, read_single_digit_rect)
   return val, block_pos
-
-
-typeOfrect = t.Literal["single", "block"]
 
 
 def read_rect_from_file(xml_path: P, type_: typeOfrect):
@@ -193,7 +198,7 @@ def get_rectangle(filename: P) -> T.Rect:
   Returns:
       T.Rect: 矩形框字典
   """
-  _, rect = read_xml(filename, read_rect_from_node)
+  _, rect = read_xml_to_get(filename, read_rect_from_node)
   return rect
 
 
@@ -241,4 +246,4 @@ def get_xml_config(img_path: P) -> t.Tuple[str, T.Rect]:
   Returns:
       Tuple[str, T.Rect]: 返回值和矩形框信息的元组
   """
-  return read_xml(get_xml_config_path(img_path), read_rect_from_node)
+  return read_xml_to_get(get_xml_config_path(img_path), read_rect_from_node)
