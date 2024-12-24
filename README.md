@@ -19,3 +19,8 @@ We use [mkdocs](https://www.mkdocs.org/) for documentation.
 ## Notes
 
 1. Pure functional is critial. Less things to worry about.
+
+
+## For Developer
+
+`pdm run pip install -r ./dev.txt`

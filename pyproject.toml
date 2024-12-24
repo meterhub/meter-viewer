@@ -24,11 +24,6 @@ requires-python = "==3.9.*,!=3.9.7"
 readme = "README.md"
 license = { text = "MIT" }
 
-
-[project.optional-dependencies]
-gui = ["nicegui>=1.4.25"]
-notebook = ["pandoc>=2.3", "nbconvert>=7.16.4"]
-ui = ["streamlit>=1.35.0", "fastui>=0.6.0"]
 [tool.pdm]
 distribution = true
 
@@ -48,10 +43,7 @@ app = 'pdm run streamlit run src/meterviewer/fastview/home.py --browser.gatherUs
 # verify_ssl = true
 
 [dependency-groups]
-dev = [
-    "pytest>=8.2.0",
-    "ruff>=0.4.4",
-    "mkdocstrings-python>=1.12.2",
-    "devpk",
-    "mkdocs-material>=9.5.43",
-]
+dev = ["pip>24.0"]
+
+[tool.ruff]
+indent-width = 2
