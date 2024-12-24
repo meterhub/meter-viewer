@@ -40,7 +40,7 @@ def read_rand_img(
   digit: t.Union[int, str],
   promise=False,
 ) -> T.NpImage:
-  """随机读取一张数字图像
+  """随机读取一张数字图像，单字
   Args:
       root: 根目录路径
       get_dataset: 获取数据集名称的函数
