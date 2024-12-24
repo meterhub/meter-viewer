@@ -6,10 +6,15 @@ import typing as t
 from . import config
 
 
-def read_image_area(file_path: pathlib.Path) -> t.List[config.RectO]:
-  """这个函数仅为了读取矩形部分"""
-  assert file_path.suffix == ".xml", "仅支持xml文件"
-  return config.read_xml_to_get(file_path, config.read_single_digit_rect)
+def read_image_area(file_path: pathlib.Path) -> t.List[str, config.T.Rect]:
+  """读取一个图片的长条矩形部分"""
+  assert file_path.suffix in (".jpg", ".jpeg"), "仅支持jpg文件"
+  assert file_path.exists(), f"{file_path}文件不存在"
+
+  xml_filepath = config.get_xml_config_path(file_path, types="block")
+  assert xml_filepath.exists(), f"{xml_filepath}文件不存在"
+
+  return config.read_rect_from_file(xml_filepath, "block")
 
 
 def get_random_image_file(root_dir: pathlib.Path) -> pathlib.Path:

@@ -9,7 +9,7 @@ def use_func(name: str):
     raise ValueError(f"func {name} not found")
 
 
-def must_str(object) -> str:
+def will_be_str(object) -> str:
   return str(object)
 
 
