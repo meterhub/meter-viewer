@@ -11,7 +11,7 @@ from PIL import ImageFile
 from tqdm import tqdm
 
 from meterviewer import T
-from meterviewer.datasets import config
+from meterviewer.datasets.read import config
 from meterviewer.img import cmp
 
 logger.add("./logs/meterviewer-proc.log")

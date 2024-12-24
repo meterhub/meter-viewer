@@ -6,8 +6,8 @@ from pathlib import Path as P
 from PIL import Image
 
 from meterviewer import T, files
-from meterviewer.datasets import config, dataset, imgv
-from meterviewer.datasets.read import single
+from meterviewer.datasets import dataset, imgv
+from meterviewer.datasets.read import config, single
 from meterviewer.img import cut, process
 
 
