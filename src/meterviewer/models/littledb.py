@@ -1,4 +1,8 @@
-# create a little db for storing the images and values
+"""
+create a little db for storing the images and values.
+
+some basic models.
+"""
 
 from __future__ import annotations
 

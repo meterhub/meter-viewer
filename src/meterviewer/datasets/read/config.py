@@ -63,7 +63,7 @@ def read_rect_from_node(root: t.Iterable) -> t.Tuple[str, T.Rect]:
       continue
     for subchild in child:
       if subchild.tag == "name":
-        val = F.must_str(subchild.text)
+        val = F.will_be_str(subchild.text)
 
       # print(subchild.tag, subchild.text)
       if subchild.tag == "bndbox":
@@ -75,6 +75,7 @@ def read_rect_from_node(root: t.Iterable) -> t.Tuple[str, T.Rect]:
 
 def read_xml(filename: P):
   """读取 xml 文件，获取 root 节点"""
+  assert filename.exists(), f"{filename}文件不存在"
   tree = ET.parse(filename)
   return tree.getroot()
 
@@ -92,6 +93,7 @@ def read_xml_to_get(
   Returns:
       Any: 回调函数的返回结果
   """
+  assert filename.exists(), f"{filename}文件不存在"
   return read_func(read_xml(filename))
 
 
