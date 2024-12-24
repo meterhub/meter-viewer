@@ -3,4 +3,4 @@ from meterviewer import func, types
 F = func
 T = types
 
-__version__ = "1.2.0"
+__version__ = "1.2.1"
