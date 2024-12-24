@@ -1,7 +1,7 @@
 [project]
 name = "meterviewer"
 dynamic = ["version"]
-description = "Default template for PDM package"
+description = "Process meter-formatted dataset."
 authors = [{ name = "svtter", email = "svtter@qq.com" }]
 dependencies = [
     "matplotlib>=3.8.4",
