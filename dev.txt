@@ -1,6 +1,5 @@
 nicegui>=1.4.25
 pandoc>=2.3
-nbconvert>=7.16.4
 streamlit>=1.35.0
 fastui>=0.6.0
 pytest>=8.2.0",
@@ -8,3 +7,4 @@ ruff>=0.4.4
 mkdocstrings-python>=1.12.2
 devpk
 mkdocs-material>=9.5.43
+jupyterlab
