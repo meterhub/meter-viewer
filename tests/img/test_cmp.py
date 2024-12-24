@@ -1,6 +1,6 @@
 import numpy as np
 
-from . import cmp
+from meterviewer.img import cmp
 
 
 def test_two_data():
