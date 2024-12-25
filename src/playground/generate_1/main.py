@@ -36,6 +36,7 @@ def load_config(config_path: pathlib.Path) -> t.Callable[[getList], t.Any]:
     return data
 
   def get_dataset() -> str:
+    """随机选择一个数据集"""
     nonlocal dataset_list
     dataset_list = get_config("dataset")
     return random.choice(dataset_list)

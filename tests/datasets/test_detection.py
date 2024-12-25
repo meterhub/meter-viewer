@@ -16,7 +16,8 @@ def test_read_to_get(root_path):
   res = detection.read_image_area(
     select_one(root_path, sample_dataset),
   )
-  assert len(res) > 0
+  assert res is not None
+  assert res["xmin"] is not None
 
 
 def test_list_imgs(root_path):

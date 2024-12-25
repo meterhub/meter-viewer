@@ -1,5 +1,6 @@
-from meterviewer import types as T
 import cv2
+
+from meterviewer import types as T
 
 
 # draw rectangle on image

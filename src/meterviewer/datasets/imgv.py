@@ -31,6 +31,7 @@ hash_store = {}
 
 
 def save_hash(im: T.NpImage, index: int):
+  """save image file hash value."""
   hash = cmp.get_hash(im)
   res = hash_store.get(hash, None)
   if res is None:
