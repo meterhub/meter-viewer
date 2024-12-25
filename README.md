@@ -1,6 +1,13 @@
 # Meterviewer
 
-Meter Data viewer, to view multiple dataset via notebook.
+Meter Data viewer, not only to view multiple dataset via notebook.
+
+## Features
+
+1. Meter Image generation.
+2. Generate jsondb for meter dataset.
+3. Generate sqlite.db for meter dataset.
+4. View the dataset with streamlit.
 
 ## Install
 
