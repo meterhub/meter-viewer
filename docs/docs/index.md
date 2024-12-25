@@ -9,9 +9,7 @@ meter-viewer is a tool to view and generate meter images.
 1. 读取`MeterData`数据集
 2. Reuse old dataset format `MeterData`. Make it easy to reuse the library.
 3. 使用 `playground/main.py` 可以生成新的数据集。
-
-## TODO
-- [ ] create a `data format` for meter dataset.
+4. Validate `data format` for meter dataset. Check the dataset with `meterviewer.validator`.
 
 ### Problems
 
@@ -20,10 +18,11 @@ meter-viewer is a tool to view and generate meter images.
 
 ### CMD
 
-> !NOTICE
-> Not finished.
+生成 jsondb:
 
-- CMD 中是所有的命令
+```bash
+python ./src/playground/generate_jsondb
+```
 
 ## Dependencies
 
