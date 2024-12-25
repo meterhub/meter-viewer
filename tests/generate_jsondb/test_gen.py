@@ -24,11 +24,13 @@ def test_db_content(gen):
   db = MeterDB.model_validate(content)
   assert len(db.data) > 0
 
-  data = get_random_data()
+  # we confirm that the data exists.
+  data_path = str(get_random_data(is_relative_path=True))
 
+  # test if the data exists in the db.
   find = False
   for item in db.data:
-    if item.filepath == data:
+    if item.filepath == data_path:
       find = True
       break
   assert find

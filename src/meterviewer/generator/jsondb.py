@@ -61,14 +61,21 @@ def get_mid_path(is_test: bool = False) -> str:
     return "lens_6/XL/XL"
 
 
-def get_random_data(is_test: bool = False) -> pathlib.Path:
+def get_random_data(
+  is_test: bool = False,
+  is_relative_path: bool = True,
+) -> pathlib.Path:
   """随机获取一个数据集下的图片"""
   dataset = get_random_dataset(is_train=not is_test)
   base_dir = get_base_dir()
   mid_path = get_mid_path(is_test=is_test)
 
   data_path = glob.glob(str(pathlib.Path(base_dir) / mid_path / dataset / "*.jpg"))
-  return random.choice(data_path)
+  random_path = random.choice(data_path)
+  if is_relative_path:
+    return pathlib.Path(random_path).relative_to(base_dir)
+  else:
+    return pathlib.Path(random_path)
 
 
 def set_local_config(infile: pathlib.Path):
@@ -77,7 +84,12 @@ def set_local_config(infile: pathlib.Path):
   get_local_config = load_config(config_path=infile)
 
 
-def gen_db(infile: pathlib.Path, output: pathlib.Path, is_test: bool = False):
+def gen_db(
+  infile: pathlib.Path,
+  output: pathlib.Path,
+  is_test: bool = False,
+  is_relative_path: bool = True,
+):
   """读取数据集下所有的图片，以及点的位置，生成一个json文件"""
 
   # set the get_local_config
@@ -91,8 +103,15 @@ def gen_db(infile: pathlib.Path, output: pathlib.Path, is_test: bool = False):
     data_path = glob.glob(str(pathlib.Path(base_dir) / mid_path / dataset / "*.jpg"))
     for jpg_data in data_path:
       rect = read_image_area(pathlib.Path(jpg_data))
+
+      # 使用相对路径可以避免生成的 db 无法在其他机器上使用
+      if is_relative_path:
+        relative_path = pathlib.Path(jpg_data).relative_to(base_dir)
+      else:
+        relative_path = jpg_data
+
       item = Item(
-        filepath=jpg_data,
+        filepath=str(relative_path),
         dataset=dataset,
         xmin=rect["xmin"],
         xmax=rect["xmax"],
