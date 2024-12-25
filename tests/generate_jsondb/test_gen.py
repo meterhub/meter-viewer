@@ -4,13 +4,13 @@ import pathlib
 
 import pytest
 
-from playground import generate_jsondb
-from playground.generate_jsondb.schema import MeterDB
+from meterviewer.generator.jsondb import gen_db, get_random_data
+from meterviewer.generator.schema import MeterDB
 
 
 @pytest.fixture
-def gen():
-  yield generate_jsondb.gen_db(output=pathlib.Path(__file__).parent / "meterdb.json")
+def gen(set_config):
+  yield gen_db(infile=set_config, output=pathlib.Path(__file__).parent / "meterdb.json")
   os.unlink(pathlib.Path(__file__).parent / "meterdb.json")
 
 
@@ -24,7 +24,7 @@ def test_db_content(gen):
   db = MeterDB.model_validate(content)
   assert len(db.data) > 0
 
-  data = generate_jsondb.get_random_data()
+  data = get_random_data()
 
   find = False
   for item in db.data:

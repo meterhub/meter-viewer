@@ -1,16 +1,17 @@
 from pydantic import BaseModel
 
 
-class Point(BaseModel):
-  x: float
-  y: float
+class Item(BaseModel):
+  filepath: str
+  dataset: str
+
+  xmin: float
+  xmax: float
+  ymin: float
+  ymax: float
 
 
-class MeterDataset(BaseModel):
-  name: str
-  img_path: str
-  img_height: int
-  img_width: int
-  area: list[Point]  # top-left, bottom-right
-  value: int
-  is_carry: bool
+class MeterDB(BaseModel):
+  """the data load from the meterdb.json"""
+
+  data: list[Item]
