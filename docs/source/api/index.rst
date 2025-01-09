@@ -13,7 +13,7 @@ Overview
 
 一般一个 MeterData 的组成形式如下：
 
-.. code-block:: txt
+.. code-block:: text
 
    - ImageSets_block_zoom  # blocked images
    - config  # 标签文件，用于 detection
