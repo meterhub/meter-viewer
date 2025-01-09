@@ -2,11 +2,14 @@
 
 import glob
 import json
+import os
 import pathlib
 import random
 import typing as t
+from functools import lru_cache
 
 import toml
+from pydantic import BaseModel
 
 from meterviewer.datasets.read.detection import read_image_area
 
@@ -33,32 +36,51 @@ get_local_config = None
 
 # 随机选择一个数据集
 def get_random_dataset(is_train: bool = True) -> str:
-  dataset_list = get_all_dataset(is_train)
+  dataset_list = get_dataset(is_train)
   return random.choice(dataset_list)
 
 
+class DatasetList(BaseModel):
+  digit_num: int
+  dataset_list: list[str]
+
+
 # 获取数据集列表
-def get_all_dataset(is_train: bool = True) -> list[str]:
+def get_dataset(digit_number: int, is_train: bool = True) -> DatasetList:
   config = get_local_config()
   if is_train:
     key = "train_dataset"
   else:
     key = "test_dataset"
-  return config["base"][key]
+
+  if digit_number not in [5, 6]:
+    raise ValueError(f"digit_number must be 5 or 6, but got {digit_number}")
+  return DatasetList(digit_num=digit_number, dataset_list=config["base"][f"{digit_number}_digit"][key])
 
 
+@lru_cache
 def get_base_dir() -> str:
   """获取数据集的 base_dir"""
   config = get_local_config()
   return config["base"]["root_path"]
 
 
-def get_mid_path(is_test: bool = False) -> str:
+@lru_cache
+def get_mid_path(digit_num: int, is_test: bool) -> str:
   """获取数据集的 mid_path"""
-  if is_test:
-    return "lens_6/CS/all_CS"
-  else:
-    return "lens_6/XL/XL"
+  if digit_num not in [5, 6]:
+    raise ValueError(f"digit_num must be 5 or 6, but got {digit_num}")
+
+  if digit_num == 5:
+    if is_test:
+      return "lens_5/XL/DATA"
+    else:
+      return "lens_5/CS/Data_cs"
+  if digit_num == 6:
+    if is_test:
+      return "lens_6/CS/all_CS"
+    else:
+      return "lens_6/XL/XL"
 
 
 def get_random_data(
@@ -78,47 +100,85 @@ def get_random_data(
     return pathlib.Path(random_path)
 
 
+# Not a pure function.
 def set_local_config(infile: pathlib.Path):
   """设置本地配置"""
   global get_local_config
   get_local_config = load_config(config_path=infile)
 
 
+def get_images_with_full_path(
+  base_dir: str,
+  dataset_name: str,
+  digit_number: int,
+  is_test: bool,
+) -> list[str]:
+  data_path = glob.glob(str(pathlib.Path(base_dir) / get_mid_path(digit_number, is_test) / dataset_name / "*.jpg"))
+  return data_path
+
+
+def get_dataset_dir(
+  digit_number: int,
+  is_test: bool,
+) -> pathlib.Path:
+  return pathlib.Path(get_base_dir()) / get_mid_path(digit_number, is_test)
+
+
 def gen_db(
   infile: pathlib.Path,
   output: pathlib.Path,
-  is_test: bool = False,
-  is_relative_path: bool = True,
+  stage: t.Literal["train", "test"],
 ):
-  """读取数据集下所有的图片，以及点的位置，生成一个json文件"""
+  """
+  读取数据集下所有的图片, 以及点的位置, 生成一个json文件
+  """
 
   # set the get_local_config
   set_local_config(infile)
 
   data = []
-  mid_path = get_mid_path(is_test)
+  is_train = stage == "train"
+  is_test = stage == "test"
 
-  for dataset in get_all_dataset(is_train=not is_test):
-    base_dir = get_base_dir()
-    data_path = glob.glob(str(pathlib.Path(base_dir) / mid_path / dataset / "*.jpg"))
-    for jpg_data in data_path:
-      rect = read_image_area(pathlib.Path(jpg_data))
+  base_dir = get_base_dir()
 
-      # 使用相对路径可以避免生成的 db 无法在其他机器上使用
-      if is_relative_path:
-        relative_path = pathlib.Path(jpg_data).relative_to(base_dir)
-      else:
-        relative_path = jpg_data
+  # 获取 5-6 位的大型数据集
+  for digit in [6, 5]:
+    dataset = get_dataset(digit, is_train)
+    # 遍历小数据集，根据不同的仪表型号区分的
 
-      item = Item(
-        filepath=str(relative_path),
-        dataset=dataset,
-        xmin=rect["xmin"],
-        xmax=rect["xmax"],
-        ymin=rect["ymin"],
-        ymax=rect["ymax"],
+    for dataset_name in dataset.dataset_list:
+      # 获取所有的图像路径
+      img_paths = get_images_with_full_path(
+        base_dir,
+        dataset_name,
+        dataset.digit_num,
+        is_test,
       )
-      data.append(item)
+
+      if not img_paths:
+        print(f"no image found for dataset: {dataset_name}, {img_paths}")
+        continue
+
+      for img_path in img_paths:
+        assert os.path.exists(img_path), f"image not found: {img_path}"
+        assert os.path.isfile(img_path), f"image is not a file: {img_path}"
+
+        # 读取图像中的点
+        rect = read_image_area(pathlib.Path(img_path))
+
+        # 使用相对路径可以避免生成的 db 无法在其他机器上使用
+        relative_path = pathlib.Path(img_path).relative_to(base_dir)
+
+        item = Item(
+          filepath=str(relative_path),
+          dataset=dataset_name,
+          xmin=rect["xmin"],
+          xmax=rect["xmax"],
+          ymin=rect["ymin"],
+          ymax=rect["ymax"],
+        )
+        data.append(item)
 
   meter_db = MeterDB(data=data)
 

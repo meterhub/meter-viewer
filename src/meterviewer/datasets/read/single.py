@@ -1,5 +1,7 @@
-"""read data from disk.
-处理单个数字数据集的函数，数据集格式为 dataset_name/[0-9]
+"""
+read data from disk.
+
+处理单个数字数据集的函数，数据集格式为 `dataset_name/[0-9]`
 """
 
 from __future__ import annotations

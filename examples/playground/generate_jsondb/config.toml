@@ -4,6 +4,7 @@ description = "These dataset has high quality, could be used to generate block i
 output_path = "meterdb.json"
 
 [base.6_digit]
+
 train_dataset = [
     "M2L10XL",
     "M3L1X",
@@ -106,7 +107,6 @@ test_dataset = [
     "M2L4CS",
     "neweyem6l4CS",
     "M7666-3576L0C2640CS",
-    ".DS_Store",
     "M3L9CS",
     "neweyem3l1CS",
     "neweyem8l4CS",
@@ -121,7 +121,58 @@ test_dataset = [
     "M2L2CS",
 ]
 
-
 [base.5_digit]
-train_dataset = ["M11L5CS", "M4L3CS", "M5L13CS"]
-test_dataset = ["M5L3XL", "M5L4XL", "M4L5XL"]
+
+train_dataset = [
+    "M11L5CS",
+    "M4L3CS",
+    "M5L13CS",
+    "M11L2CS",
+    "neweyem11l2CS",
+    "M5L14CS",
+    "M5L15CS",
+    "M4L1CS",
+    "M5L2CS",
+    "M5L4CS",
+    "M5L11CS",
+    "M11L4CS",
+    "M5L16CS",
+    "M5L1CS",
+    "M11L3CS",
+    "M5L12CS",
+    "M4L2CS",
+    "M11L1CS",
+    "M5L3CS",
+    "M4L5CS",
+    "neweyem11l1CS",
+    "M5L18CS",
+    "M4L4CS",
+    "M5L17CS",
+]
+test_dataset = [
+    "M5L3XL",
+    "M5L4XL",
+    "M4L5XL",
+    "M5L16XL",
+    "M5L18XL",
+    "M5L14XL",
+    "M11L3XL",
+    "M11L4XL",
+    "M5L17XL",
+    "M5L12XL",
+    "M4L3XL",
+    "M5L15XL",
+    "20181112xnd",
+    "M5L1XL",
+    "M4L2XL",
+    "M11L2XL",
+    "M5L11XL",
+    "M4L1XL",
+    "M5L13XL",
+    "M4L4XL",
+    "M5L2XL",
+    "neweyem11l1XL",
+    "M11L1XL",
+    "neweyem11l2XL",
+    "M11L5XL",
+]
