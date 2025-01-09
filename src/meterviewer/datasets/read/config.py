@@ -28,17 +28,17 @@ class RectO(object):
 
   def check(self):
     # assert rect.xmin != "" and rect.ymin != "" and rect.xmax != "" and rect.ymax != "", rect
-    assert (
-      self.xmin != "" and self.ymin != "" and self.xmax != "" and self.ymax != ""
-    ), self
+    assert self.xmin != "" and self.ymin != "" and self.xmax != "" and self.ymax != "", self
 
   def to_dict(self) -> T.Rect:
-    return {
-      "xmin": self.xmin,
-      "ymin": self.ymin,
-      "xmax": self.xmax,
-      "ymax": self.ymax,
-    }
+    return T.Rect.model_validate(
+      {
+        "xmin": self.xmin,
+        "ymin": self.ymin,
+        "xmax": self.xmax,
+        "ymax": self.ymax,
+      }
+    )
 
   def __str__(self):
     return f"RectO({self.xmin}, {self.ymin}, {self.xmax}, {self.ymax})"
@@ -204,9 +204,7 @@ def get_rectangle(filename: P) -> T.Rect:
   return rect
 
 
-def get_xml_config_path(
-  img_path: P, types: t.Literal["value", "block", "single"] = "value"
-) -> P:
+def get_xml_config_path(img_path: P, types: t.Literal["value", "block", "single"] = "value") -> P:
   """根据图片路径获取对应的XML配置文件路径
 
   Args:

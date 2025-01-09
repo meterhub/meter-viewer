@@ -14,7 +14,7 @@ def test_cut(root_path):
 			<xmax>112</xmax>
 			<ymax>72</ymax>"""
 
-  rect = T.Rect(xmin="82", ymin="39", xmax="112", ymax="72")
+  rect = T.Rect(xmin=82, ymin=39, xmax=112, ymax=72)
   cut_img = cut.cut_img(im, rect)
   process.show_img(cut_img, is_stop=0)
 

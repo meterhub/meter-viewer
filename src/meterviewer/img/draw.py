@@ -6,8 +6,7 @@ from meterviewer import types as T
 # draw rectangle on image
 def draw_rectangle(im: T.NpImage, rect: T.Rect) -> T.NpImage:
   """draw rectangle on image"""
-  x0, y0, x1, y1 = rect["xmin"], rect["ymin"], rect["xmax"], rect["ymax"]
-  x0, y0, x1, y1 = int(x0), int(y0), int(x1), int(y1)
+  x0, y0, x1, y1 = rect.xmin, rect.ymin, rect.xmax, rect.ymax
   writable_im = im.copy()
   cv2.rectangle(writable_im, (x0, y0), (x1, y1), (0, 255, 0), 2)
   return writable_im
