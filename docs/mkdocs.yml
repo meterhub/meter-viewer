@@ -1,6 +1,6 @@
 site_name: Meter Viewer
 theme:
-  name: material
+  name: readthedocs
 
 plugins:
 - search

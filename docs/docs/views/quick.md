@@ -1,4 +1,2 @@
 # Views
 
-
-::: meterviewer.views.quick
