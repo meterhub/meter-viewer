@@ -53,12 +53,21 @@ def get_base_dir() -> str:
   return config["base"]["root_path"]
 
 
-def get_mid_path(is_test: bool = False) -> str:
+def get_mid_path(digit_num: int, is_test: bool = False) -> str:
   """获取数据集的 mid_path"""
-  if is_test:
-    return "lens_6/CS/all_CS"
-  else:
-    return "lens_6/XL/XL"
+  if digit_num not in [5, 6]:
+    raise ValueError(f"digit_num must be 5 or 6, but got {digit_num}")
+
+  if digit_num == 5:
+    if is_test:
+      return "lens_5/XL/DATA"
+    else:
+      return "lens_5/CS/Data_cs"
+  if digit_num == 6:
+    if is_test:
+      return "lens_6/CS/all_CS"
+    else:
+      return "lens_6/XL/XL"
 
 
 def get_random_data(

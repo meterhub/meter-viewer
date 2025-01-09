@@ -1,6 +1,7 @@
-import typing as t
-import platform
 import pathlib
+import platform
+import typing as t
+
 import distro
 
 

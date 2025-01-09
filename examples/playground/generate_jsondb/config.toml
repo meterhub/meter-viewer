@@ -1,6 +1,10 @@
 [base]
 root_path = "/data/xiu-hao/work/Dataset/MeterData/"
 description = "These dataset has high quality, could be used to generate block image. The length is 5."
+output_path = "meterdb.json"
+
+[6_digit]
+
 train_dataset = [
     "M2L10XL",
     "M3L1X",
@@ -117,5 +121,3 @@ test_dataset = [
     "neweyem6l3CS",
     "M2L2CS",
 ]
-
-output_path = "meterdb.json"
