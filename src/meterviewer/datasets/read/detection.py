@@ -8,7 +8,7 @@ from . import config
 
 def read_image_area(file_path: pathlib.Path) -> config.T.Rect:
   """读取一个图片的长条矩形部分"""
-  assert file_path.suffix in (".jpg", ".jpeg"), "仅支持jpg文件"
+  assert file_path.suffix in (".jpg", ".jpeg"), f"仅支持jpg文件, given name: {file_path}"
   assert file_path.exists(), f"{file_path}文件不存在"
 
   xml_filepath = config.get_xml_config_path(file_path, types="block")
