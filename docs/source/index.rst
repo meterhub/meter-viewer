@@ -17,7 +17,7 @@ Features
 #. Reuse old dataset format ``MeterData``. Make it easy to reuse the library.
 #. 使用 ``playground/main.py`` 可以生成新的数据集。
 #. Validate ``data format`` for meter dataset. Check the dataset with ``meterviewer.validator``.
-#. 生成 jsondb，通过 ``./src/playground/generate_jsondb/main.ipynb``
+#. 生成 jsondb，通过 ``./examples/playground/generate_jsondb/main.ipynb``
 
 Problems
 ^^^^^^^^
