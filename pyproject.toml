@@ -50,6 +50,7 @@ app = 'pdm run streamlit run src/meterviewer/fastview/home.py --browser.gatherUs
 dev = ["pip>24.0"]
 
 [tool.ruff]
+line-length = 120
 indent-width = 2
 
 [build-system]

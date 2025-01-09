@@ -28,7 +28,7 @@
 
 total files:
 
-- ['block.xml', 'type.xml', 'res.xml', 'valid.xml']
+- `['block.xml', 'type.xml', 'res.xml', 'valid.xml']`
 - block: 读数范围
 - res: 单个读数的数据和位置
 

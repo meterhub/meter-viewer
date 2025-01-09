@@ -1,4 +1,4 @@
-# Detection
+# detection
 
 Read block area.
 
@@ -18,3 +18,5 @@ def test_read_to_get(root_path):
 ```
 
 这样可以读取任意一个图片的 block 值.
+
+::: meterviewer.datasets.read.detection
