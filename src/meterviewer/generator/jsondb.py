@@ -78,6 +78,7 @@ def get_random_data(
     return pathlib.Path(random_path)
 
 
+# Not a pure function.
 def set_local_config(infile: pathlib.Path):
   """设置本地配置"""
   global get_local_config
@@ -90,15 +91,18 @@ def gen_db(
   is_test: bool = False,
   is_relative_path: bool = True,
 ):
-  """读取数据集下所有的图片，以及点的位置，生成一个json文件"""
+  """
+  读取数据集下所有的图片, 以及点的位置, 生成一个json文件
+  """
 
   # set the get_local_config
   set_local_config(infile)
 
   data = []
   mid_path = get_mid_path(is_test)
+  is_train = not is_test
 
-  for dataset in get_all_dataset(is_train=not is_test):
+  for dataset in get_all_dataset(is_train=is_train):
     base_dir = get_base_dir()
     data_path = glob.glob(str(pathlib.Path(base_dir) / mid_path / dataset / "*.jpg"))
     for jpg_data in data_path:
