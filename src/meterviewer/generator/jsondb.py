@@ -55,7 +55,9 @@ def get_dataset(digit_number: int, is_train: bool = True) -> DatasetList:
 
   if digit_number not in [5, 6]:
     raise ValueError(f"digit_number must be 5 or 6, but got {digit_number}")
-  return DatasetList(digit_num=digit_number, dataset_list=config["base"][f"{digit_number}_digit"][key])
+  return DatasetList(
+    digit_num=digit_number, dataset_list=config["base"][f"{digit_number}_digit"][key]
+  )
 
 
 @lru_cache
@@ -113,7 +115,14 @@ def get_images_with_full_path(
   digit_number: int,
   is_test: bool,
 ) -> list[str]:
-  data_path = glob.glob(str(pathlib.Path(base_dir) / get_mid_path(digit_number, is_test) / dataset_name / "*.jpg"))
+  data_path = glob.glob(
+    str(
+      pathlib.Path(base_dir).expanduser()
+      / get_mid_path(digit_number, is_test)
+      / dataset_name
+      / "*.jpg"
+    )
+  )
   return data_path
 
 
