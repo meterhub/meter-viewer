@@ -18,10 +18,7 @@ We use [pdm] to manage the project.
 
 ## Documentation
 
-We use [mkdocs](https://www.mkdocs.org/) for documentation.
-
-- To install `mkdocs`, use `python3 -m pip install mkdocs`.
-- To view the documentation, run `cd docs && mkdocs serve`.
+We use [sphinx](https://www.sphinx-doc.org/en/master/) for documentation.
 
 ## Notes
 
