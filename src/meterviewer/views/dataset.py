@@ -21,21 +21,25 @@ def get_random_images(dataset: str, digit_num: int, stage: str):
   return images
 
 
-# 生成样例数据图片列表
+# 生成样例数据图片列表的函数
 def gen_plt_images(datasets: jsondb.DatasetList, digit_num: int, stage: str):
-  plt_images = []
-  for dataset in datasets.dataset_list:
-    images = get_random_images(dataset, digit_num, stage)
-    if len(images) == 0:
-      print(f"empty dataset: {dataset}")
-      continue
+  # 输入 get_random_image 的函数
+  def fn(get_random_image=get_random_image):
+    plt_images = []
+    for dataset in datasets.dataset_list:
+      images = get_random_images(dataset, digit_num, stage)
+      if len(images) == 0:
+        print(f"empty dataset: {dataset}")
+        continue
 
-    item = {
-      "dataset": (dataset, len(images)),
-      "image": get_random_image(images),
-    }
-    plt_images.append(item)
-  return plt_images
+      item = {
+        "dataset": (dataset, len(images)),
+        "image": get_random_image(images),
+      }
+      plt_images.append(item)
+    return plt_images
+
+  return fn
 
 
 # 根据数据集随机返回一张图片
