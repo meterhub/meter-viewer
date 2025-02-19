@@ -2,6 +2,7 @@
 
 import pathlib
 import random
+from multiprocessing import Value
 
 import cv2
 
@@ -45,6 +46,8 @@ def gen_plt_images(datasets: jsondb.DatasetList, digit_num: int, stage: str):
 # 根据数据集随机返回一张图片
 def get_random_image_by_dataset(dataset: str, digit_num: int, stage: str):
   images = get_random_images(dataset, digit_num, stage)
+  if len(images) == 0:
+    raise ValueError(f"empty dataset: {dataset}")
   return get_random_image(images)
 
 
