@@ -11,7 +11,11 @@ Meter Data viewer, not only to view multiple dataset via notebook.
 
 ## Install
 
-We use [pdm] to manage the project.
+`pip install meterviewer`
+
+## Development
+
+We use [pdm](https://pdm-project.org/) to manage the project.
 
 - To install pdm, run `python3 -m pip install pdm`.
 - To install the dependencies, run `pdm install`.
