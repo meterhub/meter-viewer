@@ -32,3 +32,38 @@ Dependencies
 
 * Future, 使用 returns 框架来完成返回值判定
 * `streamui <https://docs.streamlit.io/get-started/tutorials/create-an-app>`_
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 基础文档:
+
+   general/index
+   general/files
+   general/func
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 功能文档:
+
+   views/index
+   views/quickstart
+
+.. toctree::
+   :maxdepth: 2
+   :caption: API参考:
+
+   api/index
+   api/generator
+   api/dataset/v1/index
+   api/dataset/read/config
+   api/dataset/read/detection
+   api/dataset/read/single
+
+.. toctree::
+   :maxdepth: 3
+   :caption: 其他资源:
+
+   journals/index
+   uncommon/index
+

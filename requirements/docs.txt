@@ -1,3 +1,2 @@
-mkdocs
-mkdocstrings-python>=1.12.2
-mkdocs-material>=9.5.43
+# this file is for dev environment
+sphinx_rtd_theme
