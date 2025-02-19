@@ -2,8 +2,6 @@ import pathlib
 import platform
 import typing as t
 
-import distro
-
 
 def get_root_path():
   def get_system_type() -> t.Literal["macOS", "Windows", "Other", "Linux"]:
@@ -30,9 +28,6 @@ def get_root_path():
   elif get_system_type() == "Windows":
     return pathlib.Path(r"D:\Store\MeterData")
   elif get_system_type() == "Linux":
-    if distro.version() == "24.04":
-      return pathlib.Path("~/Work/Dataset/MeterData").expanduser()
-    else:
-      return pathlib.Path("~/work/Dataset/MeterData").expanduser()
+    return pathlib.Path("~/Work/Dataset/MeterData").expanduser()
   else:
     raise Exception("Not work under Linux now. 2024-05-21.")
