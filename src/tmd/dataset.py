@@ -1,11 +1,18 @@
 from __future__ import annotations
+
 import pathlib
-import torch
-from torch.utils.data import Dataset
 import typing as t
+
 import numpy as np
-from torchvision import datasets
 from PIL import Image
+
+try:
+  import torch
+  from torch.utils.data import Dataset
+  from torchvision import datasets
+except ImportError:
+  st.text("Please install torch and torchvision.")
+
 # from torchvision.transforms import transforms
 
 

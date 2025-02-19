@@ -2,13 +2,18 @@
 import os
 import pathlib
 import typing as t
-import streamlit as st
+
 import numpy as np
+import streamlit as st
+
 from meterviewer.config import get_root_path
 from tmd.dataset import NumpyDataset
 
-import torch
-from torchvision.transforms import v2
+try:
+  import torch
+  from torchvision.transforms import v2
+except ImportError:
+  st.text("Please install torch and torchvision.")
 
 torch.manual_seed(17)
 
