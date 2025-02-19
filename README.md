@@ -31,4 +31,4 @@ We use [sphinx](https://www.sphinx-doc.org/en/master/) for documentation.
 
 ## For Developer
 
-`pdm run pip install -r ./dev.txt`
+`pdm run pip install -r ./requirements/dev.txt -r /requirements/docs.txt`
