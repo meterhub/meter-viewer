@@ -53,6 +53,7 @@ def view_dataset_in_rows(num: int, imglist: T.ImgList):
 
 
 def view_dataset(num: int, imglist: T.ImgList):
+  """显示图片列表中的图片"""
   if imgshape := len(imglist[0].shape) > 3:
     raise Exception(f"imglist or Dataset meets error, shape: {imgshape}")
   for im in imglist[:num]:

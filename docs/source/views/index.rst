@@ -34,3 +34,17 @@ DatasetView
    view = MyDatasetView()
    im = view.get_random_image_by_dataset(datasets.dataset_list[0], digit_num, stage)
    plt.imshow(im)
+
+
+NP Dataset
+-------------
+
+源代码位置：`src/meterviewer/views/np_dataset.py``
+
+NP dataset 主要用于查看 np 类型的数据集，并且生成 details.toml 文件，用于简化查看过程。
+
+.. code-block:: python
+
+   from meterviewer.views.np_dataset import view_merge_np
+
+   view_merge_np(current_dataset, get_x_y=get_x_y_name)
