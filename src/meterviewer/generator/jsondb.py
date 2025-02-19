@@ -13,6 +13,7 @@ from pydantic import BaseModel
 
 from meterviewer.datasets.read.detection import read_image_area
 
+from .base import Generator
 from .schema import Item, MeterDB
 
 
@@ -45,9 +46,7 @@ class DatasetList(BaseModel):
   dataset_list: list[str]
 
 
-# 获取数据集列表
-def get_dataset(digit_number: int, is_train: bool = True) -> DatasetList:
-  config = get_local_config()
+def _get_dataset(config, digit_number: int, is_train: bool = True) -> DatasetList:
   if is_train:
     key = "train_dataset"
   else:
@@ -60,11 +59,21 @@ def get_dataset(digit_number: int, is_train: bool = True) -> DatasetList:
   )
 
 
+# 获取数据集列表
+def get_dataset(digit_number: int, is_train: bool = True) -> DatasetList:
+  config = get_local_config()
+  return _get_dataset(config, digit_number, is_train)
+
+
+def _get_base_dir(config):
+  return config["base"]["root_path"]
+
+
 @lru_cache
 def get_base_dir() -> str:
   """获取数据集的 base_dir"""
   config = get_local_config()
-  return config["base"]["root_path"]
+  return _get_base_dir(config)
 
 
 @lru_cache
@@ -83,6 +92,7 @@ def get_mid_path(digit_num: int, is_test: bool) -> str:
       return "lens_6/CS/all_CS"
     else:
       return "lens_6/XL/XL"
+  raise ValueError(f"digit_num must be 5 or 6, but got {digit_num}")
 
 
 def get_random_data(
@@ -104,7 +114,7 @@ def get_random_data(
 
 # Not a pure function.
 def set_local_config(infile: pathlib.Path):
-  """设置本地配置"""
+  """设置本地配置, 只针对直接调用的函数有效"""
   global get_local_config
   get_local_config = load_config(config_path=infile)
 
@@ -195,3 +205,22 @@ def gen_db(
     json.dump(meter_db.model_dump(), f)
 
   return output
+
+
+class JSONDB(Generator):
+  """generate jsondb, inherit get_local_config method to get local config"""
+
+  def get_infile(self):
+    raise NotImplementedError("get_infile")
+
+  def get_local_config(self) -> dict:
+    fn = load_config(config_path=self.get_infile())
+    return fn()
+
+  def get_dataset(self, digit_number: int, is_train: bool = True) -> DatasetList:
+    return _get_dataset(self.get_local_config(), digit_number, is_train)
+
+  def get_base_dir(self) -> str:
+    """获取数据集的 base_dir"""
+    config = self.get_local_config()
+    return config["base"]["root_path"]
