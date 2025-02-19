@@ -1,5 +1,6 @@
 [base]
-root_path = "/data/xiu-hao/work/Dataset/MeterData/"
+# MeterData 的根目录
+root_path = "./data"
 description = "These dataset has high quality, could be used to generate block image. The length is 5."
 output_path = "meterdb.json"
 
