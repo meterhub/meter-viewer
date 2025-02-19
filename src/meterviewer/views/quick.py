@@ -1,10 +1,11 @@
+"""快速浏览 np 类型的数据集"""
+
 from pathlib import Path as P
 
 from meterviewer import files
 from meterviewer import types as T
-from meterviewer.datasets import dataset
 
-from . import current
+from . import np_dataset
 
 
 def more_quick_view(
@@ -43,9 +44,9 @@ def quick_view(
   x = files.load_from_disk(P(current_dataset) / x_name)
   y = files.load_from_disk(P(current_dataset) / y_name)
 
-  current.view_merge_np(current_dataset, get_x_y=get_x_y_name)
+  np_dataset.view_merge_np(current_dataset, get_x_y=get_x_y_name)
   if write_config:
-    current.write_details(current_dataset, get_xy_name=get_x_y_name)
+    np_dataset.write_details(current_dataset, get_xy_name=get_x_y_name)
   return x, y
 
 
