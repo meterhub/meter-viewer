@@ -14,19 +14,29 @@ dependencies = [
     "alembic>=1.13.1",
     "tqdm>=4.66.4",
     "loguru>=0.7.2",
+    "pydantic>=2.10.6",
 ]
 # requires-python = ">3.10,<4.0"
 requires-python = ">=3.9,<4.0"
 readme = "README.md"
 license = { text = "MIT" }
 
-[tool.pdm.version]
-source = "file"
-path = "./src/meterviewer/__init__.py"
 
+[dependency-groups]
+dev = [
+    "pip>=25.0.1",
+]
+
+[tool.ruff]
+line-length = 88
+indent-width = 2
 
 [tool.pdm]
 distribution = true
+
+[tool.pdm.version]
+source = "file"
+path = "./src/meterviewer/__init__.py"
 
 [tool.pdm.scripts]
 notebook = 'pdm run jupyter-notebook .'
@@ -42,13 +52,6 @@ app = 'pdm run streamlit run src/meterviewer/fastview/home.py --browser.gatherUs
 # name = "private"
 # url = "https://mirrors.aliyun.com/pypi/simple/"
 # verify_ssl = true
-
-[dependency-groups]
-dev = ["pip>24.0"]
-
-[tool.ruff]
-line-length = 88
-indent-width = 2
 
 [build-system]
 requires = ["pdm-backend"]

@@ -1,4 +1,4 @@
-"""generate database"""
+"""generate sqlite3 database"""
 
 import typing as t
 from pathlib import Path as P
@@ -8,6 +8,8 @@ from meterviewer.datasets import dataset, imgv
 from meterviewer.datasets.read import single
 from meterviewer.models import littledb
 from meterviewer.values import is_carry
+
+from .base import Generator
 
 # Type hint for database insertion function
 dbInsertFunc = t.Callable[[str, int, bool], None]
@@ -77,3 +79,19 @@ def create_db(root_path: P):
     root_path,
     handle_func=handle_dataset,
   )
+
+
+class DB(Generator):
+  """generate sqlite3 database"""
+
+  def load_root_path(self):
+    raise NotImplementedError("load_root_path")
+
+  def create_db(self):
+    return create_db(self.load_root_path())
+
+  def generate_db_for_all(self, db_path: P):
+    return generate_db_for_all(self.load_root_path(), db_path)
+
+  def generate_for_one_dataset(self, dataset: P, insert: dbInsertFunc):
+    return generate_for_one_dataset(dataset, insert)
