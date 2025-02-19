@@ -125,14 +125,14 @@ def get_images_with_full_path(
   digit_number: int,
   is_test: bool,
 ) -> list[str]:
-  data_path = glob.glob(
-    str(
-      pathlib.Path(base_dir).expanduser()
-      / get_mid_path(digit_number, is_test)
-      / dataset_name
-      / "*.jpg"
-    )
+  full_path = str(
+    pathlib.Path(base_dir).expanduser()
+    / get_mid_path(digit_number, is_test)
+    / dataset_name
+    / "*.jpg"
   )
+  print("full_path: ", full_path)
+  data_path = glob.glob(full_path)
   return data_path
 
 
