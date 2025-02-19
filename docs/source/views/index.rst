@@ -20,4 +20,16 @@ DatasetView
    im = get_random_image_by_dataset(datasets.dataset_list[0], digit_num, stage)
    plt.imshow(im)
 
+由于存在实质上的依赖关系，并且在内部隐藏了这个依赖关系。我们更加建议你使用 DatasetView 的实例。
 
+.. code-block:: python
+
+   from meterviewer.views.dataset import DatasetView
+
+   class MyDatasetView(DatasetView):
+   def get_base_dir(self):
+      return jsondb.get_base_dir() # 可以使用别的 base_dir
+
+   view = MyDatasetView()
+   im = view.get_random_image_by_dataset(datasets.dataset_list[0], digit_num, stage)
+   plt.imshow(im)
