@@ -1,12 +1,12 @@
 from meterviewer.datasets import imgv
-from meterviewer.views import current
+from meterviewer.views import np_dataset
 from tests.utils import show_img
 
 
 def test_view_merge_np(root_path):
   """test view_merge_np"""
   d = root_path / "generated"
-  current.view_merge_np(d)
+  np_dataset.view_merge_np(d)
   assert True
 
 

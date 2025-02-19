@@ -80,3 +80,26 @@ def write_details(
     get_details=lambda x, y: dataset.get_details(pp, x, y),
     write_to_file=write_to_file,
   )
+
+
+class NPView(object):
+  def view(self, current_dataset: str | pathlib.Path, default_way=1):
+    if default_way == 1:
+      view_func = self.view_dataset
+    else:
+      view_func = self.view_dataset_in_rows
+
+    return view_merge_np(
+      current_dataset=current_dataset,
+      view_dataset=view_func,
+      get_x_y=self.get_x_y_name,
+    )
+
+  def view_dataset(self, num: int, imglist: T.ImgList):
+    return dataset.view_dataset(num, imglist)
+
+  def view_dataset_in_rows(self, num: int, imglist: T.ImgList):
+    return dataset.view_dataset_in_rows(num, imglist)
+
+  def get_x_y_name(self):
+    return T.x_name, T.y_name
