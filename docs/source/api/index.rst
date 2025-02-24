@@ -11,7 +11,7 @@ Overview
 数据集文件结构
 -------------
 
-一般一个 MeterData 的组成形式如下：
+一般一个 MeterData 的数据集组成形式如下：
 
 .. code-block:: text
 
@@ -35,6 +35,16 @@ total files:
 * ``['block.xml', 'type.xml', 'res.xml', 'valid.xml']``
 * block: 读数范围
 * res: 单个读数的数据和位置
+
+绘图功能
+-------
+
+为了能够更方便的查看标注位置，我们提供了绘图功能。
+
+`./src/meterviewer/img/draw.py` 中提供了绘图功能。
+
+可以在仪表图片上展示相关区域。
+
 
 API 接口文档
 -----------
