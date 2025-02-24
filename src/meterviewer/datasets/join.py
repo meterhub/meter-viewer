@@ -1,3 +1,5 @@
+"""用于单个仪表的拼接"""
+
 import functools
 import typing as t
 
