@@ -9,10 +9,6 @@ def use_func(name: str):
     raise ValueError(f"func {name} not found")
 
 
-def will_be_str(object) -> str:
-  return str(object)
-
-
 def must_loop(arr: t.Iterable, func: t.Callable, custom_error):
   """raise custom error if not looped"""
   is_loop, set_loop = looped()

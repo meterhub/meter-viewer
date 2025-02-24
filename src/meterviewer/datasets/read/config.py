@@ -28,7 +28,9 @@ class RectO(object):
 
   def check(self):
     # assert rect.xmin != "" and rect.ymin != "" and rect.xmax != "" and rect.ymax != "", rect
-    assert self.xmin != "" and self.ymin != "" and self.xmax != "" and self.ymax != "", self
+    assert (
+      self.xmin != "" and self.ymin != "" and self.xmax != "" and self.ymax != ""
+    ), self
 
   def to_dict(self) -> T.Rect:
     return T.Rect.model_validate(
@@ -63,7 +65,7 @@ def read_rect_from_node(root: t.Iterable) -> t.Tuple[str, T.Rect]:
       continue
     for subchild in child:
       if subchild.tag == "name":
-        val = F.will_be_str(subchild.text)
+        val = str(subchild.text)
 
       # print(subchild.tag, subchild.text)
       if subchild.tag == "bndbox":
@@ -204,7 +206,9 @@ def get_rectangle(filename: P) -> T.Rect:
   return rect
 
 
-def get_xml_config_path(img_path: P, types: t.Literal["value", "block", "single"] = "value") -> P:
+def get_xml_config_path(
+  img_path: P, types: t.Literal["value", "block", "single"] = "value"
+) -> P:
   """根据图片路径获取对应的XML配置文件路径
 
   Args:
