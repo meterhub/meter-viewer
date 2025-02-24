@@ -39,8 +39,6 @@ Dependencies
    :caption: 基础文档:
 
    general/index
-   general/files
-   general/func
 
 .. toctree::
    :maxdepth: 2
