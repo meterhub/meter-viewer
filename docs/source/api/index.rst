@@ -41,22 +41,17 @@ total files:
 
 为了能够更方便的查看标注位置，我们提供了绘图功能。
 
-`./src/meterviewer/img/draw.py` 中提供了绘图功能。
+``./src/meterviewer/img/draw.py`` 中提供了绘图功能。
 
 可以在仪表图片上展示相关区域。
 
 
 API 接口文档
------------
+===========
 
 .. toctree::
    :maxdepth: 2
 
-   core
-   dataset/v1/index
-   dataset/read/config
-   dataset/read/detection
-   dataset/read/single
+   dataset
+   dataset_v1
    generator
-   utils
-   visualization
