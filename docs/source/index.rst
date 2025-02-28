@@ -53,10 +53,8 @@ Dependencies
 
    api/index
    api/generator
-   api/dataset/v1/index
-   api/dataset/read/config
-   api/dataset/read/detection
-   api/dataset/read/single
+   api/datasets_v1
+   api/datasets
 
 .. toctree::
    :maxdepth: 3

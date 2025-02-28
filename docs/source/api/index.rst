@@ -52,6 +52,6 @@ API 接口文档
 .. toctree::
    :maxdepth: 2
 
-   dataset
-   dataset_v1
+   datasets
+   datasets_v1
    generator
