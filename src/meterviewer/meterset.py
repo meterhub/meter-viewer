@@ -29,6 +29,9 @@ class MeterSet(object):
     plt.imshow(img)
     plt.show()
 
+  def __len__(self):
+    return len(self.image_list)
+
   def values(self, i: int):
     if i > len(self.image_list):
       raise ValueError(f"index {i} out of range")
