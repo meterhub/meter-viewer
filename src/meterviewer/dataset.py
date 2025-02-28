@@ -9,12 +9,18 @@ Args:
 """
 
 import pathlib
+import warnings
 
 try:
   from torch.utils.data import Dataset
 except ImportError:
-  print("torch is not installed. Please install it with `pip install torch`.")
-  exit(1)
+  warnings.warn(
+    "torch is not installed. Please install it with `pip install torch`.", stacklevel=2
+  )
+
+  class Dataset:
+    pass
+
 
 from meterviewer.meterset import MeterSet
 
@@ -39,6 +45,7 @@ class MeterDataset(Dataset):
     self.transform = transform
     self.load_metersets()
     self.length = sum([self.get_len(meterset) for meterset in self.metersets])
+    self.start_end_list = self.scan()
 
   def load_metersets(self):
     raise NotImplementedError("Please implement this method")
@@ -82,10 +89,21 @@ class MeterDataset(Dataset):
       sample = self.transform(sample)
     return sample
 
+  def scan(self):
+    """扫描 metersets，返回一个开始结束索引的列表，__getitem__ 可以借助这个列表来快速定位"""
+    start_end_list = []
+    for i, meterset in enumerate(self.metersets):
+      start_end_list.append(
+        (
+          sum(self.get_len(meterset) for meterset in self.metersets[:i]),
+          sum(self.get_len(meterset) for meterset in self.metersets[: i + 1]),
+        )
+      )
+    return start_end_list
+
   def __getitem__(self, index):
     """get item from all over the metersets"""
-    for meterset in self.metersets:
-      if index < self.get_len(meterset):
-        return self.get_item(meterset, index)
-      index -= self.get_len(meterset)
+    for i, (start, end) in enumerate(self.start_end_list):
+      if start <= index < end:
+        return self.get_item(self.metersets[i], index - start)
     raise IndexError(f"index {index} out of range")
