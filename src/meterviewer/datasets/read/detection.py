@@ -31,6 +31,7 @@ def read_area_img(
   # range_: tuple[float, float],
   promise=False,
 ):
+  """return a meter-reading area img"""
   pass
 
 
