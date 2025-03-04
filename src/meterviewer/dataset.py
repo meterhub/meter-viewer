@@ -10,6 +10,7 @@ Args:
 
 import pathlib
 import warnings
+from typing import Type
 
 try:
   from torch.utils.data import Dataset
@@ -34,6 +35,8 @@ class MyMeterSet(MeterSet):
 
 
 class MeterDataset(Dataset):
+  meterset_cls: Type[MeterSet] = MyMeterSet # 用于自定义 MeterSet
+
   def __init__(
     self,
     root_dir,
@@ -59,12 +62,16 @@ class MeterDataset(Dataset):
   ):
     if self.stage == "train":
       self.metersets = [
-        MyMeterSet(name=name, root_path=pathlib.Path(self.root_dir) / train_folder)
+        self.meterset_cls(
+          name=name, root_path=pathlib.Path(self.root_dir) / train_folder
+        )
         for name in train_list
       ]
     elif self.stage == "test":
       self.metersets = [
-        MyMeterSet(name=name, root_path=pathlib.Path(self.root_dir) / test_folder)
+        self.meterset_cls(
+          name=name, root_path=pathlib.Path(self.root_dir) / test_folder
+        )
         for name in test_list
       ]
 
