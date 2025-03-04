@@ -36,30 +36,31 @@ Dependencies
 
 .. toctree::
    :maxdepth: 2
-   :caption: 基础文档:
+   :caption: 基础文档
 
    general/index
 
 .. toctree::
    :maxdepth: 2
-   :caption: 功能文档:
+   :caption: 功能文档
 
    views/index
    views/quickstart
 
 .. toctree::
    :maxdepth: 2
-   :caption: API参考:
+   :caption: API参考
 
    api/index
    api/generator
    api/datasets_v1
    api/datasets
    api/img
+   api/meterset
 
 .. toctree::
    :maxdepth: 3
-   :caption: 其他资源:
+   :caption: 其他资源
 
    journals/index
    uncommon/index
