@@ -174,7 +174,7 @@ def get_single_digit_values(filename: P) -> t.Tuple[str, T.Rect]:
   return val, block_pos
 
 
-def read_rect_from_file(xml_path: P, type_: typeOfrect):
+def read_rect_from_file(xml_path: P, type_: t.Literal["single", "block"]):
   """从文件中读取矩形框信息
 
   Args:

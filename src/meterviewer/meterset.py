@@ -5,7 +5,7 @@ import cv2
 import matplotlib.pyplot as plt
 
 from meterviewer.datasets.read.config import get_xml_config
-from meterviewer.datasets.read.detection import read_image_area
+from meterviewer.datasets.read.detection import read_area_pos
 from meterviewer.img.draw import draw_rectangle
 
 
@@ -42,7 +42,7 @@ class MeterSet(object):
     if i > len(self.image_list):
       raise ValueError(f"index {i} out of range")
     filepath = self.image_list[i]
-    rect = read_image_area(pathlib.Path(filepath))
+    rect = read_area_pos(pathlib.Path(filepath))
     return rect
 
   def load_list(self):

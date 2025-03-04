@@ -39,7 +39,7 @@ path = "./src/meterviewer/__init__.py"
 [tool.pdm.scripts]
 notebook = 'pdm run jupyter-notebook .'
 app = 'pdm run streamlit run src/meterviewer/fastview/home.py --browser.gatherUsageStats false'
-docs = "pdm run sphinx-autobuild -c ./docs/ -b html docs/source docs/build --port 0"
+docs = "pdm run sphinx-autobuild -c ./docs/ -b html docs/source docs/build --port 49527"
 
 # [[tool.pdm.source]]
 # name = "pypi"

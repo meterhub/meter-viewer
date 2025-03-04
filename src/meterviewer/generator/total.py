@@ -5,13 +5,14 @@ from pathlib import Path as P
 
 from PIL import Image
 
-from meterviewer import T, files
-from meterviewer.datasets import dataset, imgv
-from meterviewer.datasets.read import config, single
-from meterviewer.img import cut, process
+from meterviewer import T
+from meterviewer.datasets import imgv
+from meterviewer.datasets.read import config
+from meterviewer.img import cut
 
 
 def cut_one_img(filepath: P) -> t.Tuple[T.ImgList, T.DigitStr]:
+  """cut the image, to show meter-reading area only"""
   im, val, pos = imgv.view_one_img_v(filepath)
   xml_path = config.get_xml_config_path(filepath, "single")
   pos_list = config.read_rect_from_file(xml_path, "single")

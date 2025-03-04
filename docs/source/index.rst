@@ -55,6 +55,7 @@ Dependencies
    api/generator
    api/datasets_v1
    api/datasets
+   api/img
 
 .. toctree::
    :maxdepth: 3

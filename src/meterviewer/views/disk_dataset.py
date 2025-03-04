@@ -55,7 +55,7 @@ def get_random_image_by_dataset(dataset: str, digit_num: int, stage: str):
     raise ValueError(f"empty dataset: {dataset}")
 
   def fn(image: pathlib.Path):
-    area = jsondb.read_image_area(image)
+    area = jsondb.read_area_pos(image)
     area = Rect.model_validate(area)
     return area
 
@@ -94,6 +94,6 @@ class DatasetView(object):
     return jsondb.get_base_dir()
 
   def read_image_area(self, image: pathlib.Path):
-    area = jsondb.read_image_area(image)
+    area = jsondb.read_area_pos(image)
     area = Rect.model_validate(area)
     return area

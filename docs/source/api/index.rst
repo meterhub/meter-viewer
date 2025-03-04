@@ -55,3 +55,4 @@ API 接口文档
    datasets
    datasets_v1
    generator
+   img
