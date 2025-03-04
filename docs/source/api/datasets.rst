@@ -1,7 +1,7 @@
 datasets
 =========
 
-数据集相关接口
+数据集相关接口，用于操作整个数据集，而不是单张图片。
 
 read
 -----
@@ -13,13 +13,16 @@ config
 
 读取配置文件中的标签，标记数值。
 
-::: meterviewer.datasets.read.config
-
+.. currentmodule:: meterviewer.datasets.read.config
+.. automodule:: meterviewer.datasets.read.config
+  :members:
 
 single
 ^^^^^^
 
-::: meterviewer.datasets.read.single
+.. currentmodule:: meterviewer.datasets.read.single
+.. automodule:: meterviewer.datasets.read.single
+  :members:
 
 
 detection
@@ -44,4 +47,6 @@ Read block area.
 
 这样可以读取任意一个图片的 block 值.
 
-::: meterviewer.datasets.read.detection
+.. currentmodule:: meterviewer.datasets.read.detection
+.. automodule:: meterviewer.datasets.read.detection
+  :members:

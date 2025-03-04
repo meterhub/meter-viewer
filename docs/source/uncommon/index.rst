@@ -10,4 +10,3 @@
    troubleshooting
    performance_tuning
    advanced_usage
-   name
