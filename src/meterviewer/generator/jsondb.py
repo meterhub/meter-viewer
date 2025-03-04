@@ -11,7 +11,7 @@ from functools import lru_cache
 import toml
 from pydantic import BaseModel
 
-from meterviewer.datasets.read.detection import read_image_area
+from meterviewer.datasets.read.detection import read_area_pos
 
 from .base import Generator
 from .schema import Item, MeterDB
@@ -184,7 +184,7 @@ def gen_db(
         assert os.path.isfile(img_path), f"image is not a file: {img_path}"
 
         # 读取图像中的点
-        rect = read_image_area(pathlib.Path(img_path))
+        rect = read_area_pos(pathlib.Path(img_path))
 
         # 使用相对路径可以避免生成的 db 无法在其他机器上使用
         relative_path = pathlib.Path(img_path).relative_to(base_dir)

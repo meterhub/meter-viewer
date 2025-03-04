@@ -13,7 +13,7 @@ def select_one(root_path, dataset_name: str) -> pathlib.Path:
 
 
 def test_read_to_get(root_path):
-  res = detection.read_image_area(
+  res = detection.read_area_pos(
     select_one(root_path, sample_dataset),
   )
   assert res is not None
