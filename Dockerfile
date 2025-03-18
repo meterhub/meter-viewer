@@ -1,11 +1,9 @@
 FROM python:3.11
 
 RUN pip install -U pip && \
-  pip install jupyterlab matplotlib pandas numpy scipy
+  pip install jupyterlab matplotlib pandas numpy scipy ipywidgets -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 WORKDIR /app
-
-COPY . .
 
 EXPOSE 8888
 
