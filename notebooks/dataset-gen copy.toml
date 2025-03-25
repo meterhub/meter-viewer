@@ -1,0 +1,14 @@
+[generate_config]
+name = "generate 1"
+path = "generated_new_x1"
+description = "These dataset has high quality, could be used to generate block image"
+x_name = "x_train.npy"
+y_name = "y_train.npy"
+total_nums = 1000
+length = 6
+
+dataset = [
+    "M1L1XL",
+    "M1L3XL",
+]
+

@@ -1,0 +1,27 @@
+# Meter Viewer
+
+meter-viewer is a tool to generate meter images.
+
+相比于最初的名字`viewer`，更多的是实现 geenerate 的功能。
+
+## Features
+
+1. create a `data format` for meter dataset.
+2. Reuse old dataset format. Make it easy to reuse the library.
+
+### Problems
+
+1. 进位状态不一致。这导致不同数位进位状态不太准确，失去了原本的判断依据。
+2. 需要筛选出处于进位状态的数据，来重新生成。
+
+### CMD
+
+> !NOTICE
+> Not finished.
+
+- CMD 中是所有的命令
+
+## Dependencies
+
+- Future, 使用 returns 框架来完成返回值判定
+- [streamui](https://docs.streamlit.io/get-started/tutorials/create-an-app)

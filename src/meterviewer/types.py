@@ -1,7 +1,5 @@
 import typing as t
-
 import numpy as np
-from pydantic import BaseModel
 
 # Numpy typed Image
 NpImage = np.ndarray
@@ -30,15 +28,11 @@ y_test: str = "y_test.npy"
 
 
 def isImgDataset(x: t.Any) -> bool:
-  return isinstance(x, np.ndarray) and len(x.shape) == 4
+    return isinstance(x, np.ndarray) and len(x.shape) == 4
 
 
 def isLabelData(y: t.Any) -> bool:
-  return isinstance(y, np.ndarray) and len(y.shape) == 2
+    return isinstance(y, np.ndarray) and len(y.shape) == 2
 
 
-class Rect(BaseModel):
-  xmin: int
-  ymin: int
-  xmax: int
-  ymax: int
+Rect = t.TypedDict("Rect", {"xmin": str, "ymin": str, "xmax": str, "ymax": str})
