@@ -15,10 +15,10 @@ Meter Data viewer, not only to view multiple dataset via notebook.
 
 ## Development
 
-We use [pdm](https://pdm-project.org/) to manage the project.
+我们使用 [uv](https://github.com/astral-sh/uv) 来管理项目。
 
-- To install pdm, run `python3 -m pip install pdm`.
-- To install the dependencies, run `pdm install`.
+- 要安装 uv，运行 `python3 -m pip install uv`。
+- 要安装依赖，运行 `uv sync`。
 
 ## Documentation
 
@@ -27,8 +27,3 @@ We use [sphinx](https://www.sphinx-doc.org/en/master/) for documentation.
 ## Notes
 
 1. Pure functional is critial. Less things to worry about.
-
-
-## For Developer
-
-`pdm run pip install -r ./requirements/dev.txt -r /requirements/docs.txt`
