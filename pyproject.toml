@@ -22,9 +22,6 @@ readme = "README.md"
 license = { text = "MIT" }
 
 
-[dependency-groups]
-dev = ["pip>=25.0.1"]
-
 [tool.ruff]
 line-length = 88
 indent-width = 2
@@ -36,21 +33,21 @@ distribution = true
 source = "file"
 path = "./src/meterviewer/__init__.py"
 
-[tool.pdm.scripts]
-notebook = 'pdm run jupyter-notebook .'
-app = 'pdm run streamlit run src/meterviewer/fastview/home.py --browser.gatherUsageStats false'
-docs = "pdm run sphinx-autobuild -c ./docs/ -b html docs/source docs/build --port 49527"
-
-# [[tool.pdm.source]]
-# name = "pypi"
-# url = "https://pypi.tuna.tsinghua.edu.cn/simple"
-# verify_ssl = false
-
-# [[tool.pdm.source]]
-# name = "private"
-# url = "https://mirrors.aliyun.com/pypi/simple/"
-# verify_ssl = true
-
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
+
+[dependency-groups]
+dev = [
+    "devpk>=0.2.1",
+    "fastui>=0.6.0",
+    "jupyterlab>=4.4.3",
+    "nicegui>=1.4.25",
+    "pandoc>=2.3",
+    "pytest>=8.2.0",
+    "ruff>=0.4.4",
+    "streamlit>=1.35.0",
+]
+docs = [
+    "sphinx-rtd-theme>=3.0.2",
+]
