@@ -1,2 +1,0 @@
-# this file is for dev environment
-sphinx_rtd_theme
