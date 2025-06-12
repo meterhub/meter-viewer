@@ -5,9 +5,16 @@ Meter Data viewer, not only to view multiple dataset via notebook.
 ## Features
 
 1. Meter Image generation.
+
+- `./examples/playground/generate_1/main.py`
+
 2. Generate jsondb for meter dataset.
+
+- `./examples/generate_jsondb/main.ipynb`
+
 3. Generate sqlite.db for meter dataset.
-4. View the dataset with streamlit.
+
+- `./examples/generate_db/create_all.py`
 
 ## Install
 
@@ -27,3 +34,8 @@ We use [sphinx](https://www.sphinx-doc.org/en/master/) for documentation.
 ## Notes
 
 1. Pure functional is critial. Less things to worry about.
+
+
+## LICENSE
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

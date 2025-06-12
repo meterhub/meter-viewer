@@ -11,12 +11,14 @@ try:
   from torch.utils.data import Dataset
   from torchvision import datasets
 except ImportError:
-  st.text("Please install torch and torchvision.")
-
-# from torchvision.transforms import transforms
+  print("Please install torch and torchvision.")
 
 
 class NumpyDataset(Dataset):
+  """
+  A dataset that loads numpy arrays from a directory.
+  TODO: add transform and target_transform."""
+
   def __init__(
     self,
     root: pathlib.Path,
