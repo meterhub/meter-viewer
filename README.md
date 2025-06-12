@@ -7,6 +7,7 @@ Meter Data viewer, not only to view multiple dataset via notebook.
 1. Meter Image generation.
 
 - `./examples/playground/generate_1/main.py`
+- `./examples/notebooks/generate-op-v2.ipynb`
 
 2. Generate jsondb for meter dataset.
 
