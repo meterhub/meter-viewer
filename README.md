@@ -1,42 +1,56 @@
-# Meterviewer
+# MeterViewer - 仪表数据集处理工具
 
-Meter Data viewer, not only to view multiple dataset via notebook.
+[![PyPI Version](https://img.shields.io/pypi/v/meterviewer)](https://pypi.org/project/meterviewer/)
+[![Python Version](https://img.shields.io/badge/python-3.9%2B-blue)]()
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]()
 
-## Features
+> 处理仪表格式数据集的Python工具库，支持生成、查看和管理仪表数据集。
 
-1. Meter Image generation.
+## 功能特性
+- **仪表图像生成**：创建标准化仪表图像数据集
+- **数据集管理**：支持JSON/SQLite数据库生成
+- **可视化工具**：Jupyter Notebook集成
+- **数据验证**：确保数据集格式正确性
 
-- `./examples/playground/generate_1/main.py`
-- `./examples/notebooks/generate-op-v2.ipynb`
+## 安装
+```bash
+pip install meterviewer
+```
 
-2. Generate jsondb for meter dataset.
+## 快速开始
+```python
+from meterviewer import generate_dataset, view_meter
 
-- `./examples/generate_jsondb/main.ipynb`
+# 生成仪表数据集
+dataset = generate_dataset(config="dataset-config.toml")
 
-3. Generate sqlite.db for meter dataset.
+# 可视化仪表数据
+view_meter(dataset[0])
+```
 
-- `./examples/generate_db/create_all.py`
+## 文档
+- [在线文档](https://meterhub.github.io/meter-viewer)
+- 本地构建：`cd docs && make html`
 
-## Install
+## 示例
+- [图像生成示例](./examples/notebooks/generate-op-v2.ipynb)
+- [数据集分析示例](./examples/notebooks/view_dataset.ipynb)
+- [JSON数据库生成](./examples/generate_jsondb/main.ipynb)
 
-`pip install meterviewer`
+## 开发指南
+```bash
+# 安装开发依赖
+uv sync --group dev
 
-## Development
+# 运行测试
+pytest tests/
 
-We use [uv](https://github.com/astral-sh/uv) to manage the project.
+# 代码检查
+ruff check . --fix
+```
 
-- To install uv, run `python3 -m pip install uv`.
-- To install dependencies, run `uv sync`.
+## 贡献
+欢迎提交Issue和PR！详见[贡献指南](CONTRIBUTING.md)
 
-## Documentation
-
-We use [sphinx](https://www.sphinx-doc.org/en/master/) for documentation.
-
-## Notes
-
-1. Pure functional is critial. Less things to worry about.
-
-
-## LICENSE
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## 许可证
+[MIT](LICENSE) © 2025 svtter
