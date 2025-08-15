@@ -11,21 +11,33 @@ Overview
 数据集文件结构
 -------------
 
-一般一个 MeterData 的数据集组成形式如下：
+一般一个 MeterData 的数据集组成形式如下，我们以 M10L1XL 为例：
 
 .. code-block:: text
-
-   - ImageSets_block_zoom  # blocked images
-   - config  # 标签文件，用于 detection
-   - Numpy_block_zoom # 已经切割的 np
-   - ImageSets_seg # 通过单子分割的np文件
-   - id # 编号。每个数据集都有对应的 id，用于 track。
-   - baocun # 标签文件，数值
-   - .DS_Store
-   - coor_all_img_np  # 没有根据 config 切割的文件
-   - ImageSets # 单子的分割
-   - Numpy_seg # 单字分割的数据文件
-   - Digit # 似乎与 digit 相同
+   M10L1XL
+   ├── 2018-11-23-12-16-01.jpg
+   ├── 2018-11-24-13-06-01.jpg
+   ├── 2018-11-24-13-11-01.jpg
+   ├── 2018-11-24-13-16-01.jpg
+   ├── 2018-11-24-13-21-01.jpg
+   ├── 2018-11-24-13-26-01.jpg
+   ├── 2018-11-24-13-31-01.jpg
+   ├── baocun # 标签文件，数值
+   ├── config # 标签文件，用于 detection
+   ├── coor_all_img_np # 没有根据 config 切割的文件
+   ├── Digit # 似乎与 digit 相同
+   ├── id # 编号。每个数据集都有对应的 id，用于 track。
+   ├── ImageSets # 单个数字的分割
+   ├── ImageSets_block_zoom # blocked images
+   ├── ImageSets_seg # 通过单子分割的np文件
+   ├── Numpy_block_zoom # 已经切割的 np
+   ├── Numpy_seg # 单字分割的数据文件
+   ├── x_history.npy
+   ├── x_test_history.npy
+   ├── x_train_history.npy
+   ├── y_history.npy
+   ├── y_test_history.npy
+   └── y_train_history.npy
 
 config folder
 ^^^^^^^^^^^^^
