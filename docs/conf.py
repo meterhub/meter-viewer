@@ -8,8 +8,8 @@
 from meterviewer import __version__
 
 project = "Meter Viewer"
-copyright = "2024, Xiu-Hao"
-author = "Xiu-Hao"
+copyright = "2024, svtter"
+author = "svtter"
 release = __version__
 
 # -- General configuration ---------------------------------------------------
