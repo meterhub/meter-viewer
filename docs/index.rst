@@ -42,6 +42,12 @@ Dependencies
 
 .. toctree::
    :maxdepth: 2
+   :caption: 示例
+   
+   examples/index
+
+.. toctree::
+   :maxdepth: 2
    :caption: 功能文档
 
    views/index

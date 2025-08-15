@@ -1,3 +1,5 @@
+# 这是一个配置示例，路径都是本地的路径。
+
 [[base]]
 root_dir = "D:/Store/MeterData"
 description = "This config file is to store the path of the data, let the user easy to use."
