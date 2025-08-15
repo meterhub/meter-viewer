@@ -44,7 +44,7 @@ Dependencies
    :maxdepth: 2
    :caption: 示例
    
-   examples/index
+   usecases/index
 
 .. toctree::
    :maxdepth: 2
