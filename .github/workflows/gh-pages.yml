@@ -8,6 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:  # 添加权限配置
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
