@@ -40,8 +40,8 @@ Overview
    ├── y_test_history.npy
    └── y_train_history.npy
 
-config folder
-^^^^^^^^^^^^^
+config 文件夹中的内容
+^^^^^^^^^^^^^^^^^^^^
 
 total files:
 
@@ -58,15 +58,3 @@ total files:
 
 可以在仪表图片上展示相关区域。
 
-
-API 接口文档
-===========
-
-.. toctree::
-   :maxdepth: 2
-
-   datasets
-   datasets_v1
-   generator
-   meterset
-   img
