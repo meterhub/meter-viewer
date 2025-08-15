@@ -1,0 +1,336 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generator &mdash; Meter Viewer 1.5.1 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=a9157562"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="dataset v1" href="datasets_v1.html" />
+    <link rel="prev" title="总结" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Meter Viewer
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">基础文档</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">Get started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">示例</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usecases/index.html">Use Cases</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">功能文档</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../views/index.html">视图文档</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API参考</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">总结</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Generator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#jsondb">JSONDB</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="datasets_v1.html">dataset v1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="img.html">img</a></li>
+<li class="toctree-l1"><a class="reference internal" href="meterset.html">MeterSet</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">开发者</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer/index.html">For developer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">其他资源</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../journals/index.html">开发日志</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../uncommon/index.html">特殊用例</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Meter Viewer</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Generator</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/meterhub/meter-viewer/blob/main/docs/api/generator.rst" class="fa fa-github"> 在 GitHub 上编辑</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="generator">
+<h1>Generator<a class="headerlink" href="#generator" title="Link to this heading"></a></h1>
+<p>Generator 用于生成不同的数据集格式，方便后续进行处理。</p>
+<section id="jsondb">
+<h2>JSONDB<a class="headerlink" href="#jsondb" title="Link to this heading"></a></h2>
+<p>JSONDB 是 Generator 的子类，用于生成 JSON 格式的数据集。</p>
+<p>使用方法:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">meterviewer.generator.jsondb</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_dataset</span><span class="p">,</span> <span class="n">set_local_config</span>
+
+<span class="c1"># 设置好本地配置目录，里面包含选出来的数据集</span>
+<span class="n">set_local_config</span><span class="p">(</span>
+  <span class="s2">&quot;/data/xiu-hao/work/project/meter-project/meter-viewer/examples/playground/generate_jsondb/config.toml&quot;</span>
+<span class="p">)</span>
+
+<span class="n">datasets</span> <span class="o">=</span> <span class="n">get_dataset</span><span class="p">(</span><span class="n">digit_num</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">is_train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>其中，<code class="docutils literal notranslate"><span class="pre">config.toml</span></code> 文件内容如下:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[base]</span>
+<span class="n">root_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;/data/xiu-hao/work/Dataset/MeterData/&quot;</span>
+<span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;These dataset has high quality, could be used to generate block image. The length is 5.&quot;</span>
+<span class="n">output_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;meterdb.json&quot;</span>
+
+<span class="k">[base.6_digit]</span>
+
+<span class="n">train_dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;M2L10XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M3L1X&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem6l1XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M1L4XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M3L10XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M10L1XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M2L9XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem3l1XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M1L10XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M2L1XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M8L10XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M2L8XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M2L7XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem1l4XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M2L2XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M8L1XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M3L6XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem8l1XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M8L2XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M3L8XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem7l1XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M1L6XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M8L7XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M3L9XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem1l1XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M2L3XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M3L2XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M1L9XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M1L1XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M1L5XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M1L8XL&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">test_dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;M8L10CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M1L7CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem8l3CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M10L4CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem3l4CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem7l2CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M3L7CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M8L9CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M3L4CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem7l1CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M10L3CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem8l1CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem1l2CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M10L10CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M2L6CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M3L3CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M8L8CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M8L1CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem1l3CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem7l4CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem8l2CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M10L1CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem6l5CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M3L5CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M10L6CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M1L4CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M1L8CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M2L10CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M8L3CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem3l2CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M7666-1112L0C2640CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M1L9CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem8l5CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem3l3CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem6l1CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M10L5CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M8L4CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem7l5CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M10L9CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M3L10CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M1L6CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M10L8CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M10L2CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M1L3CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M2L3CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M2L9CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M8L7CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M7666-3576L1C2640CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M10L7CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M2L7CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M2L5CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M8L2CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M2L8CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M1L5CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M3L6CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem7l3CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M8L5CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M3L8CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem1l5CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem1l4CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M3L2CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem6l2CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M3L1CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M8L6CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M2L4CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem6l4CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M7666-3576L0C2640CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M3L9CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem3l1CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem8l4CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M7666-8936L1C2640CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M1L10CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M2L1CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M7666-8936L0C2640CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem3l5CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem1l1CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M1L1CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem6l3CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M2L2CS&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="k">[base.5_digit]</span>
+
+<span class="n">train_dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;M11L5CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M4L3CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L13CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M11L2CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem11l2CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L14CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L15CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M4L1CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L2CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L4CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L11CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M11L4CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L16CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L1CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M11L3CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L12CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M4L2CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M11L1CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L3CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M4L5CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem11l1CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L18CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M4L4CS&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L17CS&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">test_dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;M5L3XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L4XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M4L5XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L16XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L18XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L14XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M11L3XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M11L4XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L17XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L12XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M4L3XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L15XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;20181112xnd&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L1XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M4L2XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M11L2XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L11XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M4L1XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L13XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M4L4XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M5L2XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem11l1XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M11L1XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;neweyem11l2XL&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;M11L5XL&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="index.html" class="btn btn-neutral float-left" title="总结" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="datasets_v1.html" class="btn btn-neutral float-right" title="dataset v1" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2024, svtter。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
