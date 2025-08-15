@@ -28,3 +28,5 @@ jobs:
       - name: Deploy to gh-pages
         run: |
           ghp-import -n -p -f docs/_build/html
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
