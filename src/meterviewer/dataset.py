@@ -35,7 +35,7 @@ class MyMeterSet(MeterSet):
 
 
 class MeterDataset(Dataset):
-  meterset_cls: Type[MeterSet] = MyMeterSet # 用于自定义 MeterSet
+  meterset_cls: Type[MeterSet] = MyMeterSet  # 用于自定义 MeterSet
 
   def __init__(
     self,

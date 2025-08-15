@@ -1,7 +1,7 @@
 from pathlib import Path as P
 
 
-def check_if_meterdataset(path: P) -> bool:
+def check_if_meterdataset(path: P | str) -> None:
   """
   Check if the dataset is meter-formatted.
 
