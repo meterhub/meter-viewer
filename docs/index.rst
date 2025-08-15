@@ -34,7 +34,6 @@ Dependencies
 ------------
 
 
-* 为了尽可能减少模块之间的依赖关系，未来使用 returns 框架来完成返回值判定
 * `streamui <https://docs.streamlit.io/get-started/tutorials/create-an-app>`_
 
 
@@ -67,6 +66,12 @@ Dependencies
    api/datasets
    api/img
    api/meterset
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 开发者
+
+   developer/index
 
 .. toctree::
    :maxdepth: 3
