@@ -34,20 +34,18 @@ language = "zh_CN"
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
+
+# GitHub 仓库地址
+html_context = {
+  "display_github": True,  # 是否显示 GitHub 链接（sphinx_rtd_theme 特有）
+  "github_user": "meterhub",
+  "github_repo": "meter-viewer",
+  "github_version": "main",  # 分支名
+  "conf_py_path": "/docs/",  # 文档所在路径（仓库里的相对路径）
+}
+
+
 html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
-
-# GitHub repository configuration
-html_theme_options = {
-    "github_url": "https://github.com/meterhub/meter-viewer",
-    "style_external_links": True,
-    "navigation_depth": 4,
-}
-
-# Project URLs
-project_urls = {
-    "GitHub": "https://github.com/meterhub/meter-viewer",
-    "Issues": "https://github.com/meterhub/meter-viewer/issues",
-}
 
 source_suffix = [".rst"]
