@@ -19,9 +19,13 @@ Features
 #. Validate ``data format`` for meter dataset. Check the dataset with ``meterviewer.validator``.
 #. 生成 jsondb，通过 ``./examples/playground/generate_jsondb/main.ipynb``
 
+
+更多的样例，可以参考 :ref:`use-cases-label`
+
 Problems
 ^^^^^^^^
 
+现在 meter-viewer 也存在一些问题，尤其是在数据生成方面。
 
 #. 进位状态不一致。这导致不同数位进位状态不太准确，失去了原本的判断依据。
 #. 需要筛选出处于进位状态的数据，来重新生成。
@@ -30,7 +34,7 @@ Dependencies
 ------------
 
 
-* Future, 使用 returns 框架来完成返回值判定
+* 为了尽可能减少模块之间的依赖关系，未来使用 returns 框架来完成返回值判定
 * `streamui <https://docs.streamlit.io/get-started/tutorials/create-an-app>`_
 
 
