@@ -1,0 +1,175 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2025-09-26 &mdash; Meter Viewer 1.5.1 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=a9157562"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Meter Viewer
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">基础文档</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">Get started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">示例</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usecases/index.html">Use Cases</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">功能文档</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../views/index.html">视图文档</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API参考</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">总结</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/generator.html">Generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/datasets_v1.html">dataset v1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/datasets.html">datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/img.html">img</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/meterset.html">MeterSet</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">开发者</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer/index.html">For developer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">其他资源</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">开发日志</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../uncommon/index.html">特殊用例</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Meter Viewer</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">2025-09-26</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/meterhub/meter-viewer/blob/main/docs/journals/2025_09_26.rst" class="fa fa-github"> 在 GitHub 上编辑</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>2025-09-26<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<section id="hdf5">
+<h2>HDF5 数据迁移和压缩项目<a class="headerlink" href="#hdf5" title="Link to this heading"></a></h2>
+<section id="id2">
+<h3>项目概述<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p>成功将散布在多个目录中的 1,388,823 个图像文件迁移到 HDF5 格式，并完成了压缩归档。</p>
+</section>
+<section id="id3">
+<h3>详细过程<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p><strong>数据规模</strong>
+- 原始图像数量：1,388,823 个
+- 原始数据分布：散布在多个目录中
+- 原始总大小：约 14GB</p>
+<p><strong>技术实现</strong>
+1. 设计了 HDF5 存储结构，包括图像数据、元数据和索引
+2. 实现了迁移工具 <cite>tools/migrate_to_hdf5.py</cite>
+3. 更新了 <cite>MeterSet</cite> 类以支持 HDF5 数据源
+4. 添加了 <cite>HDF5MeterLoader</cite> 类用于高效数据访问</p>
+<p><strong>迁移执行</strong>
+- 本地测试：成功迁移 50 个测试图像
+- 服务器部署：克隆到 hejie 服务器进行完整迁移
+- 完整迁移：处理全部 1,388,823 个图像
+- 迁移结果：生成 16GB 的 HDF5 文件 (<cite>meter_data_full.h5</cite>)</p>
+<p><strong>压缩优化</strong>
+- 压缩命令：<cite>zip -9 meter_data_archive.zip meter_data_full.h5 Datasets/MeterData/labels.h5</cite>
+- 压缩时间：约 10 分钟
+- 原始大小：16GB + 5.1MB = 16.005GB
+- 压缩后大小：11GB
+- 压缩率：约 31.2%（节省 5GB 存储空间）</p>
+<p><strong>文件位置</strong>
+- 服务器：hejie:/data/xiu-hao/
+- HDF5 文件：<cite>meter_data_full.h5</cite> (16GB)
+- 标签文件：<cite>Datasets/MeterData/labels.h5</cite> (5.1MB)
+- 压缩归档：<cite>meter_data_archive.zip</cite> (11GB)</p>
+<p><strong>技术特性</strong>
+- 保持原始文件路径信息
+- 支持按类别、镜头、仪表类型过滤
+- 向后兼容现有 API
+- 高效的数据访问和索引</p>
+<p><strong>后续工作</strong>
+- 验证压缩文件的完整性
+- 测试解压缩和数据访问
+- 评估在实际应用中的性能表现</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2024, svtter。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
